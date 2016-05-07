@@ -11,4 +11,7 @@ public class HandBaggage implements SeatTaker {
         this.owner = owner;
     }
 
+    public Person getOwner() {
+        return owner;
+    }
 }

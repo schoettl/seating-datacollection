@@ -8,4 +8,8 @@ public class Group {
         id = nextId++;
     }
 
+    public int getId() {
+        return id;
+    }
+
 }

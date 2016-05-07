@@ -8,6 +8,10 @@ public class Seat {
         this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public SeatTaker getSeatTaker() {
         return seatTaker;
     }
@@ -15,4 +19,5 @@ public class Seat {
     public void setSeatTaker(SeatTaker seatTaker) {
         this.seatTaker = seatTaker;
     }
+
 }

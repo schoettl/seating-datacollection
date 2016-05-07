@@ -4,6 +4,7 @@ public class Person implements SeatTaker {
     private static int nextId = 1;
     private int id;
     private boolean disruptive;
+    private Gender gender;
     private AgeGroup ageGroup;
     private Group group;
 
@@ -19,6 +20,10 @@ public class Person implements SeatTaker {
         return disruptive;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
     public AgeGroup getAgeGroup() {
         return ageGroup;
     }
@@ -29,6 +34,10 @@ public class Person implements SeatTaker {
 
     public void setDisruptive(boolean disruptive) {
         this.disruptive = disruptive;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public void setAgeGroup(AgeGroup ageGroup) {
