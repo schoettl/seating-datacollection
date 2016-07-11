@@ -1,0 +1,9 @@
+id                
+date              
+line              
+starting_at       
+destination       
+position_in_train 
+my_seat           
+train_type        
+train_number      

@@ -1,0 +1,8 @@
+1--------------a----+
+|         id :      |
+|   group_id :      |
+|  age_group :      |
+|     gender :      |
+| disturbing :      |
+|    baggage :      |
++-------------------+
