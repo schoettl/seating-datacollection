@@ -1,8 +1,18 @@
-1--------------a----+
-|         id :      |
-|   group_id :      |
-|  age_group :      |
-|     gender :      |
-| disturbing :      |
-|    baggage :      |
-+-------------------+
++-------SEAT---a----+         +-------SEAT---b----+         +-------SEAT---c----+         +-------SEAT---d----+
+|         id :      |         |         id :      |         |         id :      |         |         id :      |
+|   group_id :      |         |   group_id :      |         |   group_id :      |         |   group_id :      |
+|  age_group :      |         |  age_group :      |         |  age_group :      |         |  age_group :      |
+|     gender :      |         |     gender :      |         |     gender :      |         |     gender :      |
+| disturbing :      |         | disturbing :      |         | disturbing :      |         | disturbing :      |
+|    baggage :      |         |    baggage :      |         |    baggage :      |         |    baggage :      |
++-------------------+         +-------------------+         +-------------------+         +-------------------+
+
+
++-------SEAT---e----+         +-------SEAT---f----+         +-------SEAT---g----+         +-------SEAT---h----+
+|         id :      |         |         id :      |         |         id :      |         |         id :      |
+|   group_id :      |         |   group_id :      |         |   group_id :      |         |   group_id :      |
+|  age_group :      |         |  age_group :      |         |  age_group :      |         |  age_group :      |
+|     gender :      |         |     gender :      |         |     gender :      |         |     gender :      |
+| disturbing :      |         | disturbing :      |         | disturbing :      |         | disturbing :      |
+|    baggage :      |         |    baggage :      |         |    baggage :      |         |    baggage :      |
++-------------------+         +-------------------+         +-------------------+         +-------------------+

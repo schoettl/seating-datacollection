@@ -1,6 +1,6 @@
-id                3
+id                18
 date              2016-07-11
-line              S3
+line              s3
 starting_at       
 destination       
 position_in_train 

@@ -98,16 +98,20 @@ collectGeneralData() {
 }
 
 startSeatingDataCollection() {
-    printEventFileName data/surveys.csv
+    declare stateFile="$WORK_DIR/collection_state.txt"
     cp ui/collection_events.txt "$WORK_DIR/collection_events.txt"
-    cp ui/collection_state.txt  "$WORK_DIR/collection_state.txt"
+    cp ui/collection_state.txt "$stateFile"
+
     cd "$PROGDIR" || exitWithError "error: cannot access dir $PROGDIR"
-    #vim -S control/ui.vim
+
+    export SDC_EVENTFILE
+    SDC_EVENTFILE=$(printEventFileName data/surveys.csv)
+    vim -S control/ui.vim "$stateFile"
 }
 
 main() {
     collectGeneralData
-    startSeatingDataCollection &
+    startSeatingDataCollection
 }
 
 main
