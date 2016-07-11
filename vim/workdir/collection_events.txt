@@ -1,4 +1,0 @@
-count standing persons
-train stops
-train starts
-direction changes

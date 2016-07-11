@@ -1,9 +1,0 @@
-id                18
-date              2016-07-11
-line              s3
-starting_at       
-destination       
-position_in_train 
-my_seat           
-train_type        
-train_number      
