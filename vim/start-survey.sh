@@ -1,5 +1,5 @@
 #!/bin/bash
-# Short description
+# Start seating data collection
 
 readonly PROGNAME=$(basename "$0")
 readonly PROGDIR=$(dirname "$(readlink -m "$0")")
