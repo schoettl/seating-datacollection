@@ -9,19 +9,24 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 public class SeatWidget extends TextView {
     private Seat seat;
 
-    {
-        setText("seat " + seat.getId());
+    private void init(Seat seat) {
+        this.seat = seat;
+        setText(toString());
     }
 
     public SeatWidget(Seat seat, Context context) {
         super(context);
-        this.seat = seat;
-        // I would use this(seat, ...) if I was sure about the default values for the other constructors's parameters.
+        init(seat);
     }
 
     public SeatWidget(Seat seat, Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.seat = seat;
+        init(seat);
+    }
+
+    @Override
+    public String toString() {
+        return "seat " + seat.getId();
     }
 
 }

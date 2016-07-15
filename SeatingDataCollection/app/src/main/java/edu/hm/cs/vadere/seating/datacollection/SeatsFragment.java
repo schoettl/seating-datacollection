@@ -25,9 +25,7 @@ public class SeatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
-        //ListAdapter adapter = new FloorRectAdapter(getContext());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.fragment_seats);
-        adapter.add("test1");
+        ListAdapter adapter = new FloorRectAdapter(getContext());
         view.setAdapter(adapter);
         return view;
     }
