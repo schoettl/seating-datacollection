@@ -8,8 +8,9 @@ import java.util.Date;
 public class LogEvent extends SugarRecord {
     public static final String TIME_FORMAT = "HH:mm:ss";
 
-    private Survey survey;
     private String time;
+    private Survey survey;
+
     private LogEventType eventType;
     private Integer seat;
     private Person person;

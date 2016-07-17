@@ -5,7 +5,7 @@ import com.orm.SugarApp;
 public class SeatingDataCollectionApp extends SugarApp {
     @Override
     public void onCreate() {
-        //deleteDatabase("seatingdatacollection.db");
+//        deleteDatabase("data.db");
         super.onCreate();
     }
 }

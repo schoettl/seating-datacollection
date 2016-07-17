@@ -12,4 +12,8 @@
     <string name="seat_hint">e.g. 7</string>
     <string name="trainno_hint">e.g. 1234567</string>
     <string name="traintype_default">ET423</string>
+    <string name="action_leave">Leave</string>
+    <string name="action_place_baggage">Place baggage</string>
+    <string name="action_remove_baggage">Remove baggage</string>
+    <string name="action_sit_down">Sit down</string>
 </resources>

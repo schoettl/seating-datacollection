@@ -5,9 +5,11 @@ import android.widget.EditText;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
+
 import edu.hm.cs.vadere.seating.datacollection.R;
 
-public class Survey extends SugarRecord {
+public class Survey extends SugarRecord implements Serializable {
     private String agentName;
     private String date;
     private String startingAt;

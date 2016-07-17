@@ -33,9 +33,11 @@ public class LogEventWriter {
     }
 
     public void logStopsDisturbingPerson(Person p) {
+        logEvent(new LogEvent(survey, LogEventType.STOPS_DISTURBING, null, p));
     }
 
     public void logStopsDisturbingSeat(Seat s) {
+        logEvent(new LogEvent(survey, LogEventType.STOPS_DISTURBING, s.getId(), null));
     }
 
     private void logEvent(LogEvent e) {

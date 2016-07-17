@@ -2,11 +2,16 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.hm.cs.vadere.seating.datacollection.model.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+
 public class CollectDataActivity extends AppCompatActivity {
+
+    private Survey survey;
+    private LogEventWriter logEventWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +20,8 @@ public class CollectDataActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
+        survey = Utils.getSurveyFromIntent(getIntent());
+        logEventWriter = new LogEventWriter(survey);
     }
 
     @Override

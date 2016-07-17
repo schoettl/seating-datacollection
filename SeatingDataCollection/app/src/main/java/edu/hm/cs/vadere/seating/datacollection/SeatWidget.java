@@ -39,4 +39,8 @@ public class SeatWidget extends TextView {
 //        width = height = Math.min(width, height);
 //        setMeasuredDimension(width, height);
     }
+
+    public Seat getSeat() {
+        return seat;
+    }
 }

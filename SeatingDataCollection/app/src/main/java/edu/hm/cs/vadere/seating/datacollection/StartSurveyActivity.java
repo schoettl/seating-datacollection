@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
@@ -15,6 +14,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 public class StartSurveyActivity extends AppCompatActivity {
 
     public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String EXTRA_SURVEY_ID = "SURVEY_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +31,20 @@ public class StartSurveyActivity extends AppCompatActivity {
 
     public void startSurvey(View view) {
         try {
-            saveSurvey();
+            Survey survey = saveSurvey();
             Intent intent = new Intent(this, InitCollectionActivity.class);
+            intent.putExtra(EXTRA_SURVEY_ID, survey.getId());
             startActivity(intent);
-        } catch (NumberFormatException e) {
-            // Bitte Zahlen eingeben
+        } catch (NumberFormatException e) { // TODO catch date format exception and check for date format in saveSurvey()
+            // Error message
         }
     }
 
-    private void saveSurvey() {
+    private Survey saveSurvey() {
         Survey survey = new Survey();
         survey.setValuesFromGUI(this);
         survey.save();
+        return survey;
     }
 
     private EditText getEditTextById(int viewId) {

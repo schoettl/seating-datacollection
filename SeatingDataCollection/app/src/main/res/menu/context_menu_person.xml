@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Menu xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:id="@+id/context_menu_person">
+    <item android:id="@+id/action_leave"
+        android:title="@string/action_leave" />
+    <item android:id="@+id/action_place_baggage"
+        android:title="@string/action_place_baggage" />
+
+</Menu>
