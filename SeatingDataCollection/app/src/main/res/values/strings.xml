@@ -2,4 +2,14 @@
     <string name="app_name">Seating Data Collection</string>
     <string name="start_survey">Start survey</string>
     <string name="start_data_collection">Start data collection</string>
+    <string name="agent_name_default">Jakob Schöttl</string>
+    <string name="startingat_hint">e.g. Otterfing</string>
+    <string name="direction_hint">e.g. Mammendorf</string>
+    <string name="line_hint">e.g. S3</string>
+    <string name="date_hint">Today\'s date</string>
+    <string name="wagonno_hint">e.g. 2 (second wagon from ahead)</string>
+    <string name="doorno_hint">e.g. 3 (third door from ahead)</string>
+    <string name="seat_hint">e.g. 7</string>
+    <string name="trainno_hint">e.g. 1234567</string>
+    <string name="traintype_default">ET423</string>
 </resources>

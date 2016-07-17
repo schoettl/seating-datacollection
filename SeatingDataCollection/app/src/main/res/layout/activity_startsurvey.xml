@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,14 +7,99 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.hm.cs.vadere.seating.datacollection.StartSurveyActivity">
+    tools:context="edu.hm.cs.vadere.seating.datacollection.StartSurveyActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/agent_name_default"
+        android:ems="10"
+        android:id="@+id/editTextName"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editTextDate"
+        android:layout_gravity="center_horizontal"
+        android:editable="false"
+        android:hint="@string/date_hint" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextStartingAt"
+        android:hint="@string/startingat_hint"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextDirection"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/direction_hint"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextLine"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/line_hint"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextWagonNo"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/wagonno_hint" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextDoorNo"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/doorno_hint" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextSeat"
+        android:hint="@string/seat_hint" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextTrainType"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/traintype_default"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextTrainNo"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textCapCharacters"
+        android:hint="@string/trainno_hint" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/start_survey"
         android:text="@string/start_survey"
         android:onClick="startSurvey"
         />
 
-</RelativeLayout>
+</LinearLayout>

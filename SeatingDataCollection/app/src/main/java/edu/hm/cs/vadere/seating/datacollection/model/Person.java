@@ -1,20 +1,17 @@
 package edu.hm.cs.vadere.seating.datacollection.model;
 
-public class Person implements SeatTaker {
-    private static int nextId = 1;
-    private int id;
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
+
+public class Person extends SugarRecord implements SeatTaker {
+    @Ignore
     private boolean disruptive;
+
     private Gender gender;
     private AgeGroup ageGroup;
-    private Group group;
+    private Long groupId;
 
-    public Person() {
-        id = nextId++;
-    }
-
-    public int getId() {
-        return id;
-    }
+    public Person() { }
 
     public boolean isDisruptive() {
         return disruptive;
@@ -29,7 +26,7 @@ public class Person implements SeatTaker {
     }
 
     public Group getGroup() {
-        return group;
+        return Group.findById(Group.class, groupId);
     }
 
     public void setDisruptive(boolean disruptive) {
@@ -45,7 +42,7 @@ public class Person implements SeatTaker {
     }
 
     public void setGroup(Group group) {
-        this.group = group;
+        this.groupId = group.getId();
     }
 
 }

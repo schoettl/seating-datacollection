@@ -1,15 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.model;
 
-public class Group {
-    private static int nextId = 1;
-    private int id;
+import com.orm.SugarRecord;
 
-    public Group() {
-        id = nextId++;
-    }
-
-    public int getId() {
-        return id;
-    }
-
+public class Group extends SugarRecord {
 }
