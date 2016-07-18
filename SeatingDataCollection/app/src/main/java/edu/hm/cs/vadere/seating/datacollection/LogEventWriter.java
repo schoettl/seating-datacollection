@@ -1,6 +1,14 @@
-package edu.hm.cs.vadere.seating.datacollection.model;
+package edu.hm.cs.vadere.seating.datacollection;
 
-public class LogEventWriter {
+import java.io.Serializable;
+
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
+import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
+import edu.hm.cs.vadere.seating.datacollection.model.Person;
+import edu.hm.cs.vadere.seating.datacollection.model.Seat;
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+
+public class LogEventWriter implements Serializable {
 
     private Survey survey;
 

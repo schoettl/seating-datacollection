@@ -16,4 +16,8 @@
     <string name="action_place_baggage">Place baggage</string>
     <string name="action_remove_baggage">Remove baggage</string>
     <string name="action_sit_down">Sit down</string>
+    <string name="action_set_person_properties">Set properties</string>
+    <string name="action_change_place">Change place</string>
+    <string name="action_person_disturbing">Disturbing</string>
+    <string name="action_person_stops_disturbing">Stops disturbing</string>
 </resources>

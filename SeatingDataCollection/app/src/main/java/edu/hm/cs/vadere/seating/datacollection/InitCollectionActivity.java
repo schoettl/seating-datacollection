@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import edu.hm.cs.vadere.seating.datacollection.model.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class InitCollectionActivity extends AppCompatActivity {

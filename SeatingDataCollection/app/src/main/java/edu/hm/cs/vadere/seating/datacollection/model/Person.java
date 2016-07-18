@@ -29,7 +29,7 @@ public class Person extends SugarRecord implements SeatTaker {
         return Group.findById(Group.class, groupId);
     }
 
-    public void setDisruptive(boolean disruptive) {
+    public void setDisturbing(boolean disruptive) {
         this.disruptive = disruptive;
     }
 

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Menu xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
+<menu xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
     android:layout_width="match_parent" android:id="@+id/context_menu_person">
     <item android:id="@+id/action_leave"
         android:title="@string/action_leave" />
     <item android:id="@+id/action_place_baggage"
         android:title="@string/action_place_baggage" />
+    <item android:id="@+id/action_change_place"
+        android:title="@string/action_change_place" />
+    <item android:id="@+id/action_set_person_properties"
+        android:title="@string/action_set_person_properties" />
+    <item android:id="@+id/action_person_disturbing"
+        android:title="@string/action_person_disturbing" />
+    <item android:id="@+id/action_person_stops_disturbing"
+        android:title="@string/action_person_stops_disturbing" />
 
-</Menu>
+</menu>
