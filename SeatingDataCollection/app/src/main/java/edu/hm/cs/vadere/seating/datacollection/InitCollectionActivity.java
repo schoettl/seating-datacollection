@@ -24,7 +24,7 @@ public class InitCollectionActivity extends AppCompatActivity {
     public void startDataCollection(View view) {
         logEventWriter.logInitializationEnd();
         Intent intent = new Intent(this, CollectDataActivity.class);
-        intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID, survey.getId());
+        intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, survey.getId());
         startActivity(intent);
     }
 
