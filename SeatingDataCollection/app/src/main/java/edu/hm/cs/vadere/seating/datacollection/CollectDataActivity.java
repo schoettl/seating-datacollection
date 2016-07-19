@@ -21,6 +21,8 @@ public class CollectDataActivity extends AppCompatActivity {
 
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
+
+        Utils.startSeatsFragment(this, logEventWriter);
     }
 
     @Override

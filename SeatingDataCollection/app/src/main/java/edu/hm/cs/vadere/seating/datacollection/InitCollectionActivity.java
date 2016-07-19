@@ -19,6 +19,8 @@ public class InitCollectionActivity extends AppCompatActivity {
 
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
+
+        Utils.startSeatsFragment(this, logEventWriter);
     }
 
     public void startDataCollection(View view) {
