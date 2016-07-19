@@ -21,18 +21,16 @@
         <activity
             android:name=".InitCollectionActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartSurveyActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".StartSurveyActivity"
+            >
         </activity>
         <activity
             android:name=".CollectDataActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".InitCollectionActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".InitCollectionActivity"
+            >
         </activity>
 
 
