@@ -40,6 +40,9 @@
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="edu.hm.cs.vadere.seating.datacollection.model" />
         -->
         <meta-data android:name="QUERY_LOG" android:value="true" />
+
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

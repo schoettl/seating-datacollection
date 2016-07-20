@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,6 +28,11 @@ public class StartSurveyActivity extends AppCompatActivity {
         super.onStart();
         String todayStr = new SimpleDateFormat(ISO_DATE_FORMAT).format(new Date());
         getEditTextById(R.id.editTextDate).setText(todayStr);
+    }
+
+    public void exportData(View view) {
+        AsyncTask task = new DatabaseExportTask(getBaseContext(), null);
+        task.execute();
     }
 
     public void startSurvey(View view) {

@@ -20,4 +20,5 @@
     <string name="action_change_place">Change place</string>
     <string name="action_person_disturbing">Disturbing</string>
     <string name="action_person_stops_disturbing">Stops disturbing</string>
+    <string name="export_data">Export data</string>
 </resources>
