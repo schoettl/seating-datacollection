@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ChangeSeatAction;
 import edu.hm.cs.vadere.seating.datacollection.actions.PendingAction;
@@ -32,6 +31,8 @@ public class SeatsFragment extends Fragment {
 
     private static final String LOG_EVENT_WRITER_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
     public static final String TAG = "SeatsFragment";
+
+    private FloorRectAdapter floorRectAdapter;
     private LogEventWriter logEventWriter;
     private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
 
@@ -57,22 +58,21 @@ public class SeatsFragment extends Fragment {
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         registerForContextMenu(view);
-        ListAdapter adapter = new FloorRectAdapter(getContext());
+        floorRectAdapter = new FloorRectAdapter(getContext());
         View.OnClickListener seatClickListener = new SeatClickListener();
-        for (int i = 0; i < adapter.getCount(); i++) {
-            Object o = adapter.getItem(i);
-            if (o instanceof SeatWidget) {
-                SeatWidget seatWidget = (SeatWidget) o;
+        for (View v : floorRectAdapter) {
+            if (v instanceof SeatWidget) {
+                SeatWidget seatWidget = (SeatWidget) v;
                 seatWidget.setOnClickListener(seatClickListener);
             }
         }
-        view.setAdapter(adapter);
+        view.setAdapter(floorRectAdapter);
         return view;
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View gridView, ContextMenu.ContextMenuInfo menuInfo) {
-        Log.d("SeatsFragment", "on create context menu");
+        Log.d(TAG, "on create context menu");
         super.onCreateContextMenu(menu, gridView, menuInfo);
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -84,15 +84,15 @@ public class SeatsFragment extends Fragment {
             SeatWidget seatWidget = (SeatWidget) v;
             SeatTaker seatTaker = seatWidget.getSeat().getSeatTaker();
             if (seatTaker instanceof Person) {
-                Log.d("SeatsFragment", "person");
+                Log.d(TAG, "person");
                 inflater.inflate(R.menu.context_menu_person, menu);
 
             } else if (seatTaker instanceof HandBaggage) {
-                Log.d("SeatsFragment", "baggage");
+                Log.d(TAG, "baggage");
                 inflater.inflate(R.menu.context_menu_baggage, menu);
 
             } else { // seat is empty
-                Log.d("SeatsFragment", "empty seat");
+                Log.d(TAG, "empty seat");
                 inflater.inflate(R.menu.context_menu_seat, menu);
             }
         }
@@ -101,16 +101,20 @@ public class SeatsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get clicked view: http://stackoverflow.com/questions/2926293/identifying-the-view-selected-in-a-contextmenu-android
+        Log.d(TAG, "on options item selected");
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Log.d(TAG, menuInfo.targetView.toString());
+        View listItem = (View) floorRectAdapter.getItem(menuInfo.position);
+        Log.d(TAG, listItem.toString());
         if (!(menuInfo.targetView instanceof SeatWidget))
             return false;
 
         Seat seat = ((SeatWidget) menuInfo.targetView).getSeat();
+        Log.d(TAG, seat.toString());
 
         cancelPendingAction();
         switch (item.getItemId()) {
             case R.id.action_sit_down:
+                Log.d(TAG, "action sit down");
                 actionSitDown(seat);
                 return true;
             case R.id.action_change_place:
@@ -135,6 +139,7 @@ public class SeatsFragment extends Fragment {
                 actionPersonStopsDisturbing(seat);
                 return true;
             default:
+                Log.w(TAG, "context menu item not implemented");
                 return super.onOptionsItemSelected(item);
         }
     }

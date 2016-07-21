@@ -6,12 +6,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 // 4 Vierer
-public class FloorRectAdapter extends BaseAdapter {
+public class FloorRectAdapter extends BaseAdapter implements Iterable<View> {
     private final static int FLOOR_RECT_COUNT = 20;
     private final Context context;
     private final List<View> views;
@@ -39,7 +40,7 @@ public class FloorRectAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null; // not implemented
+        return views.get(position);
     }
 
     @Override
@@ -50,5 +51,24 @@ public class FloorRectAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return views.get(position);
+    }
+
+    @Override
+    public Iterator<View> iterator() {
+        return new Iterator<View>() {
+            private int currentIteratorIndex = 0;
+            @Override
+            public boolean hasNext() {
+                return (currentIteratorIndex + 1) < getCount();
+            }
+            @Override
+            public View next() {
+                return (View) getItem(currentIteratorIndex++);
+            }
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 }
