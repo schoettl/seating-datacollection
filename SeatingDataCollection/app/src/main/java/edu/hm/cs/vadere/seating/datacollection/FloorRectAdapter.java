@@ -56,14 +56,14 @@ public class FloorRectAdapter extends BaseAdapter implements Iterable<View> {
     @Override
     public Iterator<View> iterator() {
         return new Iterator<View>() {
-            private int currentIteratorIndex = 0;
+            private int nextIndex = 0;
             @Override
             public boolean hasNext() {
-                return (currentIteratorIndex + 1) < getCount();
+                return nextIndex < getCount();
             }
             @Override
             public View next() {
-                return (View) getItem(currentIteratorIndex++);
+                return (View) getItem(nextIndex++);
             }
             @Override
             public void remove() {

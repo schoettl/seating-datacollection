@@ -57,7 +57,6 @@ public class SeatsFragment extends Fragment {
         logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_KEY);
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
-        registerForContextMenu(view);
         floorRectAdapter = new FloorRectAdapter(getContext());
         View.OnClickListener seatClickListener = new SeatClickListener();
         for (View v : floorRectAdapter) {
@@ -67,6 +66,7 @@ public class SeatsFragment extends Fragment {
             }
         }
         view.setAdapter(floorRectAdapter);
+        registerForContextMenu(view);
         return view;
     }
 
