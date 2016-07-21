@@ -1,5 +1,7 @@
-package edu.hm.cs.vadere.seating.datacollection;
+package edu.hm.cs.vadere.seating.datacollection.actions;
 
+import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;

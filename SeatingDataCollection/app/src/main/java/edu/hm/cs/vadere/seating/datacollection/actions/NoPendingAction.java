@@ -1,4 +1,6 @@
-package edu.hm.cs.vadere.seating.datacollection;
+package edu.hm.cs.vadere.seating.datacollection.actions;
+
+import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 
 public class NoPendingAction extends PendingAction {
     public NoPendingAction() {
