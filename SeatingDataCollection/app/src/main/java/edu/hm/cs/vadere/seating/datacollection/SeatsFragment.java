@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ChangeSeatAction;
 import edu.hm.cs.vadere.seating.datacollection.actions.PendingAction;
@@ -58,13 +59,7 @@ public class SeatsFragment extends Fragment {
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         floorRectAdapter = new FloorRectAdapter(getContext());
-        View.OnClickListener seatClickListener = new SeatClickListener();
-        for (View v : floorRectAdapter) {
-            if (v instanceof SeatWidget) {
-                SeatWidget seatWidget = (SeatWidget) v;
-                seatWidget.setOnClickListener(seatClickListener);
-            }
-        }
+        view.setOnItemClickListener(new ListItemClickListener());
         view.setAdapter(floorRectAdapter);
         registerForContextMenu(view);
         return view;
@@ -76,12 +71,12 @@ public class SeatsFragment extends Fragment {
         super.onCreateContextMenu(menu, gridView, menuInfo);
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Log.d(SeatsFragment.class.getSimpleName(), info.targetView.toString());
         View v = info.targetView;
 
         if (v instanceof SeatWidget) {
             MenuInflater inflater = getActivity().getMenuInflater();
             SeatWidget seatWidget = (SeatWidget) v;
+            Log.d(TAG, "context menu: " + seatWidget.toString());
             SeatTaker seatTaker = seatWidget.getSeat().getSeatTaker();
             if (seatTaker instanceof Person) {
                 Log.d(TAG, "person");
@@ -111,7 +106,7 @@ public class SeatsFragment extends Fragment {
         Seat seat = ((SeatWidget) menuInfo.targetView).getSeat();
         Log.d(TAG, seat.toString());
 
-        cancelPendingAction();
+        clearPendingAction();
         switch (item.getItemId()) {
             case R.id.action_sit_down:
                 Log.d(TAG, "action sit down");
@@ -144,7 +139,7 @@ public class SeatsFragment extends Fragment {
         }
     }
 
-    private void cancelPendingAction() {
+    private void clearPendingAction() {
         pendingAction = PendingAction.NO_PENDING_ACTION;
     }
 
@@ -201,14 +196,14 @@ public class SeatsFragment extends Fragment {
         logEventWriter.logSeatEvent(LEAVE, seat, p);
     }
 
-    private class SeatClickListener implements View.OnClickListener {
+    private class ListItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onClick(View v) {
-            Log.d(TAG, v.toString());
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.d(TAG, "click: " + view.toString());
             if (pendingAction.isActionPending()) {
-                pendingAction.seatSelected((SeatWidget) v);
+                pendingAction.seatSelected((SeatWidget) view);
             }
-            cancelPendingAction();
+            clearPendingAction();
         }
     }
 
