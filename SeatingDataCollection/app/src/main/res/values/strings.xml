@@ -21,4 +21,6 @@
     <string name="action_person_disturbing">Disturbing</string>
     <string name="action_person_stops_disturbing">Stops disturbing</string>
     <string name="export_data">Export data</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

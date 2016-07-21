@@ -1,7 +1,9 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 
@@ -143,7 +146,17 @@ public class SeatsFragment extends Fragment {
     private void actionPersonDisturbing(Seat seat) {
         Person p = (Person) seat.getSeatTaker();
         p.setDisturbing(true);
-        logEventWriter.logDisturbingPerson(p, null); // TODO prompt for reason
+
+        final EditText editTextReason = new EditText(getContext());
+        final OkClickListener okClickListener = new OkClickListener(editTextReason);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Reason for disturbing");
+        builder.setMessage("You can type-in a reason");
+        builder.setView(editTextReason);
+        builder.setPositiveButton(R.string.ok, okClickListener);
+        builder.show();
+
+        logEventWriter.logDisturbingPerson(p, okClickListener.getResult());
     }
 
     private void actionPersonStopsDisturbing(Seat seat) {
@@ -191,6 +204,21 @@ public class SeatsFragment extends Fragment {
                 pendingAction.seatSelected((SeatWidget) v);
             }
             cancelPendingAction();
+        }
+    }
+
+    private class OkClickListener implements DialogInterface.OnClickListener {
+        private EditText edit;
+        private String result;
+        public OkClickListener(EditText edit) {
+            this.edit = edit;
+        }
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            result = edit.getText().toString();
+        }
+        public String getResult() {
+            return result;
         }
     }
 }
