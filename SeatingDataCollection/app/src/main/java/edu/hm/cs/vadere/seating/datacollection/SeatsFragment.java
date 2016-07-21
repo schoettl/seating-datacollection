@@ -17,12 +17,17 @@ import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.*;
+
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
 
 public class SeatsFragment extends Fragment {
 
     private static final String LOG_EVENT_WRITER_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
+    public static final String TAG = "SeatsFragment";
     private LogEventWriter logEventWriter;
+    private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
 
     public static SeatsFragment newInstance(LogEventWriter logEventWriter) {
         SeatsFragment fragment = new SeatsFragment();
@@ -47,6 +52,14 @@ public class SeatsFragment extends Fragment {
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         registerForContextMenu(view);
         ListAdapter adapter = new FloorRectAdapter(getContext());
+        View.OnClickListener seatClickListener = new SeatClickListener();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            Object o = adapter.getItem(i);
+            if (o instanceof SeatWidget) {
+                SeatWidget seatWidget = (SeatWidget) o;
+                seatWidget.setOnClickListener(seatClickListener);
+            }
+        }
         view.setAdapter(adapter);
         return view;
     }
@@ -83,12 +96,13 @@ public class SeatsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get clicked view: http://stackoverflow.com/questions/2926293/identifying-the-view-selected-in-a-contextmenu-android
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Log.d("SeatsFragment", menuInfo.targetView.toString());
+        Log.d(TAG, menuInfo.targetView.toString());
         if (!(menuInfo.targetView instanceof SeatWidget))
             return false;
 
         Seat seat = ((SeatWidget) menuInfo.targetView).getSeat();
 
+        cancelPendingAction();
         switch (item.getItemId()) {
             case R.id.action_sit_down:
                 actionSitDown(seat);
@@ -119,6 +133,10 @@ public class SeatsFragment extends Fragment {
         }
     }
 
+    private void cancelPendingAction() {
+        pendingAction = PendingAction.NO_PENDING_ACTION;
+    }
+
     private void actionPersonDisturbing(Seat seat) {
         Person p = (Person) seat.getSeatTaker();
         p.setDisturbing(true);
@@ -136,14 +154,12 @@ public class SeatsFragment extends Fragment {
     }
 
     private void actionPlaceBaggage(Seat seat) {
-        HandBaggage b = new HandBaggage((Person) seat.getSeatTaker());
-        // TODO wait for select target seat
-        //otherSeat.setSeatTaker(b);
-        //logEventWriter.logSeatEvent(PLACE_BAGGAGE, seat, b.getOwner());
+        pendingAction = new PlaceBaggageAction(logEventWriter, (Person) seat.getSeatTaker());
     }
 
     private void actionRemoveBaggage(Seat seat) {
-        HandBaggage b = (HandBaggage) clearSeat(seat);
+        HandBaggage b = (HandBaggage) seat.getSeatTaker();
+        seat.clearSeat();
         logEventWriter.logSeatEvent(REMOVE_BAGGAGE, seat, b.getOwner());
     }
 
@@ -155,20 +171,23 @@ public class SeatsFragment extends Fragment {
     }
 
     private void actionChangeSeat(Seat seat) {
-        Person personChangingSeat = (Person) seat.getSeatTaker();
-        // TODO wait for select target seat
-        //newSeat.setSeatTaker(personChangingSeat);
-        //logEventWriter.logSeatEvent(CHANGE_SEAT, newSeat, personChangingSeat);
+        pendingAction = new ChangeSeatAction(logEventWriter, seat);
     }
 
     private void actionLeave(Seat seat) {
-        Person p = (Person) clearSeat(seat);
+        Person p = (Person) seat.getSeatTaker();
+        seat.clearSeat();
         logEventWriter.logSeatEvent(LEAVE, seat, p);
     }
 
-    private SeatTaker clearSeat(Seat seat) {
-        SeatTaker x = seat.getSeatTaker();
-        seat.setSeatTaker(null);
-        return x;
+    private class SeatClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, v.toString());
+            if (pendingAction.isActionPending()) {
+                pendingAction.seatSelected((SeatWidget) v);
+            }
+            cancelPendingAction();
+        }
     }
 }

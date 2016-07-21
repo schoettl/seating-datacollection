@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection;
+package edu.hm.cs.vadere.seating.datacollection.db;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;

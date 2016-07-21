@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.hm.cs.vadere.seating.datacollection.db.MySQLiteOpenHelper;
+
 public class DatabaseExportTask extends AsyncTask<String, String, Boolean> {
     private final Context context;
     private final ProgressDialog progressDialog;

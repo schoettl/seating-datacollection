@@ -20,4 +20,8 @@ public class Seat {
         this.seatTaker = seatTaker;
     }
 
+    public void clearSeat() {
+        seatTaker = null;
+    }
+
 }

@@ -39,12 +39,12 @@ public class FloorRectAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return null; // not implemented
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return 0; // not implemented
     }
 
     @Override
