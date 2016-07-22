@@ -76,6 +76,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     private List<String> getTableList(SQLiteDatabase db) {
         List<String> result = new LinkedList<>();
         try (Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type = 'table'", null)) {
+            c.moveToFirst(); // TODO necessary?
             while (!c.isAfterLast()) {
                 result.add(c.getString(0));
                 c.moveToNext();
@@ -88,6 +89,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         final File exportFile = new File(directory, tableName + ".csv");
         try (CSVWriter writer = new CSVWriter(new FileWriter(exportFile), ',')) {
             final Cursor cursor = queryTable(db, tableName);
+            cursor.moveToFirst(); // TODO necessary?
             while (!cursor.isAfterLast()) {
                 final String[] fields = getFieldsAsStringArray(cursor);
                 writer.writeNext(fields);
