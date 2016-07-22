@@ -94,7 +94,7 @@ public class SeatsFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         // Get clicked view: http://stackoverflow.com/questions/2926293/identifying-the-view-selected-in-a-contextmenu-android
         Log.d(TAG, "on options item selected");
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -135,7 +135,7 @@ public class SeatsFragment extends Fragment {
                 return true;
             default:
                 Log.w(TAG, "context menu item not implemented");
-                return super.onOptionsItemSelected(item);
+                return super.onContextItemSelected(item);
         }
     }
 
