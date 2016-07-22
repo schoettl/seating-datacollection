@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
 
 import com.opencsv.CSVWriter;
 
@@ -19,6 +20,8 @@ import java.util.List;
 import edu.hm.cs.vadere.seating.datacollection.db.MySQLiteOpenHelper;
 
 public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
+    private static final String TAG = "DatabaseExport";
+
     private final Context context;
     private final ProgressDialog progressDialog;
 
@@ -39,8 +42,8 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-//        progressDialog.set... or show dialog?
-        progressDialog.setMessage("Finished");
+        progressDialog.dismiss();
+        // TODO show dialog?
     }
 
     @Override
@@ -49,18 +52,22 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
             exportAllTables();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e(TAG, "error while exporting: " + e.getLocalizedMessage());
             return false;
         }
         return true;
     }
 
     private void exportAllTables() throws IOException {
-        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
-            throw new IOException("external storage must be mounted writable");
+//        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
+//            throw new IOException("external storage must be mounted writable");
 
-        File directory = Environment.getExternalStorageDirectory();
+//        File directory = Environment.getExternalStorageDirectory();
+        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        logDirExist(directory);
         directory = new File(directory, "SeatingDataCollection");
-        directory.mkdir();
+        directory.mkdirs();
+        logDirExist(directory);
 
         // Open db
         SQLiteOpenHelper helper = new MySQLiteOpenHelper(context, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
