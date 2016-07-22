@@ -18,7 +18,7 @@ import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.db.MySQLiteOpenHelper;
 
-public class DatabaseExportTask extends AsyncTask<String, String, Boolean> {
+public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     private final Context context;
     private final ProgressDialog progressDialog;
 
@@ -40,11 +40,12 @@ public class DatabaseExportTask extends AsyncTask<String, String, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected Boolean doInBackground(Void... params) {
         try {
             exportAllTables();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
