@@ -8,13 +8,8 @@ import edu.hm.cs.vadere.seating.datacollection.model.FloorRectWidget;
 
 public class PlaceholderWidget extends FloorRectWidget {
 
-    private void init() {
-        setText("placeholder");
-    }
-
     public PlaceholderWidget(Context context) {
         super(context);
-        init();
     }
 
 }

@@ -2,7 +2,8 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import edu.hm.cs.vadere.seating.datacollection.model.FloorRectWidget;
@@ -15,6 +16,7 @@ public class SeatWidget extends FloorRectWidget {
         this.seat = seat;
         setText(toString());
         setBackgroundColor(Color.BLUE);
+        setGravity(Gravity.CENTER);
     }
 
     public SeatWidget(Seat seat, Context context) {
