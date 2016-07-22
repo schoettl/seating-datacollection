@@ -5,9 +5,10 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import edu.hm.cs.vadere.seating.datacollection.model.FloorRectWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
-public class SeatWidget extends TextView {
+public class SeatWidget extends FloorRectWidget {
     private Seat seat;
 
     private void init(Seat seat) {
@@ -21,23 +22,9 @@ public class SeatWidget extends TextView {
         init(seat);
     }
 
-    public SeatWidget(Seat seat, Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(seat);
-    }
-
     @Override
     public String toString() {
         return "seat " + seat.getId();
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        int width = MeasureSpec.getSize(widthMeasureSpec);
-//        int height = MeasureSpec.getSize(heightMeasureSpec);
-//        width = height = Math.min(width, height);
-//        setMeasuredDimension(width, height);
     }
 
     public Seat getSeat() {

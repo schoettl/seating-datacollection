@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class PlaceholderWidget extends TextView {
+import edu.hm.cs.vadere.seating.datacollection.model.FloorRectWidget;
+
+public class PlaceholderWidget extends FloorRectWidget {
 
     private void init() {
         setText("placeholder");
@@ -12,11 +14,6 @@ public class PlaceholderWidget extends TextView {
 
     public PlaceholderWidget(Context context) {
         super(context);
-        init();
-    }
-
-    public PlaceholderWidget(Context context, AttributeSet attrs) {
-        super(context, attrs);
         init();
     }
 
