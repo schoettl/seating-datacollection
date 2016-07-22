@@ -29,14 +29,18 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        super.onPreExecute();
-        progressDialog.setMessage("Exporting db...");
         progressDialog.show();
     }
 
     @Override
+    protected void onProgressUpdate(String... values) {
+        progressDialog.setMessage(values[0]);
+    }
+
+    @Override
     protected void onPostExecute(Boolean aBoolean) {
-        super.onPostExecute(aBoolean);
+//        progressDialog.set... or show dialog?
+        progressDialog.setMessage("Finished");
     }
 
     @Override
@@ -64,6 +68,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
         // For each table
         for (String tableName : getTableList(db)) {
+            publishProgress("Exporting table " + tableName);
             exportTable(db, tableName, directory);
         }
     }

@@ -1,11 +1,13 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +33,8 @@ public class StartSurveyActivity extends AppCompatActivity {
     }
 
     public void exportData(View view) {
-        AsyncTask task = new DatabaseExportTask(getBaseContext(), null);
+        ProgressDialog progressDialog = new ProgressDialog(getBaseContext());
+        AsyncTask task = new DatabaseExportTask(getBaseContext(), progressDialog);
         task.execute();
     }
 
