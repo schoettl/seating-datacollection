@@ -5,7 +5,7 @@ import com.orm.SugarApp;
 public class SeatingDataCollectionApp extends SugarApp {
 
     public static final String DATABASE_NAME = "data.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 5;
 
     @Override
     public void onCreate() {
