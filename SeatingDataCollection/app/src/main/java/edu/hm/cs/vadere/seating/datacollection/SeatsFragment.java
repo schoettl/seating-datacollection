@@ -111,7 +111,6 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         clearPendingAction();
         switch (item.getItemId()) {
             case R.id.action_sit_down:
-                Log.d(TAG, "action sit down");
                 actionSitDown(seat);
                 return true;
             case R.id.action_change_place:
