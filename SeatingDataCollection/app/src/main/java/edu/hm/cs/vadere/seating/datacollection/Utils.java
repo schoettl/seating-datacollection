@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import com.orm.util.NamingHelper;
+
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class Utils {
@@ -21,6 +23,12 @@ public class Utils {
         SeatsFragment fragment = SeatsFragment.newInstance(logEventWriter);
         ft.replace(R.id.seats_fragment_placeholder, fragment);
         ft.commit();
+    }
+
+    /** EntityName -> ENTITY_NAME */
+    public static String toSugarTableName(Class<?> entityClass) {
+        return NamingHelper.toSQLName(entityClass);
+        // in next release of Sugar ORM it will be com.orm.helper.NamingHelper#toTableName(Class<?>)
     }
 
 }

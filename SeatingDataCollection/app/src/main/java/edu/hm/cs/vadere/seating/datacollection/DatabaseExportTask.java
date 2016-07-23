@@ -18,6 +18,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.db.MySQLiteOpenHelper;
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
+import edu.hm.cs.vadere.seating.datacollection.model.Person;
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     private static final String TAG = "DatabaseExport";
@@ -73,7 +76,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         SQLiteOpenHelper helper = new MySQLiteOpenHelper(context, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
         try (SQLiteDatabase db = helper.getWritableDatabase()) {
 
-            List<String> tableNames = getTableList(db);
+            List<String> tableNames = getTableList();
             Log.d(TAG, "exporting " + tableNames.size() + " tables");
 
             for (String tableName : tableNames) {
@@ -88,15 +91,11 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         Log.d(TAG, "dir exists? " + directory.toString() + " -> " + directory.isDirectory());
     }
 
-    private List<String> getTableList(SQLiteDatabase db) {
+    private List<String> getTableList() {
         List<String> result = new LinkedList<>();
-        try (Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type = 'table'", null)) {
-            c.moveToFirst();
-            while (!c.isAfterLast()) {
-                result.add(c.getString(0));
-                c.moveToNext();
-            }
-        }
+        result.add(Utils.toSugarTableName(Survey.class));
+        result.add(Utils.toSugarTableName(Person.class));
+        result.add(Utils.toSugarTableName(LogEvent.class));
         return result;
     }
 
