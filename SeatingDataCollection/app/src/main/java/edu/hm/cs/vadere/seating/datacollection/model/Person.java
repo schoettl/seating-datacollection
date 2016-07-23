@@ -9,7 +9,7 @@ public class Person extends SugarRecord implements SeatTaker {
 
     private Gender gender;
     private AgeGroup ageGroup;
-    private Long groupId;
+    private Group group;
 
     public Person() { }
 
@@ -26,7 +26,7 @@ public class Person extends SugarRecord implements SeatTaker {
     }
 
     public Group getGroup() {
-        return Group.findById(Group.class, groupId);
+        return group;
     }
 
     public void setDisturbing(boolean disruptive) {
@@ -41,8 +41,9 @@ public class Person extends SugarRecord implements SeatTaker {
         this.ageGroup = ageGroup;
     }
 
+    /** Group should be saved before saving this (at least up to version 1.5). */
     public void setGroup(Group group) {
-        this.groupId = group.getId();
+        this.group = group;
     }
 
 }
