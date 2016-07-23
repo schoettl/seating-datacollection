@@ -23,7 +23,7 @@ public class StartSurveyActivity extends AppCompatActivity {
     public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
     public static final String EXTRA_SURVEY_ID_KEY = "44cb788eb14b3d9a670962249fb0da402999aa72";
 
-    private static final int PERMISSION_REQUEST_CODE = 1;
+    private static final int EXPORT_DATA_REQUEST_CODE = 1;
     private static final String[] REQUIRED_PERMISSIONS = { Manifest.permission.WRITE_EXTERNAL_STORAGE };
     private static final String TAG = "StartSurveyActivity";
 
@@ -45,9 +45,9 @@ public class StartSurveyActivity extends AppCompatActivity {
         if (permission != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 // TODO show explanation instead of just retrying:
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, EXPORT_DATA_REQUEST_CODE);
             } else {
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, EXPORT_DATA_REQUEST_CODE);
             }
             return false;
         }
@@ -56,11 +56,23 @@ public class StartSurveyActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "permissions for export granted, try again");
-        } else {
-            Log.i(TAG, "permissions for export denied");
+        switch (requestCode) {
+            case EXPORT_DATA_REQUEST_CODE:
+                if (areAllPermissionsGranted(grantResults)) {
+                    Log.i(TAG, "permissions for export granted");
+                    exportData(null);
+                } else {
+                    Log.i(TAG, "permissions for export denied");
+                }
+                break;
         }
+    }
+
+    private boolean areAllPermissionsGranted(@NonNull int[] grantResults) {
+        for (int result : grantResults)
+            if (result != PackageManager.PERMISSION_GRANTED)
+                return false;
+        return true;
     }
 
     public void exportData(View view) {
