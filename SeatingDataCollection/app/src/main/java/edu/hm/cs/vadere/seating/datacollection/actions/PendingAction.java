@@ -1,19 +1,18 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
-import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 
 public abstract class PendingAction {
     public static final PendingAction NO_PENDING_ACTION = new NoPendingAction();
 
-    private LogEventWriter logEventWriter;
+    private ActionManager actionManager;
 
-    protected PendingAction(LogEventWriter logEventWriter) {
-        this.logEventWriter = logEventWriter;
+    protected PendingAction(ActionManager actionManager) {
+        this.actionManager = actionManager;
     }
 
-    protected LogEventWriter getLogEventWriter() {
-        return logEventWriter;
+    protected ActionManager getActionManager() {
+        return actionManager;
     }
 
     public boolean isActionPending() {

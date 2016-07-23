@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.actions.ChangeSeatAction;
 import edu.hm.cs.vadere.seating.datacollection.actions.PendingAction;
 import edu.hm.cs.vadere.seating.datacollection.actions.PlaceBaggageAction;
@@ -25,18 +26,13 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
-
 public class SeatsFragment extends Fragment implements PersonDialogFragment.PersonDialogListener {
 
     private static final String LOG_EVENT_WRITER_ARG_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
     public static final String TAG = "SeatsFragment";
 
     private FloorRectAdapter floorRectAdapter;
-    private LogEventWriter logEventWriter;
-    private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
+    private ActionManager actionManager;
 
     public static SeatsFragment newInstance(LogEventWriter logEventWriter) {
         Bundle bundle = new Bundle();
@@ -57,7 +53,8 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_ARG_KEY);
+        LogEventWriter logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_ARG_KEY);
+        actionManager = new ActionManager(this, logEventWriter);
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         floorRectAdapter = new FloorRectAdapter(getContext());
@@ -108,94 +105,36 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         Seat seat = ((SeatWidget) menuInfo.targetView).getSeat();
         Log.d(TAG, seat.toString());
 
-        clearPendingAction();
+        actionManager.clearPendingAction();
         switch (item.getItemId()) {
             case R.id.action_sit_down:
-                actionSitDown(seat);
+                actionManager.actionSitDown(seat);
                 return true;
             case R.id.action_change_place:
-                actionChangeSeat(seat);
+                actionManager.actionChangeSeat(seat);
                 return true;
             case R.id.action_leave:
-                actionLeave(seat);
+                actionManager.actionLeave(seat);
                 return true;
             case R.id.action_place_baggage:
-                actionPlaceBaggage(seat);
+                actionManager.actionPlaceBaggage(seat);
                 return true;
             case R.id.action_remove_baggage:
-                actionRemoveBaggage(seat);
+                actionManager.actionRemoveBaggage(seat);
                 return true;
             case R.id.action_set_person_properties:
-                actionSetPersonProperties(seat);
+                actionManager.actionSetPersonProperties(seat);
                 return true;
             case R.id.action_person_disturbing:
-                actionPersonDisturbing(seat);
+                actionManager.actionPersonDisturbing(seat);
                 return true;
             case R.id.action_person_stops_disturbing:
-                actionPersonStopsDisturbing(seat);
+                actionManager.actionPersonStopsDisturbing(seat);
                 return true;
             default:
                 Log.w(TAG, "context menu item not implemented");
                 return super.onContextItemSelected(item);
         }
-    }
-
-    private void clearPendingAction() {
-        pendingAction = PendingAction.NO_PENDING_ACTION;
-    }
-
-    private void actionPersonDisturbing(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        p.setDisturbing(true);
-
-        final EditText editTextReason = new EditText(getContext());
-        final OkClickListener okClickListener = new OkClickListener(editTextReason);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Reason for disturbing");
-        builder.setMessage("You can type-in a reason");
-        builder.setView(editTextReason);
-        builder.setPositiveButton(R.string.ok, okClickListener);
-        builder.show();
-
-        logEventWriter.logDisturbingPerson(p, okClickListener.getResult());
-    }
-
-    private void actionPersonStopsDisturbing(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        p.setDisturbing(false);
-        logEventWriter.logStopsDisturbingPerson(p);
-    }
-
-    private void actionSetPersonProperties(Seat seat) {
-        DialogFragment dialog = PersonDialogFragment.newInstance((Person) seat.getSeatTaker());
-        dialog.show(getActivity().getSupportFragmentManager(), "???");
-    }
-
-    private void actionPlaceBaggage(Seat seat) {
-        pendingAction = new PlaceBaggageAction(logEventWriter, (Person) seat.getSeatTaker());
-    }
-
-    private void actionRemoveBaggage(Seat seat) {
-        HandBaggage b = (HandBaggage) seat.getSeatTaker();
-        seat.clearSeat();
-        logEventWriter.logSeatEvent(REMOVE_BAGGAGE, seat, b.getOwner());
-    }
-
-    private void actionSitDown(Seat seat) {
-        Person person = new Person();
-        person.save();
-        seat.setSeatTaker(person);
-        logEventWriter.logSeatEvent(SIT_DOWN, seat, person);
-    }
-
-    private void actionChangeSeat(Seat seat) {
-        pendingAction = new ChangeSeatAction(logEventWriter, seat);
-    }
-
-    private void actionLeave(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        seat.clearSeat();
-        logEventWriter.logSeatEvent(LEAVE, seat, p);
     }
 
     @Override
@@ -214,25 +153,11 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
                 return;
             }
 
-            if (pendingAction.isActionPending()) {
-                pendingAction.seatSelected((SeatWidget) view);
-                clearPendingAction();
+            if (actionManager.isActionPending()) {
+                actionManager.finishPendingAction((SeatWidget) view);
+                actionManager.clearPendingAction();
             }
         }
     }
 
-    private class OkClickListener implements DialogInterface.OnClickListener {
-        private EditText edit;
-        private String result;
-        public OkClickListener(EditText edit) {
-            this.edit = edit;
-        }
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            result = edit.getText().toString();
-        }
-        public String getResult() {
-            return result;
-        }
-    }
 }
