@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
+import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class CollectDataActivity extends AppCompatActivity {
@@ -27,8 +29,7 @@ public class CollectDataActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_start, menu);
+        getMenuInflater().inflate(R.menu.menu_data_collection, menu);
         return true;
     }
 
@@ -37,13 +38,20 @@ public class CollectDataActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_direction_change:
+                logEventWriter.logTrainEvent(LogEventType.DIRECTION_CHANGE);
+                return true;
+            case R.id.action_door_release:
+                logEventWriter.logTrainEvent(LogEventType.DOOR_RELEASE);
+                return true;
+            case R.id.action_train_starts:
+                logEventWriter.logTrainEvent(LogEventType.TRAIN_STARTS);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 }

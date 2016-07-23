@@ -25,4 +25,7 @@
     <string name="cancel">Cancel</string>
     <string name="disturbing">Disturbing</string>
     <string name="dialog_person_message">Update person</string>
+    <string name="action_direction_change">Direction change</string>
+    <string name="action_door_release">Door release</string>
+    <string name="action_train_starts">Train starts</string>
 </resources>

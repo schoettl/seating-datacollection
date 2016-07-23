@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_direction_change"
+        android:title="@string/action_direction_change" />
+
+    <item android:id="@+id/action_door_release"
+        android:title="@string/action_door_release" />
+
+    <item android:id="@+id/action_train_starts"
+        android:title="@string/action_train_starts" />
+
+</menu>
