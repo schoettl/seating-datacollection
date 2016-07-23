@@ -71,12 +71,16 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
         // Open db
         SQLiteOpenHelper helper = new MySQLiteOpenHelper(context, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        try (SQLiteDatabase db = helper.getWritableDatabase()) {
 
-        // For each table
-        for (String tableName : getTableList(db)) {
-            publishProgress("Exporting table " + tableName);
-            exportTable(db, tableName, directory);
+            List<String> tableNames = getTableList(db);
+            Log.d(TAG, "exporting " + tableNames.size() + " tables");
+
+            for (String tableName : tableNames) {
+                Log.d(TAG, "exporting table " + tableName);
+                publishProgress("Exporting table " + tableName);
+                exportTable(db, tableName, directory);
+            }
         }
     }
 

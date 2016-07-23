@@ -202,8 +202,8 @@ public class SeatsFragment extends Fragment {
             Log.d(TAG, "click: " + view.toString());
             if (pendingAction.isActionPending()) {
                 pendingAction.seatSelected((SeatWidget) view);
+                clearPendingAction();
             }
-            clearPendingAction();
         }
     }
 
