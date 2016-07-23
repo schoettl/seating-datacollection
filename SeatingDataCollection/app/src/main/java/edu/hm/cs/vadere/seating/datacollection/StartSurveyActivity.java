@@ -100,13 +100,33 @@ public class StartSurveyActivity extends AppCompatActivity {
 
     private Survey saveSurvey() {
         Survey survey = new Survey();
-        survey.setValuesFromGUI(this);
+        survey.setAgentName(getTextFromEdit(R.id.editTextName));
+        survey.setDate(getTextFromEdit(R.id.editTextDate));
+        survey.setStartingAt(getTextFromEdit(R.id.editTextStartingAt));
+        survey.setDestination(getTextFromEdit(R.id.editTextDirection));
+        survey.setLine(getTextFromEdit(R.id.editTextLine));
+        survey.setWagonNo(getIntFromEdit(R.id.editTextWagonNo));
+        survey.setDoorNo(getIntFromEdit(R.id.editTextDoorNo));
+        survey.setTrainType(getTextFromEdit(R.id.editTextTrainType));
+        survey.setTrainNumber(getTextFromEdit(R.id.editTextTrainNo));
         survey.save();
         return survey;
     }
 
     private EditText getEditTextById(int viewId) {
         return (EditText) findViewById(viewId);
+    }
+
+    private String getTextFromEdit(int viewId) {
+        EditText edit = getEditTextById(viewId);
+        return edit.getText().toString();
+    }
+
+    private int getIntFromEdit(int viewId) {
+        String text = getTextFromEdit(viewId);
+        if (text.isEmpty())
+            text = "0"; // default for numbers in Person record
+        return Integer.parseInt(text);
     }
 
 }
