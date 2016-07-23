@@ -18,6 +18,10 @@ public class LogEvent extends SugarRecord {
     private Integer extraInt;
     private String extraString;
 
+    public LogEvent() {
+        this(null, null, null, null, null, null);
+    }
+
     public LogEvent(Survey survey, LogEventType eventType, Integer seat, Person person, Integer extraInt, String extraString) {
         this.time = new SimpleDateFormat(TIME_FORMAT).format(new Date());
         this.eventType = eventType;
