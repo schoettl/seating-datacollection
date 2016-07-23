@@ -134,6 +134,10 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         }
     }
 
+    public ActionManager getActionManager() {
+        return actionManager;
+    }
+
     @Override
     public void onPersonDialogPositiveClick(PersonDialogFragment dialog) {
         Log.i(TAG, "update person");
@@ -152,7 +156,6 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
 
             if (actionManager.isActionPending()) {
                 actionManager.finishPendingAction((SeatWidget) view);
-                actionManager.clearPendingAction();
             }
         }
     }

@@ -28,4 +28,5 @@
     <string name="action_direction_change">Direction change</string>
     <string name="action_door_release">Door release</string>
     <string name="action_train_starts">Train starts</string>
+    <string name="action_mark_agent">Mark agent</string>
 </resources>

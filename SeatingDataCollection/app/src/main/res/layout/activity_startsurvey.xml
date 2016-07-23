@@ -73,14 +73,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextSeat"
-        android:hint="@string/seat_hint" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/editTextTrainType"
         android:layout_gravity="center_horizontal"
         android:text="@string/traintype_default"

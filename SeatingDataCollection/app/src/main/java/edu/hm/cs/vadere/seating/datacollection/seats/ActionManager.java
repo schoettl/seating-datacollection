@@ -14,6 +14,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
@@ -98,6 +99,10 @@ public class ActionManager {
         logEventWriter.logSeatEvent(LEAVE, seat, p);
     }
 
+    public void actionMarkAgent(Survey survey) {
+        pendingAction = new MarkAgentAction(this, survey);
+    }
+
     public void finishActionPlaceBaggage(Person person, Seat otherSeat) {
         HandBaggage baggage = new HandBaggage(person);
         otherSeat.setSeatTaker(baggage);
@@ -115,12 +120,18 @@ public class ActionManager {
         logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
     }
 
+    public void finishActionMarkAgent(Survey survey, Person person) {
+        survey.setAgent(person);
+        survey.save();
+    }
+
     public boolean isActionPending() {
         return pendingAction.isActionPending();
     }
 
     public void finishPendingAction(SeatWidget view) {
         pendingAction.seatSelected(view);
+        clearPendingAction();
     }
 
     private void removeBaggageIfAny(Seat seat) {
