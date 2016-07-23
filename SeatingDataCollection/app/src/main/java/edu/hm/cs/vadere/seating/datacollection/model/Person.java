@@ -5,7 +5,7 @@ import com.orm.dsl.Ignore;
 
 public class Person extends SugarRecord implements SeatTaker {
     @Ignore
-    private boolean disruptive;
+    private boolean disturbing;
 
     private Gender gender;
     private AgeGroup ageGroup;
@@ -13,8 +13,8 @@ public class Person extends SugarRecord implements SeatTaker {
 
     public Person() { }
 
-    public boolean isDisruptive() {
-        return disruptive;
+    public boolean isDisturbing() {
+        return disturbing;
     }
 
     public Gender getGender() {
@@ -30,7 +30,7 @@ public class Person extends SugarRecord implements SeatTaker {
     }
 
     public void setDisturbing(boolean disruptive) {
-        this.disruptive = disruptive;
+        this.disturbing = disruptive;
     }
 
     public void setGender(Gender gender) {
