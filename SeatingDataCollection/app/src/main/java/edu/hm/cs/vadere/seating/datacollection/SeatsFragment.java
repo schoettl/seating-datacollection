@@ -2,6 +2,7 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -28,9 +29,9 @@ import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
 
-public class SeatsFragment extends Fragment {
+public class SeatsFragment extends Fragment implements PersonDialogFragment.PersonDialogListener {
 
-    private static final String LOG_EVENT_WRITER_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
+    private static final String LOG_EVENT_WRITER_ARG_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
     public static final String TAG = "SeatsFragment";
 
     private FloorRectAdapter floorRectAdapter;
@@ -38,9 +39,10 @@ public class SeatsFragment extends Fragment {
     private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
 
     public static SeatsFragment newInstance(LogEventWriter logEventWriter) {
-        SeatsFragment fragment = new SeatsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(LOG_EVENT_WRITER_KEY, logEventWriter);
+        SeatsFragment fragment = new SeatsFragment();
+
+        bundle.putSerializable(LOG_EVENT_WRITER_ARG_KEY, logEventWriter);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -55,7 +57,7 @@ public class SeatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_KEY);
+        logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_ARG_KEY);
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         floorRectAdapter = new FloorRectAdapter(getContext());
@@ -166,7 +168,8 @@ public class SeatsFragment extends Fragment {
     }
 
     private void actionSetPersonProperties(Seat seat) {
-        // TODO show dialog
+        DialogFragment dialog = PersonDialogFragment.newInstance((Person) seat.getSeatTaker());
+        dialog.show(getActivity().getSupportFragmentManager(), "???");
     }
 
     private void actionPlaceBaggage(Seat seat) {
@@ -194,6 +197,12 @@ public class SeatsFragment extends Fragment {
         Person p = (Person) seat.getSeatTaker();
         seat.clearSeat();
         logEventWriter.logSeatEvent(LEAVE, seat, p);
+    }
+
+    @Override
+    public void onPersonDialogPositiveClick(PersonDialogFragment dialog) {
+        Log.i(TAG, "update person");
+        dialog.updateAndSavePerson();
     }
 
     private class FloorRectClickListener implements ListView.OnItemClickListener {

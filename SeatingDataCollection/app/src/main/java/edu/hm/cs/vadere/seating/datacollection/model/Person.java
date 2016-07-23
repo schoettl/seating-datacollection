@@ -3,7 +3,9 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-public class Person extends SugarRecord implements SeatTaker {
+import java.io.Serializable;
+
+public class Person extends SugarRecord implements SeatTaker, Serializable {
     @Ignore
     private boolean disturbing;
 

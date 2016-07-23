@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.model;
+package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.Context;
 import android.widget.TextView;

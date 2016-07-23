@@ -3,10 +3,7 @@ package edu.hm.cs.vadere.seating.datacollection;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.TextView;
 
-import edu.hm.cs.vadere.seating.datacollection.model.FloorRectWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class SeatWidget extends FloorRectWidget {

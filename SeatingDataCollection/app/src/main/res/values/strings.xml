@@ -23,4 +23,6 @@
     <string name="export_data">Export data</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="disturbing">Disturbing</string>
+    <string name="dialog_person_message">Update person</string>
 </resources>
