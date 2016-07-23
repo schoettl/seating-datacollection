@@ -11,7 +11,8 @@ public class Person extends SugarRecord implements SeatTaker, Serializable {
 
     private Gender gender;
     private AgeGroup ageGroup;
-    private Group group;
+    /** "group" is a illegal name because it is a reserved word in SQL. */
+    private Group mateGroup;
 
     public Person() { }
 
@@ -28,7 +29,7 @@ public class Person extends SugarRecord implements SeatTaker, Serializable {
     }
 
     public Group getGroup() {
-        return group;
+        return mateGroup;
     }
 
     public void setDisturbing(boolean disruptive) {
@@ -45,7 +46,7 @@ public class Person extends SugarRecord implements SeatTaker, Serializable {
 
     /** Group should be saved before saving this (at least up to version 1.5). */
     public void setGroup(Group group) {
-        this.group = group;
+        this.mateGroup = group;
     }
 
 }
