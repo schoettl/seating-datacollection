@@ -59,7 +59,7 @@ public class SeatsFragment extends Fragment {
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         floorRectAdapter = new FloorRectAdapter(getContext());
-        view.setOnItemClickListener(new ListItemClickListener());
+        view.setOnItemClickListener(new FloorRectClickListener());
         view.setAdapter(floorRectAdapter);
         registerForContextMenu(view);
         return view;
@@ -196,10 +196,16 @@ public class SeatsFragment extends Fragment {
         logEventWriter.logSeatEvent(LEAVE, seat, p);
     }
 
-    private class ListItemClickListener implements ListView.OnItemClickListener {
+    private class FloorRectClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Log.d(TAG, "click: " + view.toString());
+
+            if (!(view instanceof SeatWidget)) {
+                Log.d(TAG, "not a seat - ignoring click");
+                return;
+            }
+
             if (pendingAction.isActionPending()) {
                 pendingAction.seatSelected((SeatWidget) view);
                 clearPendingAction();
