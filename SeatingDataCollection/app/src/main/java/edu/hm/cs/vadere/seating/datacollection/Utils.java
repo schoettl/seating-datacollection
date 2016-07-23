@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.orm.util.NamingHelper;
 
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class Utils {

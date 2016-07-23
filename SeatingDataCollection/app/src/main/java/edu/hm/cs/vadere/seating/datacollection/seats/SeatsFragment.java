@@ -1,10 +1,7 @@
-package edu.hm.cs.vadere.seating.datacollection;
+package edu.hm.cs.vadere.seating.datacollection.seats;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,14 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 
-import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
-import edu.hm.cs.vadere.seating.datacollection.actions.ChangeSeatAction;
-import edu.hm.cs.vadere.seating.datacollection.actions.PendingAction;
-import edu.hm.cs.vadere.seating.datacollection.actions.PlaceBaggageAction;
+import edu.hm.cs.vadere.seating.datacollection.FloorRectAdapter;
+import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
+import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;

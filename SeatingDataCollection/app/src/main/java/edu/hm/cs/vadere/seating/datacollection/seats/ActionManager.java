@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.actions;
+package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
