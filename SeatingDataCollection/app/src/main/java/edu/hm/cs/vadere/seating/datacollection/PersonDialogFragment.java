@@ -36,13 +36,6 @@ public class PersonDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public void updateAndSavePerson() {
-        person.setAgeGroup((AgeGroup) spinnerAgeGroup.getSelectedItem());
-        person.setGender((Gender) spinnerGender.getSelectedItem());
-        person.setDisturbing(cbDisturbing.isChecked());
-        person.save();
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -55,7 +48,17 @@ public class PersonDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updateAndSavePerson();
+                AlertDialog d = (AlertDialog) dialog;
+                Spinner spinnerGender = (Spinner) d.findViewById(R.id.spinnerGender);
+                Spinner spinnerAgeGroup = (Spinner) d.findViewById(R.id.spinnerAgeGroup);
+                CheckBox cbDisturbing = (CheckBox) d.findViewById(R.id.cbDisturbing);
+
+                Log.d(TAG, "update and save person: " + person);
+                person.setGender((Gender) spinnerGender.getSelectedItem());
+                person.setAgeGroup((AgeGroup) spinnerAgeGroup.getSelectedItem());
+                person.setDisturbing(cbDisturbing.isChecked());
+                person.save();
+
                 dismiss(); // TODO required?
             }
         });

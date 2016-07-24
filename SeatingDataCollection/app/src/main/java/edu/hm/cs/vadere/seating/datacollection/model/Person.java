@@ -49,4 +49,8 @@ public class Person extends SugarRecord implements SeatTaker {
         this.mateGroup = group;
     }
 
+    @Override
+    public String toString() {
+        return String.format("person %d (%s, %s)", getId(), getGender(), getAgeGroup());
+    }
 }
