@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import edu.hm.cs.vadere.seating.datacollection.Consumer;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 // 4 Vierer
-public class FloorRectAdapter extends BaseAdapter implements Iterable<View> {
+public class FloorRectAdapter extends BaseAdapter {
     private final static int FLOOR_RECT_COUNT = 20;
     private static final int SEAT_COUNT = 16;
     private final Context context;
@@ -76,41 +74,12 @@ public class FloorRectAdapter extends BaseAdapter implements Iterable<View> {
         return views.get(position);
     }
 
-    // TODO use getSeats() instead
-    public void forEachSeat(Consumer<Seat> operation) {
-        for (View view : this) {
-            if (view instanceof SeatWidget) {
-                Seat seat = ((SeatWidget) view).getSeat();
-                operation.accept(seat);
-            }
-        }
-    }
-
-    @Override
-    public Iterator<View> iterator() {
-        // TODO Used besides in getSeats?
-        return new Iterator<View>() {
-            private int nextIndex = 0;
-            @Override
-            public boolean hasNext() {
-                return nextIndex < getCount();
-            }
-            @Override
-            public View next() {
-                return (View) getItem(nextIndex++);
-            }
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-    }
-
     public ArrayList<Seat> getSeats() {
         ArrayList<Seat> result = new ArrayList<>(SEAT_COUNT);
-        for (View view : this) {
-            if (view instanceof SeatWidget) {
-                Seat seat = ((SeatWidget) view).getSeat();
+        for (int i = 0; i < getCount(); i++) {
+            Object o = getItem(i);
+            if (o instanceof SeatWidget) {
+                Seat seat = ((SeatWidget) o).getSeat();
                 result.add(seat);
             }
         }
