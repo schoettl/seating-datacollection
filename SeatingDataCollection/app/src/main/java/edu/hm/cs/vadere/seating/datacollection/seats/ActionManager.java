@@ -4,8 +4,12 @@ import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 
+import edu.hm.cs.vadere.seating.datacollection.FloorRectAdapter;
+import edu.hm.cs.vadere.seating.datacollection.FloorRectWidget;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
@@ -14,6 +18,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
+import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
@@ -91,12 +96,12 @@ public class ActionManager {
     }
 
     public void actionLeave(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
+        Person person = (Person) seat.getSeatTaker();
 
-        // TODO for each seat: if baggage and belongs to p -> actionRemoveBaggage(seat);
+        removeBaggageForPerson(person);
 
         seat.clearSeat();
-        logEventWriter.logSeatEvent(LEAVE, seat, p);
+        logEventWriter.logSeatEvent(LEAVE, seat, person);
     }
 
     public void actionMarkAgent(Survey survey) {
@@ -125,13 +130,27 @@ public class ActionManager {
         survey.save();
     }
 
+    public void finishPendingAction(SeatWidget view) {
+        pendingAction.seatSelected(view);
+        clearPendingAction();
+    }
+
     public boolean isActionPending() {
         return pendingAction.isActionPending();
     }
 
-    public void finishPendingAction(SeatWidget view) {
-        pendingAction.seatSelected(view);
-        clearPendingAction();
+    private void removeBaggageForPerson(Person person) {
+        GridView gridView = (GridView) hostFragment.getView();
+        FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
+        for (View w : adapter) {
+            if (w instanceof SeatWidget) {
+                Seat seatWithBaggage = ((SeatWidget) w).getSeat();
+                SeatTaker seatTaker = seatWithBaggage.getSeatTaker();
+                if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
+                    actionRemoveBaggage(seatWithBaggage);
+                }
+            }
+        }
     }
 
     private void removeBaggageIfAny(Seat seat) {
