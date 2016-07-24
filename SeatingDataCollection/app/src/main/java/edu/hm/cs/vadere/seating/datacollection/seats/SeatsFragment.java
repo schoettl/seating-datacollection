@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +71,12 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_seats_fragment, menu);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View gridView, ContextMenu.ContextMenuInfo menuInfo) {
         Log.d(TAG, "on create context menu");
         super.onCreateContextMenu(menu, gridView, menuInfo);
@@ -94,6 +101,17 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
                 Log.d(TAG, "empty seat");
                 inflater.inflate(R.menu.context_menu_seat, menu);
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_define_group:
+                // TODO action to define group
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
