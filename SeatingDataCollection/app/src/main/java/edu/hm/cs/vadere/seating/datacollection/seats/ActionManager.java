@@ -10,6 +10,8 @@ import android.widget.GridView;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
+import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -25,7 +27,7 @@ public class ActionManager {
     private static final int UPDATE_PERSON_PROPERTIES_REQUEST_CODE = 1;
     private final Fragment hostFragment;
     private final LogEventWriter logEventWriter;
-    private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
+    private PendingAction pendingAction = null;
 
     public ActionManager(Fragment hostFragment, LogEventWriter logEventWriter) {
         this.logEventWriter = logEventWriter;
@@ -33,7 +35,7 @@ public class ActionManager {
     }
 
     public void clearPendingAction() {
-        pendingAction = PendingAction.NO_PENDING_ACTION;
+        pendingAction = null;
     }
 
     public void actionPersonDisturbing(Seat seat) {
@@ -58,7 +60,8 @@ public class ActionManager {
     }
 
     public void actionSetPersonProperties(Seat seat) {
-        DialogFragment dialog = PersonDialogFragment.newInstance((Person) seat.getSeatTaker());
+        Person person = (Person) seat.getSeatTaker();
+        DialogFragment dialog = PersonDialogFragment.newInstance(person);
         dialog.setTargetFragment(hostFragment, UPDATE_PERSON_PROPERTIES_REQUEST_CODE);
         dialog.show(hostFragment.getActivity().getSupportFragmentManager(), "???");
     }
@@ -133,7 +136,7 @@ public class ActionManager {
     }
 
     public boolean isActionPending() {
-        return pendingAction.isActionPending();
+        return pendingAction != null;
     }
 
     private void removeBaggageForPerson(final Person person) {

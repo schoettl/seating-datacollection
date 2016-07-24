@@ -14,5 +14,6 @@ public class ChangeSeatAction extends PendingAction {
     public void seatSelected(SeatWidget seatWidget) {
         Seat newSeat = seatWidget.getSeat();
         getActionManager().finishActionChangeSeat(seat, newSeat);
+        clearThisPendingAction();
     }
 }

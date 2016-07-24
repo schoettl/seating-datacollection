@@ -20,12 +20,14 @@ import java.util.List;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
+import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 
-public class SeatsFragment extends Fragment implements PersonDialogFragment.PersonDialogListener {
+public class SeatsFragment extends Fragment {
 
     private static final String MODEL_ARG_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
     private static final String LOG_EVENT_WRITER_ARG_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
@@ -126,7 +128,7 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         Seat seat = ((SeatWidget) v).getSeat();
         Log.d(TAG, seat.toString());
 
-        actionManager.clearPendingAction();
+        actionManager.clearPendingAction(); // every context menu action cancels a pending action
         switch (item.getItemId()) {
             case R.id.action_sit_down:
                 actionManager.actionSitDown(seat);
@@ -160,12 +162,6 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
 
     public ActionManager getActionManager() {
         return actionManager;
-    }
-
-    @Override
-    public void onPersonDialogPositiveClick(PersonDialogFragment dialog) {
-        Log.i(TAG, "update person");
-        dialog.updateAndSavePerson();
     }
 
     public ArrayList<Seat> getState() {

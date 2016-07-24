@@ -8,9 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -23,7 +21,6 @@ public class PersonDialogFragment extends DialogFragment {
     private static final String TAG = "PersonDialog";
     private static final String PERSON_ARG_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
 
-    private PersonDialogListener listener;
     private Person person;
 
     private Spinner spinnerGender;
@@ -46,20 +43,10 @@ public class PersonDialogFragment extends DialogFragment {
         person.save();
     }
 
-    public interface PersonDialogListener {
-        void onPersonDialogPositiveClick(PersonDialogFragment dialog);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        listener = (PersonDialogListener) getTargetFragment();
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Log.d(TAG, "on create dialog");
         super.onCreateDialog(savedInstanceState);
+        Log.d(TAG, "on create dialog");
 
         person = (Person) getArguments().get(PERSON_ARG_KEY);
 
@@ -68,7 +55,8 @@ public class PersonDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listener.onPersonDialogPositiveClick(PersonDialogFragment.this);
+                updateAndSavePerson();
+                dismiss(); // TODO required?
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -78,8 +66,6 @@ public class PersonDialogFragment extends DialogFragment {
             }
         });
 
-//        LayoutInflater inflator = getActivity().getLayoutInflater();
-//        inflator.inflate() // not necessary, builder can do it better:
         builder.setView(R.layout.dialog_person);
         return builder.create();
     }
@@ -91,20 +77,29 @@ public class PersonDialogFragment extends DialogFragment {
     }
 
     private void setInitialValues(View view) {
-        spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
+        spinnerGender = getSpinner(view, R.id.spinnerGender);
         setSimpleSpinnerAdapter(spinnerGender, Gender.values());
         spinnerGender.setSelection(person.getGender().ordinal());
 
-        spinnerAgeGroup = (Spinner) view.findViewById(R.id.spinnerAgeGroup);
+        spinnerAgeGroup = getSpinner(view, R.id.spinnerAgeGroup);
         setSimpleSpinnerAdapter(spinnerAgeGroup, AgeGroup.values());
         spinnerAgeGroup.setSelection(person.getAgeGroup().ordinal());
 
-        cbDisturbing = (CheckBox) view.findViewById(R.id.cbDisturbing);
+        cbDisturbing = getCheckBoxDisturbing(view);
         cbDisturbing.setChecked(person.isDisturbing());
+    }
+
+    private Spinner getSpinner(View view, int spinnerAgeGroup) {
+        return (Spinner) view.findViewById(spinnerAgeGroup);
+    }
+
+    private CheckBox getCheckBoxDisturbing(View view) {
+        return (CheckBox) view.findViewById(R.id.cbDisturbing);
     }
 
     private <E> void setSimpleSpinnerAdapter(Spinner spinner, E[] values) {
         spinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.plain_textview, values));
     }
+
 }
 

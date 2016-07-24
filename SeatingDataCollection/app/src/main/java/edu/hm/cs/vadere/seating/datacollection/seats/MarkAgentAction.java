@@ -15,5 +15,6 @@ public class MarkAgentAction extends PendingAction {
     public void seatSelected(SeatWidget seatWidget) {
         Person p = (Person) seatWidget.getSeat().getSeatTaker();
         getActionManager().finishActionMarkAgent(survey, p);
+        clearThisPendingAction();
     }
 }
