@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import edu.hm.cs.vadere.seating.datacollection.Consumer;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
@@ -136,18 +137,18 @@ public class ActionManager {
         return pendingAction.isActionPending();
     }
 
-    private void removeBaggageForPerson(Person person) {
+    private void removeBaggageForPerson(final Person person) {
         GridView gridView = (GridView) hostFragment.getView();
         FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
-        for (View w : adapter) {
-            if (w instanceof SeatWidget) {
-                Seat seatWithBaggage = ((SeatWidget) w).getSeat();
-                SeatTaker seatTaker = seatWithBaggage.getSeatTaker();
+        adapter.forEachSeat(new Consumer<Seat>() { // In future, this can be replaced with a lambda
+            @Override
+            public void accept(Seat seat) {
+                SeatTaker seatTaker = seat.getSeatTaker();
                 if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
-                    actionRemoveBaggage(seatWithBaggage);
+                    actionRemoveBaggage(seat);
                 }
             }
-        }
+        });
     }
 
     private void removeBaggageIfAny(Seat seat) {

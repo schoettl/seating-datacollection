@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.hm.cs.vadere.seating.datacollection.Consumer;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 // 4 Vierer
@@ -51,6 +52,15 @@ public class FloorRectAdapter extends BaseAdapter implements Iterable<View> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return views.get(position);
+    }
+
+    public void forEachSeat(Consumer<Seat> operation) {
+        for (View view : this) {
+            if (view instanceof SeatWidget) {
+                Seat seat = ((SeatWidget) view).getSeat();
+                operation.accept(seat);
+            }
+        }
     }
 
     @Override
