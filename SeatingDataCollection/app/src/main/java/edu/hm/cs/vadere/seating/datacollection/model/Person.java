@@ -5,7 +5,7 @@ import com.orm.dsl.Ignore;
 
 import java.io.Serializable;
 
-public class Person extends SugarRecord implements SeatTaker, Serializable {
+public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean disturbing;
 
