@@ -140,15 +140,12 @@ public class ActionManager {
     private void removeBaggageForPerson(final Person person) {
         GridView gridView = (GridView) hostFragment.getView();
         FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
-        adapter.forEachSeat(new Consumer<Seat>() { // In future, this can be replaced with a lambda
-            @Override
-            public void accept(Seat seat) {
-                SeatTaker seatTaker = seat.getSeatTaker();
-                if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
-                    actionRemoveBaggage(seat);
-                }
+        for (Seat seat : adapter.getSeats()) {
+            SeatTaker seatTaker = seat.getSeatTaker();
+            if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
+                actionRemoveBaggage(seat);
             }
-        });
+        }
     }
 
     private void removeBaggageIfAny(Seat seat) {
