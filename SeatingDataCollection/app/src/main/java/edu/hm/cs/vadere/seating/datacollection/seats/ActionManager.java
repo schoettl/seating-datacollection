@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.widget.GridView;
 
-import edu.hm.cs.vadere.seating.datacollection.Consumer;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;

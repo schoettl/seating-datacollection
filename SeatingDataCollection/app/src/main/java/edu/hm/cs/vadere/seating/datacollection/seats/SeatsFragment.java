@@ -61,9 +61,9 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         List<Seat> state = (List<Seat>) getArguments().getSerializable(MODEL_ARG_KEY);
         LogEventWriter logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_ARG_KEY);
         actionManager = new ActionManager(this, logEventWriter);
+        floorRectAdapter = new FloorRectAdapter(getContext(), state);
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
-        floorRectAdapter = new FloorRectAdapter(getContext(), state);
         view.setOnItemClickListener(new FloorRectClickListener());
         view.setAdapter(floorRectAdapter);
         registerForContextMenu(view);
@@ -81,8 +81,7 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
         Log.d(TAG, "on create context menu");
         super.onCreateContextMenu(menu, gridView, menuInfo);
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        View v = info.targetView;
+        View v = getViewFromMenuInfo(menuInfo);
 
         if (v instanceof SeatWidget) {
             MenuInflater inflater = getActivity().getMenuInflater();
@@ -118,14 +117,13 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Get clicked view: http://stackoverflow.com/questions/2926293/identifying-the-view-selected-in-a-contextmenu-android
-        Log.d(TAG, "on options item selected");
-        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        View listItem = (View) floorRectAdapter.getItem(menuInfo.position);
-        Log.d(TAG, listItem.toString());
-        if (!(menuInfo.targetView instanceof SeatWidget))
+        Log.d(TAG, "on context item selected");
+        View v = getViewFromMenuInfo(item.getMenuInfo());
+
+        if (!(v instanceof SeatWidget))
             return false;
 
-        Seat seat = ((SeatWidget) menuInfo.targetView).getSeat();
+        Seat seat = ((SeatWidget) v).getSeat();
         Log.d(TAG, seat.toString());
 
         actionManager.clearPendingAction();
@@ -172,6 +170,11 @@ public class SeatsFragment extends Fragment implements PersonDialogFragment.Pers
 
     public ArrayList<Seat> getState() {
         return floorRectAdapter.getSeats();
+    }
+
+    private View getViewFromMenuInfo(ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        return info.targetView; //floorRectAdapter.getItem(menuInfo.position);
     }
 
     private class FloorRectClickListener implements ListView.OnItemClickListener {
