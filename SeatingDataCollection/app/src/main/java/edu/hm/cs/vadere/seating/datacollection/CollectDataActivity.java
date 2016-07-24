@@ -5,11 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
+import java.util.ArrayList;
+
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
+import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class CollectDataActivity extends AppCompatActivity {
+
+    public static final String EXTRA_STATE_KEY = "da0a846ffbbf4436f239cc1b84af4d2a52c5d616";
 
     private Survey survey;
     private LogEventWriter logEventWriter;
@@ -22,9 +26,15 @@ public class CollectDataActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         survey = Utils.getSurveyFromIntent(getIntent());
+        ArrayList<Seat> state = getStateFromIntent();
         logEventWriter = new LogEventWriter(survey);
 
-        Utils.startSeatsFragment(this, logEventWriter);
+        Utils.startAndReturnSeatsFragment(this, logEventWriter, state);
+    }
+
+    private ArrayList<Seat> getStateFromIntent() {
+        // ArrayList because it must be serializable
+        return (ArrayList<Seat>) getIntent().getSerializableExtra(EXTRA_STATE_KEY);
     }
 
     @Override

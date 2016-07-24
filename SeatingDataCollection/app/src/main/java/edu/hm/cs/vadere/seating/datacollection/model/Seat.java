@@ -1,6 +1,8 @@
 package edu.hm.cs.vadere.seating.datacollection.model;
 
-public class Seat {
+import java.io.Serializable;
+
+public class Seat implements Serializable {
     private int id;
     private SeatTaker seatTaker;
 

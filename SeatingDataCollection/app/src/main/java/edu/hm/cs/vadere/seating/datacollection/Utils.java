@@ -6,8 +6,11 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.orm.util.NamingHelper;
 
-import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
+import java.util.ArrayList;
+
+import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class Utils {
 
@@ -19,11 +22,13 @@ public class Utils {
         return Survey.findById(Survey.class, surveyId);
     }
 
-    public static void startSeatsFragment(FragmentActivity activity, LogEventWriter logEventWriter) {
+    /** Start a SeatsFragment. The state can be null. */
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, LogEventWriter logEventWriter, ArrayList<Seat> state) {
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        SeatsFragment fragment = SeatsFragment.newInstance(logEventWriter);
+        SeatsFragment fragment = SeatsFragment.newInstance(logEventWriter, state);
         ft.replace(R.id.seats_fragment_placeholder, fragment);
         ft.commit();
+        return fragment;
     }
 
     /** EntityName -> ENTITY_NAME */

@@ -6,7 +6,6 @@
     android:numColumns="5"
     android:verticalSpacing="0dp"
     android:horizontalSpacing="0dp"
-    android:id="@+id/seatsFragment"
     tools:context=".seats.SeatsFragment">
 
 </GridView>
