@@ -23,6 +23,7 @@ import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
 
 public class ActionManager {
+    private static final int UPDATE_PERSON_PROPERTIES_REQUEST_CODE = 1;
     private final Fragment hostFragment;
     private final LogEventWriter logEventWriter;
     private PendingAction pendingAction = PendingAction.NO_PENDING_ACTION;
@@ -59,6 +60,7 @@ public class ActionManager {
 
     public void actionSetPersonProperties(Seat seat) {
         DialogFragment dialog = PersonDialogFragment.newInstance((Person) seat.getSeatTaker());
+        dialog.setTargetFragment(hostFragment, UPDATE_PERSON_PROPERTIES_REQUEST_CODE);
         dialog.show(hostFragment.getActivity().getSupportFragmentManager(), "???");
     }
 

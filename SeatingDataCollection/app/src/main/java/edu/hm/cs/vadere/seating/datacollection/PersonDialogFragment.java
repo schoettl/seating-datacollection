@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,11 +53,12 @@ public class PersonDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (PersonDialogListener) context;
+        listener = (PersonDialogListener) getTargetFragment();
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d(TAG, "on create dialog");
         super.onCreateDialog(savedInstanceState);
 
         person = (Person) getArguments().get(PERSON_ARG_KEY);
@@ -79,25 +81,26 @@ public class PersonDialogFragment extends DialogFragment {
 //        LayoutInflater inflator = getActivity().getLayoutInflater();
 //        inflator.inflate() // not necessary, builder can do it better:
         builder.setView(R.layout.dialog_person);
-
         return builder.create();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        spinnerGender = (Spinner) container.findViewById(R.id.spinnerGender);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setInitialValues(view);
+    }
+
+    private void setInitialValues(View view) {
+        spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         setSimpleSpinnerAdapter(spinnerGender, Gender.values());
         spinnerGender.setSelection(person.getGender().ordinal());
 
-        spinnerAgeGroup = (Spinner) container.findViewById(R.id.spinnerAgeGroup);
+        spinnerAgeGroup = (Spinner) view.findViewById(R.id.spinnerAgeGroup);
         setSimpleSpinnerAdapter(spinnerAgeGroup, AgeGroup.values());
         spinnerAgeGroup.setSelection(person.getAgeGroup().ordinal());
 
-        cbDisturbing = (CheckBox) container.findViewById(R.id.cbDisturbing);
+        cbDisturbing = (CheckBox) view.findViewById(R.id.cbDisturbing);
         cbDisturbing.setChecked(person.isDisturbing());
-
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private <E> void setSimpleSpinnerAdapter(Spinner spinner, E[] values) {
