@@ -13,11 +13,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
-import edu.hm.cs.vadere.seating.datacollection.FloorRectAdapter;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
-import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;

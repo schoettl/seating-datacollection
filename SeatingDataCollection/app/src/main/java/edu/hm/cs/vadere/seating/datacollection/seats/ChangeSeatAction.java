@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
-import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class ChangeSeatAction extends PendingAction {

@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
-import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 

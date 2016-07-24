@@ -8,12 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 
-import edu.hm.cs.vadere.seating.datacollection.FloorRectAdapter;
-import edu.hm.cs.vadere.seating.datacollection.FloorRectWidget;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
-import edu.hm.cs.vadere.seating.datacollection.SeatWidget;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
