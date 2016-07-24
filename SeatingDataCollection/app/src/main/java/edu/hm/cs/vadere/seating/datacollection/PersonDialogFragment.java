@@ -69,9 +69,15 @@ public class PersonDialogFragment extends DialogFragment {
                 listener.onPersonDialogPositiveClick(PersonDialogFragment.this);
             }
         });
-        // TODO is there the negative button by default?
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
 //        LayoutInflater inflator = getActivity().getLayoutInflater();
-//        inflator.inflate() // not necessary, builder can do it
+//        inflator.inflate() // not necessary, builder can do it better:
         builder.setView(R.layout.dialog_person);
 
         return builder.create();
