@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 
@@ -40,17 +39,16 @@ public class ActionManager {
     public void actionPersonDisturbing(Seat seat) {
         Person p = (Person) seat.getSeatTaker();
         p.setDisturbing(true);
+        // logging is done in the okClickListener
 
         final EditText editTextReason = new EditText(hostFragment.getContext());
-        final OkClickListener okClickListener = new OkClickListener(editTextReason);
+        final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(p, editTextReason);
         final AlertDialog.Builder builder = new AlertDialog.Builder(hostFragment.getContext());
         builder.setTitle("Reason for disturbing");
         builder.setMessage("You can type-in a reason");
         builder.setView(editTextReason);
         builder.setPositiveButton(R.string.ok, okClickListener);
         builder.show();
-
-        logEventWriter.logDisturbingPerson(p, okClickListener.getResult());
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {
@@ -154,18 +152,16 @@ public class ActionManager {
         }
     }
 
-    private class OkClickListener implements DialogInterface.OnClickListener {
+    private class DisturbingReasonOkClickListener implements DialogInterface.OnClickListener {
+        private Person p;
         private EditText edit;
-        private String result;
-        public OkClickListener(EditText edit) {
+        public DisturbingReasonOkClickListener(Person p, EditText edit) {
+            this.p = p;
             this.edit = edit;
         }
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            result = edit.getText().toString();
-        }
-        public String getResult() {
-            return result;
+            logEventWriter.logDisturbingPerson(p, edit.getText().toString());
         }
     }
 
