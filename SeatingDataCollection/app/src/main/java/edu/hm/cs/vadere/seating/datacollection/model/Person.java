@@ -7,9 +7,9 @@ public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean disturbing;
 
-    private Gender gender;
-    private AgeGroup ageGroup;
-    private MGroup mGroup;
+    private Gender gender = Gender.NA;
+    private AgeGroup ageGroup = AgeGroup.NA;
+    private MGroup mGroup = null;
 
     public Person() { }
 
