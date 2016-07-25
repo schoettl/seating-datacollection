@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -22,10 +23,6 @@ public class PersonDialogFragment extends DialogFragment {
     private static final String PERSON_ARG_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
 
     private Person person;
-
-    private Spinner spinnerGender;
-    private Spinner spinnerAgeGroup;
-    private CheckBox cbDisturbing;
 
     public static DialogFragment newInstance(Person person) {
         Bundle args = new Bundle();
@@ -48,7 +45,7 @@ public class PersonDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AlertDialog d = (AlertDialog) dialog;
+                Dialog d = (Dialog) dialog;
                 Spinner spinnerGender = (Spinner) d.findViewById(R.id.spinnerGender);
                 Spinner spinnerAgeGroup = (Spinner) d.findViewById(R.id.spinnerAgeGroup);
                 CheckBox cbDisturbing = (CheckBox) d.findViewById(R.id.cbDisturbing);
@@ -69,26 +66,28 @@ public class PersonDialogFragment extends DialogFragment {
             }
         });
 
-        builder.setView(R.layout.dialog_person);
+        // This line causes a recursion:
+        //LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_person, null);
+        setInitialValues(view);
+
+        builder.setView(view);
         return builder.create();
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setInitialValues(view);
-    }
-
     private void setInitialValues(View view) {
-        spinnerGender = getSpinner(view, R.id.spinnerGender);
+        Log.d(TAG, "sitting initial values");
+
+        Spinner spinnerGender = getSpinner(view, R.id.spinnerGender);
         setSimpleSpinnerAdapter(spinnerGender, Gender.values());
         spinnerGender.setSelection(person.getGender().ordinal());
 
-        spinnerAgeGroup = getSpinner(view, R.id.spinnerAgeGroup);
+        Spinner spinnerAgeGroup = getSpinner(view, R.id.spinnerAgeGroup);
         setSimpleSpinnerAdapter(spinnerAgeGroup, AgeGroup.values());
         spinnerAgeGroup.setSelection(person.getAgeGroup().ordinal());
 
-        cbDisturbing = getCheckBoxDisturbing(view);
+        CheckBox cbDisturbing = getCheckBoxDisturbing(view);
         cbDisturbing.setChecked(person.isDisturbing());
     }
 
