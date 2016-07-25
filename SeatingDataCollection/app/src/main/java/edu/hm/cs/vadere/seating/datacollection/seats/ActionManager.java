@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.GridView;
 
@@ -24,6 +25,7 @@ import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
 
 public class ActionManager {
+    private static final String TAG = "ActionManager";
     private final Fragment hostFragment;
     private final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
@@ -104,8 +106,11 @@ public class ActionManager {
 
     public void actionDefineGroup() {
         if (pendingAction instanceof DefineGroupAction) {
+            Log.d(TAG, "finish defining group");
             ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
+            hostFragment.getView().invalidate(); // TODO refresh UI?
         } else {
+            Log.d(TAG, "starting defining group");
             pendingAction = new DefineGroupAction(this);
         }
     }
@@ -136,9 +141,8 @@ public class ActionManager {
         survey.save();
     }
 
-    public void finishPendingAction(SeatWidget view) {
+    public void seatSelected(SeatWidget view) {
         pendingAction.seatSelected(view);
-        clearPendingAction();
     }
 
     public boolean isActionPending() {
