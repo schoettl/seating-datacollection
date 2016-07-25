@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -9,13 +8,17 @@ import android.support.v7.widget.Toolbar;
 
 import com.orm.util.NamingHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class Utils {
+
+    public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
 
     public static Survey getSurveyFromIntent(Intent intent) {
         final int invalidId = 0;
@@ -44,4 +47,9 @@ public class Utils {
         Toolbar toolbar = (Toolbar) activity.findViewById(R.id.app_toolbar);
         activity.setSupportActionBar(toolbar);
     }
+
+    public static String getTodaysDateIsoFormat() {
+        return new SimpleDateFormat(ISO_DATE_FORMAT).format(new Date());
+    }
+
 }

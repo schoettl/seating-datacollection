@@ -13,14 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class StartSurveyActivity extends AppCompatActivity {
 
-    public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
     public static final String EXTRA_SURVEY_ID_KEY = "44cb788eb14b3d9a670962249fb0da402999aa72";
 
     private static final int EXPORT_DATA_REQUEST_CODE = 1;
@@ -37,7 +33,7 @@ public class StartSurveyActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String todayStr = new SimpleDateFormat(ISO_DATE_FORMAT).format(new Date());
+        String todayStr = Utils.getTodaysDateIsoFormat();
         getEditTextById(R.id.editTextDate).setText(todayStr);
     }
 
