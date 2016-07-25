@@ -109,7 +109,7 @@ public class SeatsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_define_group:
-                // TODO action to define group
+                actionManager.actionDefineGroup();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

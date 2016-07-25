@@ -102,6 +102,14 @@ public class ActionManager {
         logEventWriter.logSeatEvent(LEAVE, seat, person);
     }
 
+    public void actionDefineGroup() {
+        if (pendingAction instanceof DefineGroupAction) {
+            ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
+        } else {
+            pendingAction = new DefineGroupAction(this);
+        }
+    }
+
     public void actionMarkAgent(Survey survey) {
         pendingAction = new MarkAgentAction(this, survey);
     }
