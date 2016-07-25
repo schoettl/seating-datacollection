@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.Gravity;
 
@@ -22,8 +23,9 @@ public class SeatWidget extends FloorRectWidget {
     }
 
     @Override
-    public String toString() {
-        return "seat " + seat.getId();
+    protected void onDraw(Canvas canvas) {
+        setText(seat.toString());
+        super.onDraw(canvas);
     }
 
     public Seat getSeat() {

@@ -14,4 +14,9 @@ public class HandBaggage implements SeatTaker {
     public Person getOwner() {
         return owner;
     }
+
+    @Override
+    public String toString() {
+        return "baggage of person " + owner.getId();
+    }
 }

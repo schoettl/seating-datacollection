@@ -26,4 +26,11 @@ public class Seat implements Serializable {
         seatTaker = null;
     }
 
+    @Override
+    public String toString() {
+        String seatTakerStr = "empty";
+        if (seatTaker != null)
+            seatTakerStr = seatTaker.toString();
+        return "seat " + id + " - " + seatTakerStr;
+    }
 }
