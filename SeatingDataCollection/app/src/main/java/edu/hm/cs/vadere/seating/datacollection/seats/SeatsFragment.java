@@ -173,15 +173,13 @@ public class SeatsFragment extends Fragment {
     private class FloorRectClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(TAG, "click: " + view.toString());
-
-            if (!(view instanceof SeatWidget)) {
+            if (view instanceof SeatWidget) {
+                SeatWidget seatWidget = (SeatWidget) view;
+                if (actionManager.isActionPending()) {
+                    actionManager.seatSelected(seatWidget.getSeat());
+                }
+            } else {
                 Log.d(TAG, "not a seat - ignoring click");
-                return;
-            }
-
-            if (actionManager.isActionPending()) {
-                actionManager.seatSelected((SeatWidget) view);
             }
         }
     }

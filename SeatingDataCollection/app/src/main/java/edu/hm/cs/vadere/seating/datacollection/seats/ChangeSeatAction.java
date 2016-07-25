@@ -11,9 +11,8 @@ public class ChangeSeatAction extends PendingAction {
     }
 
     @Override
-    public void seatSelected(SeatWidget seatWidget) {
-        Seat newSeat = seatWidget.getSeat();
-        getActionManager().finishActionChangeSeat(seat, newSeat);
+    public void seatSelected(Seat seat) {
+        getActionManager().finishActionChangeSeat(seat, seat);
         clearThisPendingAction();
     }
 }

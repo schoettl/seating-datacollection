@@ -108,7 +108,6 @@ public class ActionManager {
         if (pendingAction instanceof DefineGroupAction) {
             Log.d(TAG, "finish defining group");
             ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
-            hostFragment.getView().invalidate(); // TODO refresh UI?
         } else {
             Log.d(TAG, "starting defining group");
             pendingAction = new DefineGroupAction(this);
@@ -141,8 +140,8 @@ public class ActionManager {
         survey.save();
     }
 
-    public void seatSelected(SeatWidget view) {
-        pendingAction.seatSelected(view);
+    public void seatSelected(Seat seat) {
+        pendingAction.seatSelected(seat);
     }
 
     public boolean isActionPending() {

@@ -12,9 +12,8 @@ public class PlaceBaggageAction extends PendingAction {
     }
 
     @Override
-    public void seatSelected(SeatWidget seatWidget) {
-        Seat otherSeat = seatWidget.getSeat();
-        getActionManager().finishActionPlaceBaggage(person, otherSeat);
+    public void seatSelected(Seat seat) {
+        getActionManager().finishActionPlaceBaggage(person, seat);
         clearThisPendingAction();
     }
 }

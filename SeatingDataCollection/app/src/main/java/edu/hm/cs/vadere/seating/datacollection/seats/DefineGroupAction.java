@@ -7,6 +7,7 @@ import java.util.Set;
 
 import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
+import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 
 public class DefineGroupAction extends PendingAction {
@@ -18,8 +19,8 @@ public class DefineGroupAction extends PendingAction {
     }
 
     @Override
-    public void seatSelected(SeatWidget seatWidget) {
-        SeatTaker seatTaker = seatWidget.getSeat().getSeatTaker();
+    public void seatSelected(Seat seat) {
+        SeatTaker seatTaker = seat.getSeatTaker();
         if (seatTaker instanceof Person) {
             Log.d(TAG, "adding person to future group");
             persons.add((Person) seatTaker);

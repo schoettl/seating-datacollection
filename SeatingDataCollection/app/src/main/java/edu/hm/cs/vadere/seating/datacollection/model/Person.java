@@ -48,6 +48,6 @@ public class Person extends SugarRecord implements SeatTaker {
 
     @Override
     public String toString() {
-        return String.format("person %d (%s, %s)", getId(), getGender(), getAgeGroup());
+        return String.format("person %d (%s, %s, %s)", getId(), getGender(), getAgeGroup(), getGroup());
     }
 }

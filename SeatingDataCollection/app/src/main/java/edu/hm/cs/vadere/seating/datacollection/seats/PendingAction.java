@@ -2,6 +2,8 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.util.Log;
 
+import edu.hm.cs.vadere.seating.datacollection.model.Seat;
+
 public abstract class PendingAction {
     private static final String TAG = "PendingAction";
     private ActionManager actionManager;
@@ -19,5 +21,5 @@ public abstract class PendingAction {
         actionManager.clearPendingAction();
     }
 
-    public abstract void seatSelected(SeatWidget seatWidget);
+    public abstract void seatSelected(Seat seat);
 }
