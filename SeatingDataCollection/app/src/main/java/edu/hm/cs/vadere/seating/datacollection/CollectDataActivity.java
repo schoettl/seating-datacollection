@@ -39,16 +39,12 @@ public class CollectDataActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_data_collection, menu);
+        getMenuInflater().inflate(R.menu.menu_collect_data, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
         switch (item.getItemId()) {
             case R.id.action_direction_change:
                 logEventWriter.logTrainEvent(LogEventType.DIRECTION_CHANGE);
@@ -64,4 +60,10 @@ public class CollectDataActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // E.g. remove action_door_release when door is currently open.
+        // To trigger this callback, call invalidateOptionsMenu()
+        return super.onPrepareOptionsMenu(menu);
+    }
 }
