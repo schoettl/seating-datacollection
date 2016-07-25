@@ -1,8 +1,11 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.orm.util.NamingHelper;
 
@@ -37,4 +40,8 @@ public class Utils {
         // in next release of Sugar ORM it will be com.orm.helper.NamingHelper#toTableName(Class<?>)
     }
 
+    public static void setToolbar(AppCompatActivity activity) {
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.app_toolbar);
+        activity.setSupportActionBar(toolbar);
+    }
 }

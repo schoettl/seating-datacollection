@@ -22,8 +22,7 @@ public class CollectDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collectdata);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Utils.setToolbar(this);
 
         survey = Utils.getSurveyFromIntent(getIntent());
         ArrayList<Seat> state = getStateFromIntent();
