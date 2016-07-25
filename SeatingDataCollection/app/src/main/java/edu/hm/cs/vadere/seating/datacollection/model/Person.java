@@ -3,16 +3,13 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.io.Serializable;
-
 public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean disturbing;
 
     private Gender gender;
     private AgeGroup ageGroup;
-    /** "group" is a illegal name because it is a reserved word in SQL. */
-    private Group mateGroup;
+    private MGroup mGroup;
 
     public Person() { }
 
@@ -28,8 +25,8 @@ public class Person extends SugarRecord implements SeatTaker {
         return ageGroup;
     }
 
-    public Group getGroup() {
-        return mateGroup;
+    public MGroup getGroup() {
+        return mGroup;
     }
 
     public void setDisturbing(boolean disruptive) {
@@ -44,9 +41,9 @@ public class Person extends SugarRecord implements SeatTaker {
         this.ageGroup = ageGroup;
     }
 
-    /** Group should be saved before saving this (at least up to version 1.5). */
-    public void setGroup(Group group) {
-        this.mateGroup = group;
+    /** MGroup should be saved before saving this (at least up to version 1.5). */
+    public void setGroup(MGroup group) {
+        this.mGroup = group;
     }
 
     @Override
