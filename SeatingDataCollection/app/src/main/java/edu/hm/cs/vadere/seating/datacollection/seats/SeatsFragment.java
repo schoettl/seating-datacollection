@@ -3,7 +3,6 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import android.widget.ListView;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -205,7 +205,7 @@ public class SeatsFragment extends Fragment {
     }
 
     private void actionPersonLeave(final Seat seat) {
-        Utils.showConfirmDialog(getActivity(), R.string.dialog_confirm_leave, new DialogInterface.OnClickListener() {
+        UiHelper.showConfirmDialog(getActivity(), R.string.dialog_confirm_leave, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 actionManager.actionLeave(seat);

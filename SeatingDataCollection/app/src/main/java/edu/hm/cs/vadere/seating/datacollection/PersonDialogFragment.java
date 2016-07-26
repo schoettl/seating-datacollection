@@ -57,7 +57,7 @@ public class PersonDialogFragment extends DialogFragment {
                     listener.onPersonDialogOkClick(gender, ageGroup);
             }
         });
-        Utils.setDefaultNegativeButton(builder);
+        UiHelper.setDefaultNegativeButton(builder);
 
         // This line does not really inflate the view, so setInitialValues does not work
         //builder.setView(R.layout.dialog_person);

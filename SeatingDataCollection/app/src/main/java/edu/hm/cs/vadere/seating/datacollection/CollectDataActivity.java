@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
-import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class CollectDataActivity extends AppCompatActivity {
 
@@ -26,13 +26,13 @@ public class CollectDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collectdata);
-        Utils.setToolbar(this);
+        UiHelper.setToolbar(this);
 
         survey = Utils.getSurveyFromIntent(getIntent());
         SeatsState state = getStateFromIntent();
         logEventWriter = new LogEventWriter(survey);
 
-        Utils.startAndReturnSeatsFragment(this, survey, state);
+        UiHelper.startAndReturnSeatsFragment(this, survey, state);
     }
 
     private SeatsState getStateFromIntent() {
@@ -80,8 +80,8 @@ public class CollectDataActivity extends AppCompatActivity {
                 logEventWriter.logCountStandingPersons(count);
             }
         });
-        Utils.setDefaultNegativeButton(builder);
-        Utils.showAlertWithSoftKeyboard(builder);
+        UiHelper.setDefaultNegativeButton(builder);
+        UiHelper.showAlertWithSoftKeyboard(builder);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class CollectDataActivity extends AppCompatActivity {
     }
 
     public void endDataCollection(View view) {
-        Utils.showConfirmDialog(this, R.string.dialog_confirm_end_data_collection, new DialogInterface.OnClickListener() {
+        UiHelper.showConfirmDialog(this, R.string.dialog_confirm_end_data_collection, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(CollectDataActivity.this, StartSurveyActivity.class);

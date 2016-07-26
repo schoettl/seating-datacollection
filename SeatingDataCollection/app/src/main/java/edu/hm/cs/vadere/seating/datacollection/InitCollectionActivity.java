@@ -7,9 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
-import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
 public class InitCollectionActivity extends AppCompatActivity {
 
@@ -21,12 +21,12 @@ public class InitCollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initcollection);
-        Utils.setToolbar(this);
+        UiHelper.setToolbar(this);
 
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
 
-        seatsFragment = Utils.startAndReturnSeatsFragment(this, survey, null);
+        seatsFragment = UiHelper.startAndReturnSeatsFragment(this, survey, null);
         getSeatsFragment().getActionManager();
     }
 
