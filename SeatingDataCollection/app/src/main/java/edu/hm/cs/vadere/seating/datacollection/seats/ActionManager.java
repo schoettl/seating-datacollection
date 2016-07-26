@@ -1,7 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.DialogInterface;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -11,6 +10,8 @@ import android.widget.GridView;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
+import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -57,9 +58,17 @@ public class ActionManager {
     }
 
     public void actionSetPersonProperties(Seat seat) {
-        Person person = (Person) seat.getSeatTaker();
-        DialogFragment dialog = PersonDialogFragment.newInstance(person);
-        dialog.show(hostFragment.getActivity().getSupportFragmentManager(), "???");
+        final Person person = (Person) seat.getSeatTaker();
+        PersonDialogFragment dialog = PersonDialogFragment.newInstance(person);
+        dialog.setOkClickListener(new PersonDialogFragment.PositiveClickListener() {
+            @Override
+            public void onPersonDialogOkClick(Gender gender, AgeGroup ageGroup) {
+                person.setGender(gender);
+                person.setAgeGroup(ageGroup);
+                person.save();
+            }
+        });
+        dialog.show(hostFragment.getActivity().getSupportFragmentManager(), PersonDialogFragment.FRAGMENT_TAG);
     }
 
     public void actionPlaceBaggage(Seat seat) {

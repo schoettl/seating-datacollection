@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
@@ -17,6 +16,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 
 public class PersonDialogFragment extends DialogFragment {
+    public static final String FRAGMENT_TAG = "500718720dfb5c64e96622f91a9e3786969a9fe2";
     private static final String TAG = "PersonDialog";
     private static final String ARG_PERSON_ID_KEY = "6f962b504bd465cc949cfef640653d173daf0c4c";
     private static final String ARG_PERSON_GENDER_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
@@ -25,14 +25,15 @@ public class PersonDialogFragment extends DialogFragment {
     private long personId;
     private Gender personGender;
     private AgeGroup personAgeGroup;
+    private PositiveClickListener listener;
 
-    public static DialogFragment newInstance(Person person) {
+    public static PersonDialogFragment newInstance(Person person) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PERSON_ID_KEY, person.getId());
+        args.putLong(ARG_PERSON_ID_KEY, person.getId());
         args.putSerializable(ARG_PERSON_GENDER_KEY, person.getGender());
         args.putSerializable(ARG_PERSON_AGE_GROUP_KEY, person.getAgeGroup());
 
-        DialogFragment dialog = new PersonDialogFragment();
+        PersonDialogFragment dialog = new PersonDialogFragment();
         dialog.setArguments(args);
         return dialog;
     }
@@ -55,11 +56,10 @@ public class PersonDialogFragment extends DialogFragment {
                 Spinner spinnerGender = (Spinner) d.findViewById(R.id.spinnerGender);
                 Spinner spinnerAgeGroup = (Spinner) d.findViewById(R.id.spinnerAgeGroup);
 
-                Log.d(TAG, "updating person with id " + personId);
-                Person person = Person.findById(Person.class, personId);
-                person.setGender((Gender) spinnerGender.getSelectedItem());
-                person.setAgeGroup((AgeGroup) spinnerAgeGroup.getSelectedItem());
-                person.save();
+                Gender gender = (Gender) spinnerGender.getSelectedItem();
+                AgeGroup ageGroup = (AgeGroup) spinnerAgeGroup.getSelectedItem();
+
+                listener.onPersonDialogOkClick(gender, ageGroup);
 
                 dismiss(); // TODO required?
             }
@@ -84,6 +84,10 @@ public class PersonDialogFragment extends DialogFragment {
         return builder.create();
     }
 
+    public void setOkClickListener(PositiveClickListener listener) {
+        this.listener = listener;
+    }
+
     private void setInitialValues(View view) {
         Log.d(TAG, "setting initial values");
 
@@ -104,5 +108,8 @@ public class PersonDialogFragment extends DialogFragment {
         spinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.plain_textview, values));
     }
 
+    public interface PositiveClickListener {
+        void onPersonDialogOkClick(Gender gender, AgeGroup ageGroup);
+    }
 }
 
