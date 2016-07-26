@@ -1,5 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -74,6 +75,14 @@ public class Utils {
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.show();
+    }
+
+    public static void showConfirmDialog(Activity activity, int message, DialogInterface.OnClickListener positiveButtonListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.ok, positiveButtonListener);
+        Utils.setDefaultNegativeButton(builder);
+        builder.show();
     }
 
 }

@@ -34,4 +34,6 @@
     <string name="dialog_confirm_leave">Is this person really leaving?</string>
     <string name="action_count_standing_persons">Count standing</string>
     <string name="dialog_count_standing_persons">Please input the number of standing persons</string>
+    <string name="end_data_collection">End data collection</string>
+    <string name="dialog_confirm_end_data_collection">Really end the data collection?</string>
 </resources>

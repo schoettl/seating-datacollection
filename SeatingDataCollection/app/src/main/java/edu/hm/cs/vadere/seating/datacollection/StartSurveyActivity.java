@@ -91,7 +91,7 @@ public class StartSurveyActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_SURVEY_ID_KEY, survey.getId());
             startActivity(intent);
         } catch (NumberFormatException e) { // TODO catch date format exception and check for date format in saveSurvey()
-            // Error message
+            // TODO Error message
         }
     }
 

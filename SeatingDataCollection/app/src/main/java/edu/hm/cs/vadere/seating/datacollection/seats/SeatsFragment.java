@@ -205,16 +205,12 @@ public class SeatsFragment extends Fragment {
     }
 
     private void actionPersonLeave(final Seat seat) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_confirm_leave);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        Utils.showConfirmDialog(getActivity(), R.string.dialog_confirm_leave, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 actionManager.actionLeave(seat);
             }
         });
-        Utils.setDefaultNegativeButton(builder);
-        builder.show();
     }
 
 }

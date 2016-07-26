@@ -1,12 +1,14 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
@@ -87,5 +89,15 @@ public class CollectDataActivity extends AppCompatActivity {
         // E.g. remove action_door_release when door is currently open.
         // To trigger this callback, call invalidateOptionsMenu()
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void endDataCollection(View view) {
+        Utils.showConfirmDialog(this, R.string.dialog_confirm_end_data_collection, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(CollectDataActivity.this, StartSurveyActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

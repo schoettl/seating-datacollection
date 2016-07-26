@@ -38,8 +38,6 @@
         <meta-data android:name="DATABASE" android:value="data.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="edu.hm.cs.vadere.seating.datacollection.model" />
-        <!--
-        -->
         <meta-data android:name="QUERY_LOG" android:value="true" />
     </application>
 
