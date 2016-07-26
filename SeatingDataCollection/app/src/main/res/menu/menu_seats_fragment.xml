@@ -4,7 +4,9 @@
 
     <item android:id="@+id/action_define_group"
         android:title="@string/action_define_group"
+        android:icon="@drawable/ic_group_add_black_18dp"
         app:showAsAction="ifRoom"
         />
+    <!-- alternative icons: group, group add -->
 
 </menu>

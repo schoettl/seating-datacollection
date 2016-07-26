@@ -6,20 +6,25 @@
         android:title="@string/action_door_release"
         app:showAsAction="ifRoom"
         />
+    <!-- alternative icons: flight land, call received, pause -->
 
     <item android:id="@+id/action_train_starts"
         android:title="@string/action_train_starts"
         app:showAsAction="ifRoom"
         />
+    <!-- alternative icons: flight takeoff, call made, play arrow -->
 
     <item android:id="@+id/action_count_standing_persons"
         android:title="@string/action_count_standing_persons"
+        android:icon="@drawable/ic_people_outline_black_18dp"
         app:showAsAction="ifRoom"
         />
 
     <item android:id="@+id/action_direction_change"
         android:title="@string/action_direction_change"
+        android:icon="@drawable/ic_swap_horiz_black_18dp"
         app:showAsAction="ifRoom"
         />
+    <!-- alternative icons: keyboard return, swap horiz, compare arrows -->
 
 </menu>
