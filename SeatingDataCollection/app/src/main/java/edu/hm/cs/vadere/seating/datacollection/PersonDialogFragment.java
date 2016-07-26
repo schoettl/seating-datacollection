@@ -84,17 +84,13 @@ public class PersonDialogFragment extends DialogFragment {
     private void setInitialValues(View view, Gender gender, AgeGroup ageGroup) {
         Log.d(TAG, "setting initial values");
 
-        Spinner spinnerGender = getSpinner(view, R.id.spinnerGender);
+        Spinner spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         setSimpleSpinnerAdapter(spinnerGender, Gender.values());
         spinnerGender.setSelection(gender.ordinal());
 
-        Spinner spinnerAgeGroup = getSpinner(view, R.id.spinnerAgeGroup);
+        Spinner spinnerAgeGroup = (Spinner) view.findViewById(R.id.spinnerAgeGroup);
         setSimpleSpinnerAdapter(spinnerAgeGroup, AgeGroup.values());
         spinnerAgeGroup.setSelection(ageGroup.ordinal());
-    }
-
-    private Spinner getSpinner(View view, int spinnerAgeGroup) {
-        return (Spinner) view.findViewById(spinnerAgeGroup);
     }
 
     private <E> void setSimpleSpinnerAdapter(Spinner spinner, E[] values) {
