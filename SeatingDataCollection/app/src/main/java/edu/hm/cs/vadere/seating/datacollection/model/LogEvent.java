@@ -32,7 +32,4 @@ public class LogEvent extends SugarRecord {
         this.extraString = extraString;
     }
 
-    public LogEvent(Survey survey, LogEventType eventType, Integer seat, Person person) {
-        this(survey, eventType, seat, person, null, null);
-    }
 }

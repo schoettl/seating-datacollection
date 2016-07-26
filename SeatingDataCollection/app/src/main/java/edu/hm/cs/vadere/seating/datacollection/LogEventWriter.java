@@ -9,7 +9,11 @@ import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.*;
+
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.COUNT_STANDING_PERSONS;
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.DISTURBING;
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.INITIALIZATION_END;
+import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.STOPS_DISTURBING;
 
 public class LogEventWriter implements Serializable {
 
@@ -23,46 +27,54 @@ public class LogEventWriter implements Serializable {
 
     public void logInitializationEnd() {
         logcatInfo("initialization end", INITIALIZATION_END);
-        logEvent(new LogEvent(survey, INITIALIZATION_END, null, null));
+        logEvent(createLogEvent(INITIALIZATION_END, null, null));
     }
 
     public void logSeatEvent(LogEventType eventType, Seat seat, Person person) {
         logcatInfo("seat event", eventType);
-        logEvent(new LogEvent(survey, eventType, seat.getId(), person));
+        logEvent(createLogEvent(eventType, seat.getId(), person));
     }
 
     public void logTrainEvent(LogEventType eventType) {
         logcatInfo("train event (seat, person)", eventType);
-        logEvent(new LogEvent(survey, eventType, null, null));
+        logEvent(createLogEvent(eventType, null, null));
     }
 
     public void logCountStandingPersons(int count) {
         logcatInfo("count standing persons", COUNT_STANDING_PERSONS);
-        logEvent(new LogEvent(survey, COUNT_STANDING_PERSONS, null, null, count, null));
+        logEvent(createLogEvent(COUNT_STANDING_PERSONS, null, null, count, null));
     }
 
     public void logDisturbingPerson(Person person, String reason) {
         logcatInfo("disturbing person: " + reason, DISTURBING);
-        logEvent(new LogEvent(survey, DISTURBING, null, person, null, reason));
+        logEvent(createLogEvent(DISTURBING, null, person, null, reason));
     }
 
     public void logDisturbingSeat(Seat seat, String reason) {
         logcatInfo("disturbing seat: " + reason, DISTURBING);
-        logEvent(new LogEvent(survey, DISTURBING, seat.getId(), null, null, reason));
+        logEvent(createLogEvent(DISTURBING, seat.getId(), null, null, reason));
     }
 
     public void logStopsDisturbingPerson(Person p) {
         logcatInfo("stops disturbing person", DISTURBING);
-        logEvent(new LogEvent(survey, STOPS_DISTURBING, null, p));
+        logEvent(createLogEvent(STOPS_DISTURBING, null, p));
     }
 
     public void logStopsDisturbingSeat(Seat s) {
         logcatInfo("stops disturbing seat", DISTURBING);
-        logEvent(new LogEvent(survey, STOPS_DISTURBING, s.getId(), null));
+        logEvent(createLogEvent(STOPS_DISTURBING, s.getId(), null));
     }
 
     private void logEvent(LogEvent e) {
         e.save();
+    }
+
+    private LogEvent createLogEvent(LogEventType eventType, Integer seat, Person person, Integer extraInt, String extraString) {
+        return new LogEvent(survey, eventType, seat, person, extraInt, extraString);
+    }
+
+    private LogEvent createLogEvent(LogEventType eventType, Integer seat, Person person) {
+        return new LogEvent(survey, eventType, seat, person, null, null);
     }
 
     private void logcatInfo(String info, LogEventType event) {
