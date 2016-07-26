@@ -212,7 +212,7 @@ public class SeatsFragment extends Fragment {
                 actionManager.actionLeave(seat);
             }
         });
-        builder.setNegativeButton(R.string.cancel, Utils.ON_CLICK_DO_NOTHING_LISTENER);
+        Utils.setDefaultNegativeButton(builder);
         builder.show();
     }
 

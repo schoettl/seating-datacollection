@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.WindowManager;
 
 import com.orm.util.NamingHelper;
 
@@ -21,7 +23,7 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
 public class Utils {
 
     public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
-    public static final DialogInterface.OnClickListener ON_CLICK_DO_NOTHING_LISTENER =
+    private static final DialogInterface.OnClickListener alertDialogDefaultNegativeListener =
             new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) { }
@@ -64,6 +66,16 @@ public class Utils {
 
     public static String getTodaysDateIsoFormat() {
         return new SimpleDateFormat(ISO_DATE_FORMAT).format(new Date());
+    }
+
+    public static void setDefaultNegativeButton(AlertDialog.Builder alertDialogBuilder) {
+        alertDialogBuilder.setNegativeButton(R.string.cancel, alertDialogDefaultNegativeListener);
+    }
+
+    public static void showAlertWithSoftKeyboard(AlertDialog.Builder alertDialogBuilder) {
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        dialog.show();
     }
 
 }

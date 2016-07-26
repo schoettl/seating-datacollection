@@ -10,6 +10,7 @@ import android.widget.GridView;
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
@@ -48,7 +49,7 @@ public class ActionManager {
         builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
         builder.setPositiveButton(R.string.ok, okClickListener);
-        builder.show();
+        Utils.showAlertWithSoftKeyboard(builder);
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {

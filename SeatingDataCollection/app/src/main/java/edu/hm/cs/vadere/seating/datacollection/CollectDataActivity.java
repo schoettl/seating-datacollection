@@ -78,8 +78,8 @@ public class CollectDataActivity extends AppCompatActivity {
                 logEventWriter.logCountStandingPersons(count);
             }
         });
-        builder.setNegativeButton(R.string.cancel, Utils.ON_CLICK_DO_NOTHING_LISTENER);
-        builder.show();
+        Utils.setDefaultNegativeButton(builder);
+        Utils.showAlertWithSoftKeyboard(builder);
     }
 
     @Override
