@@ -32,4 +32,6 @@
     <string name="action_define_group">Define group</string>
     <string name="dialog_disturbing_reason">Reason for disturbing</string>
     <string name="dialog_confirm_leave">Is this person really leaving?</string>
+    <string name="action_count_standing_persons">Count standing</string>
+    <string name="dialog_count_standing_persons">Please input the number of standing persons</string>
 </resources>
