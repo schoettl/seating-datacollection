@@ -41,8 +41,7 @@ public class ActionManager {
 
     public void actionPersonDisturbing(Seat seat) {
         Person p = (Person) seat.getSeatTaker();
-        p.setDisturbing(true);
-        // logging is done in the okClickListener
+        // Action is done in the okClickListener
 
         final EditText editTextReason = new EditText(hostFragment.getContext());
         final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(p, editTextReason);
@@ -173,6 +172,7 @@ public class ActionManager {
         }
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            p.setDisturbing(true);
             logEventWriter.logDisturbingPerson(p, edit.getText().toString());
         }
     }
