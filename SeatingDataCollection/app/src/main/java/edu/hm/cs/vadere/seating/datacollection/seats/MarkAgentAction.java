@@ -14,8 +14,12 @@ public class MarkAgentAction extends PendingAction {
 
     @Override
     public void seatSelected(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        getActionManager().finishActionMarkAgent(survey, p);
-        clearThisPendingAction();
+        if (seat.getSeatTaker() instanceof Person) {
+            Person p = (Person) seat.getSeatTaker();
+            getActionManager().finishActionMarkAgent(survey, p);
+            clearThisPendingAction();
+        } else {
+            // TODO hint to the user
+        }
     }
 }
