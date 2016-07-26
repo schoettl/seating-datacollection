@@ -22,6 +22,12 @@ public class CollectDataActivity extends AppCompatActivity {
     private Survey survey;
     private LogEventWriter logEventWriter;
 
+    /**
+     * State of the train. Currently, initialized with UNKNOWN.
+     * TODO In future saved and restored (activity lifecycle?).
+     */
+    private TrainState trainState = TrainState.UNKNOWN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +58,14 @@ public class CollectDataActivity extends AppCompatActivity {
                 logEventWriter.logTrainEvent(LogEventType.DIRECTION_CHANGE);
                 return true;
             case R.id.action_door_release:
+                trainState = TrainState.DOORS_OPENED;
                 logEventWriter.logTrainEvent(LogEventType.DOOR_RELEASE);
+                supportInvalidateOptionsMenu();
                 return true;
             case R.id.action_train_starts:
+                trainState = TrainState.DOORS_CLOSED;
                 logEventWriter.logTrainEvent(LogEventType.TRAIN_STARTS);
+                supportInvalidateOptionsMenu();
                 return true;
             case R.id.action_count_standing_persons:
                 actionCountStandingPersons();
@@ -86,8 +96,18 @@ public class CollectDataActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // E.g. remove action_door_release when door is currently open.
-        // To trigger this callback, call invalidateOptionsMenu()
+        // (To trigger this callback, call invalidateOptionsMenu())
+        switch (trainState) {
+            case DOORS_CLOSED:
+                menu.removeItem(R.id.action_train_starts);
+                break;
+            case DOORS_OPENED:
+                menu.removeItem(R.id.action_door_release);
+                break;
+            case UNKNOWN:
+            default:
+                break;
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -99,5 +119,9 @@ public class CollectDataActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private enum TrainState {
+        UNKNOWN, DOORS_CLOSED, DOORS_OPENED;
     }
 }
