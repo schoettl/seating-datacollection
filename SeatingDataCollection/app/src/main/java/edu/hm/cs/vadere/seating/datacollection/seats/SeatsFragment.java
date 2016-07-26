@@ -26,8 +26,8 @@ import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 
 public class SeatsFragment extends Fragment {
 
-    private static final String MODEL_ARG_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
-    private static final String LOG_EVENT_WRITER_ARG_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
+    private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
+    private static final String ARG_LOG_EVENT_WRITER_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
     public static final String TAG = "SeatsFragment";
 
     private FloorRectAdapter floorRectAdapter;
@@ -37,8 +37,8 @@ public class SeatsFragment extends Fragment {
         Bundle bundle = new Bundle();
         SeatsFragment fragment = new SeatsFragment();
 
-        bundle.putSerializable(LOG_EVENT_WRITER_ARG_KEY, logEventWriter);
-        bundle.putSerializable(MODEL_ARG_KEY, state);
+        bundle.putSerializable(ARG_LOG_EVENT_WRITER_KEY, logEventWriter);
+        bundle.putSerializable(ARG_STATE_KEY, state);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,8 +57,8 @@ public class SeatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        List<Seat> state = (List<Seat>) getArguments().getSerializable(MODEL_ARG_KEY);
-        LogEventWriter logEventWriter = (LogEventWriter) getArguments().getSerializable(LOG_EVENT_WRITER_ARG_KEY);
+        List<Seat> state = (List<Seat>) getArguments().getSerializable(ARG_STATE_KEY);
+        LogEventWriter logEventWriter = (LogEventWriter) getArguments().getSerializable(ARG_LOG_EVENT_WRITER_KEY);
         actionManager = new ActionManager(this, logEventWriter);
         floorRectAdapter = new FloorRectAdapter(getContext(), state);
 

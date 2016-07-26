@@ -1,10 +1,8 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -20,13 +18,13 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 
 public class PersonDialogFragment extends DialogFragment {
     private static final String TAG = "PersonDialog";
-    private static final String PERSON_ARG_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
+    private static final String ARG_PERSON_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
 
     private Person person;
 
     public static DialogFragment newInstance(Person person) {
         Bundle args = new Bundle();
-        args.putSerializable(PERSON_ARG_KEY, person);
+        args.putSerializable(ARG_PERSON_KEY, person);
 
         DialogFragment dialog = new PersonDialogFragment();
         dialog.setArguments(args);
@@ -38,7 +36,7 @@ public class PersonDialogFragment extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         Log.d(TAG, "on create dialog");
 
-        person = (Person) getArguments().get(PERSON_ARG_KEY);
+        person = (Person) getArguments().get(ARG_PERSON_KEY);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_person_message);
