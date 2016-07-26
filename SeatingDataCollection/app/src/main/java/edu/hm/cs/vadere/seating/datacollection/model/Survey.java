@@ -2,9 +2,7 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 
 import com.orm.SugarRecord;
 
-import java.io.Serializable;
-
-public class Survey extends SugarRecord implements Serializable {
+public class Survey extends SugarRecord {
     private String agentName;
     private String date;
     private String startingAt;
