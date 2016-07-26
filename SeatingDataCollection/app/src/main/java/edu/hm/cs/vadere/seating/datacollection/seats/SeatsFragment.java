@@ -1,7 +1,9 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -184,8 +186,7 @@ public class SeatsFragment extends Fragment {
                     SeatTaker seatTaker = seat.getSeatTaker();
                     if (seatTaker instanceof Person) {
                         Log.d(TAG, "person");
-                        // TODO confirmation?
-                        actionManager.actionLeave(seat);
+                        actionPersonLeave(seat);
 
                     } else if (seatTaker instanceof HandBaggage) {
                         Log.d(TAG, "baggage");
@@ -200,6 +201,19 @@ public class SeatsFragment extends Fragment {
                 Log.d(TAG, "not a seat - ignoring click");
             }
         }
+    }
+
+    private void actionPersonLeave(final Seat seat) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_confirm_leave);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                actionManager.actionLeave(seat);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, Utils.ON_CLICK_DO_NOTHING_LISTENER);
+        builder.show();
     }
 
 }

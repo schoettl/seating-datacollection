@@ -1,5 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,11 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
 public class Utils {
 
     public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
+    public static final DialogInterface.OnClickListener ON_CLICK_DO_NOTHING_LISTENER =
+            new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+            };
 
     public static Survey getSurveyFromIntent(Intent intent) {
         final int invalidId = 0;

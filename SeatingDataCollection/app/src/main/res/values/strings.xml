@@ -31,4 +31,5 @@
     <string name="action_mark_agent">Mark agent</string>
     <string name="action_define_group">Define group</string>
     <string name="dialog_disturbing_reason">Reason for disturbing</string>
+    <string name="dialog_confirm_leave">Is this person really leaving?</string>
 </resources>

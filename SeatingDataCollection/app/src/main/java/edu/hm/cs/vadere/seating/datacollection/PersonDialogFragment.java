@@ -57,12 +57,7 @@ public class PersonDialogFragment extends DialogFragment {
                     listener.onPersonDialogOkClick(gender, ageGroup);
             }
         });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton(R.string.cancel, Utils.ON_CLICK_DO_NOTHING_LISTENER);
 
         // This line does not really inflate the view, so setInitialValues does not work
         //builder.setView(R.layout.dialog_person);
