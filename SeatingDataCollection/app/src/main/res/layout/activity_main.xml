@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="edu.hm.cs.vadere.seating.datacollection.MainActivity">
+
+    <include layout="@layout/app_toolbar" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_new_survey"
+        android:id="@+id/btnStartNewSurvey"
+        android:onClick="startNewSurvey" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/export_data"
+        android:id="@+id/btnExportData"
+        android:onClick="exportData" />
+
+</LinearLayout>
