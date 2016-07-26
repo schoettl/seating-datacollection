@@ -47,8 +47,7 @@ public class ActionManager {
         final EditText editTextReason = new EditText(hostFragment.getContext());
         final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(p, editTextReason);
         final AlertDialog.Builder builder = new AlertDialog.Builder(hostFragment.getContext());
-        builder.setTitle("Reason for disturbing");
-        builder.setMessage("You can type-in a reason");
+        builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
         builder.setPositiveButton(R.string.ok, okClickListener);
         builder.show();
