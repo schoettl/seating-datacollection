@@ -46,12 +46,10 @@ public class PersonDialogFragment extends DialogFragment {
                 Dialog d = (Dialog) dialog;
                 Spinner spinnerGender = (Spinner) d.findViewById(R.id.spinnerGender);
                 Spinner spinnerAgeGroup = (Spinner) d.findViewById(R.id.spinnerAgeGroup);
-                CheckBox cbDisturbing = (CheckBox) d.findViewById(R.id.cbDisturbing);
 
                 Log.d(TAG, "update and save person: " + person);
                 person.setGender((Gender) spinnerGender.getSelectedItem());
                 person.setAgeGroup((AgeGroup) spinnerAgeGroup.getSelectedItem());
-                person.setDisturbing(cbDisturbing.isChecked());
                 person.save();
 
                 dismiss(); // TODO required?
@@ -84,17 +82,10 @@ public class PersonDialogFragment extends DialogFragment {
         Spinner spinnerAgeGroup = getSpinner(view, R.id.spinnerAgeGroup);
         setSimpleSpinnerAdapter(spinnerAgeGroup, AgeGroup.values());
         spinnerAgeGroup.setSelection(person.getAgeGroup().ordinal());
-
-        CheckBox cbDisturbing = getCheckBoxDisturbing(view);
-        cbDisturbing.setChecked(person.isDisturbing());
     }
 
     private Spinner getSpinner(View view, int spinnerAgeGroup) {
         return (Spinner) view.findViewById(spinnerAgeGroup);
-    }
-
-    private CheckBox getCheckBoxDisturbing(View view) {
-        return (CheckBox) view.findViewById(R.id.cbDisturbing);
     }
 
     private <E> void setSimpleSpinnerAdapter(Spinner spinner, E[] values) {
