@@ -176,8 +176,25 @@ public class SeatsFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (view instanceof SeatWidget) {
                 SeatWidget seatWidget = (SeatWidget) view;
+                Seat seat = seatWidget.getSeat();
                 if (actionManager.isActionPending()) {
-                    actionManager.seatSelected(seatWidget.getSeat());
+                    actionManager.seatSelected(seat);
+                } else {
+                    Log.d(TAG, "normal click on seat");
+                    SeatTaker seatTaker = seat.getSeatTaker();
+                    if (seatTaker instanceof Person) {
+                        Log.d(TAG, "person");
+                        // TODO confirmation?
+                        actionManager.actionLeave(seat);
+
+                    } else if (seatTaker instanceof HandBaggage) {
+                        Log.d(TAG, "baggage");
+                        actionManager.actionRemoveBaggage(seat);
+
+                    } else { // seat is empty
+                        Log.d(TAG, "empty seat");
+                        actionManager.actionSitDown(seat);
+                    }
                 }
             } else {
                 Log.d(TAG, "not a seat - ignoring click");
