@@ -94,6 +94,8 @@ public class SeatsFragment extends Fragment {
             if (seatTaker instanceof Person) {
                 Log.d(TAG, "person");
                 inflater.inflate(R.menu.context_menu_person, menu);
+                if (!((Person) seatTaker).isDisturbing())
+                    menu.removeItem(R.id.action_person_stops_disturbing);
 
             } else if (seatTaker instanceof HandBaggage) {
                 Log.d(TAG, "baggage");
