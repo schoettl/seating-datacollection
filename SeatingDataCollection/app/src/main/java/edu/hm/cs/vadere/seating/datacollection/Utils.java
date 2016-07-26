@@ -15,6 +15,7 @@ import java.util.Date;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
 
 public class Utils {
 
@@ -25,13 +26,20 @@ public class Utils {
         long surveyId = intent.getLongExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, invalidId);
         if (surveyId == invalidId)
             throw new IllegalArgumentException("missing intent extra: " + StartSurveyActivity.EXTRA_SURVEY_ID_KEY);
-        return Survey.findById(Survey.class, surveyId);
+        return getSurvey(surveyId);
+    }
+
+    public static Survey getSurvey(long surveyId) {
+        Survey survey = Survey.findById(Survey.class, surveyId);
+        if (survey == null)
+            throw new IllegalArgumentException("invalid survey id: " + surveyId);
+        return survey;
     }
 
     /** Start a SeatsFragment. The state can be null. */
-    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, LogEventWriter logEventWriter, ArrayList<Seat> state) {
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, SeatsState state) {
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        SeatsFragment fragment = SeatsFragment.newInstance(logEventWriter, state);
+        SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
         ft.replace(R.id.seats_fragment_placeholder, fragment);
         ft.commit();
         return fragment;

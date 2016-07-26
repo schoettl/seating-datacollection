@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
@@ -22,10 +23,10 @@ public class FloorRectAdapter extends BaseAdapter {
         this(c, null);
     }
 
-    public FloorRectAdapter(Context c, List<Seat> state) {
+    public FloorRectAdapter(Context c, SeatsState state) {
         context = c;
 
-        state = checkAndPrepareState(state);
+        List<Seat> seats = restoreOrCreateSeats(state);
 
         // Add seats row-wise
         views = new ArrayList<>(FLOOR_RECT_COUNT);
@@ -34,24 +35,33 @@ public class FloorRectAdapter extends BaseAdapter {
                 // Placeholder
                 views.add(new PlaceholderWidget(context));
             } else {
-                Seat seat = state.get(seatIndex++);
+                Seat seat = seats.get(seatIndex++);
                 views.add(new SeatWidget(seat, context));
             }
         }
     }
 
     @NonNull
-    private List<Seat> checkAndPrepareState(List<Seat> state) {
+    private static List<Seat> restoreOrCreateSeats(SeatsState state) {
         if (state == null) {
-            state = new ArrayList<>(SEAT_COUNT);
-            for (int seatNumber = 1; seatNumber <= SEAT_COUNT; seatNumber++)
-                state.add(new Seat(seatNumber));
-        } else if (state.size() != SEAT_COUNT) {
-            throw new IllegalArgumentException(String.format(
-                    "state has wrong number of seats. expected: %d, actual: %d",
-                    SEAT_COUNT, state.size()));
+            return createEmptySeats();
+        } else {
+            List<Seat> result = state.restoreSeats();
+            if (result.size() != SEAT_COUNT)
+                throw new IllegalArgumentException(String.format(Locale.getDefault(),
+                        "state has wrong number of seats. expected: %d, actual: %d",
+                        SEAT_COUNT, result.size()));
+
+            return result;
         }
-        return state;
+    }
+
+    @NonNull
+    private static List<Seat> createEmptySeats() {
+        List<Seat> result = new ArrayList<>(SEAT_COUNT);
+        for (int seatNumber = 1; seatNumber <= SEAT_COUNT; seatNumber++)
+            result.add(new Seat(seatNumber));
+        return result;
     }
 
     @Override

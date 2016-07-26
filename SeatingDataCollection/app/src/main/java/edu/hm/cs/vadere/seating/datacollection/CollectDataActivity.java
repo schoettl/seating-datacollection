@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
 
 public class CollectDataActivity extends AppCompatActivity {
 
@@ -25,15 +23,14 @@ public class CollectDataActivity extends AppCompatActivity {
         Utils.setToolbar(this);
 
         survey = Utils.getSurveyFromIntent(getIntent());
-        ArrayList<Seat> state = getStateFromIntent();
+        SeatsState state = getStateFromIntent();
         logEventWriter = new LogEventWriter(survey);
 
-        Utils.startAndReturnSeatsFragment(this, logEventWriter, state);
+        Utils.startAndReturnSeatsFragment(this, survey, state);
     }
 
-    private ArrayList<Seat> getStateFromIntent() {
-        // ArrayList because it must be serializable
-        return (ArrayList<Seat>) getIntent().getSerializableExtra(EXTRA_STATE_KEY);
+    private SeatsState getStateFromIntent() {
+        return (SeatsState) getIntent().getSerializableExtra(EXTRA_STATE_KEY);
     }
 
     @Override

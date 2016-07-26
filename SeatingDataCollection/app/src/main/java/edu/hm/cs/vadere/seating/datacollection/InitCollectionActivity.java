@@ -7,11 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
 
 public class InitCollectionActivity extends AppCompatActivity {
 
@@ -28,7 +26,7 @@ public class InitCollectionActivity extends AppCompatActivity {
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
 
-        seatsFragment = Utils.startAndReturnSeatsFragment(this, logEventWriter, null);
+        seatsFragment = Utils.startAndReturnSeatsFragment(this, survey, null);
         getSeatsFragment().getActionManager();
     }
 
@@ -51,11 +49,11 @@ public class InitCollectionActivity extends AppCompatActivity {
     }
 
     public void startDataCollection(View view) {
-        // TODO check if agent is marked
+        // TODO check if agent is marked (but it should be optional - the agent may be standing)
         logEventWriter.logInitializationEnd();
         Intent intent = new Intent(this, CollectDataActivity.class);
         intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, survey.getId());
-        ArrayList<Seat> state = getSeatsFragment().getState();
+        SeatsState state = getSeatsFragment().getState();
         intent.putExtra(CollectDataActivity.EXTRA_STATE_KEY, state);
         startActivity(intent);
     }
