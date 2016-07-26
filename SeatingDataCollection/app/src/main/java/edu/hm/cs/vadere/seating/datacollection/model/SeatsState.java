@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.seats;
+package edu.hm.cs.vadere.seating.datacollection.model;
 
 import com.orm.SugarRecord;
 
@@ -6,12 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
-import edu.hm.cs.vadere.seating.datacollection.model.Person;
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
-import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
-
-/** A class to transfer state of seats. */
+/**
+ * A class to transfer state of seats. This class is responsible for packing
+ * a list of {@link Seat}s, make it serializable, and restore it later.
+ * This is useful because the id field of the entity classes is not serialized
+ * (as SugarRecord does not implement Serializable).
+ */
 public class SeatsState implements Serializable {
 
     private ArrayList<Seat> seatsState;
@@ -35,8 +35,8 @@ public class SeatsState implements Serializable {
     }
 
     public class SerializableSeatTaker implements Serializable {
-        private Long idIfPresent;
         private SeatTaker seatTaker;
+        private Long idIfPresent;
         private Long groupIdIfPresent;
 
         public SerializableSeatTaker(SeatTaker seatTaker) {

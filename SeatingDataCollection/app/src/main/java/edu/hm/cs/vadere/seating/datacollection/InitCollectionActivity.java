@@ -9,7 +9,7 @@ import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
-import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
+import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
 public class InitCollectionActivity extends AppCompatActivity {
 

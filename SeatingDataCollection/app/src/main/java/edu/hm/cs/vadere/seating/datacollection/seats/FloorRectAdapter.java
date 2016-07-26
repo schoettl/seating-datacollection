@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
+import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
 // 4 Vierer
 public class FloorRectAdapter extends BaseAdapter {

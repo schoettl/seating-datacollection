@@ -12,13 +12,11 @@ import android.view.WindowManager;
 import com.orm.util.NamingHelper;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
-import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
+import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
 public class Utils {
 

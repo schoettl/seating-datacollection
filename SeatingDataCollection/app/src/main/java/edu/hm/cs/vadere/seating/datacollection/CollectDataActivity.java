@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
-import edu.hm.cs.vadere.seating.datacollection.seats.SeatsState;
+import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
 public class CollectDataActivity extends AppCompatActivity {
 
