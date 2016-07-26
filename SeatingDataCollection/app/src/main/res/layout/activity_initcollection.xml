@@ -8,7 +8,11 @@
 
     <include layout="@layout/app_toolbar" />
 
-    <!-- below fragment, it is invisible :/ -->
+    <FrameLayout
+        android:id="@+id/seats_fragment_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,10 +20,5 @@
         android:text="@string/start_data_collection"
         android:onClick="startDataCollection"
         />
-
-    <FrameLayout
-        android:id="@+id/seats_fragment_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
 
 </LinearLayout>
