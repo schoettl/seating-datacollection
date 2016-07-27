@@ -2,6 +2,8 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 public class Survey extends SugarRecord {
     private String agentName;
     private String date;
@@ -54,6 +56,11 @@ public class Survey extends SugarRecord {
 
     public String getTrainNumber() {
         return trainNumber;
+    }
+
+    public List<LogEvent> getLogEvents() {
+        String idAsString = getId().toString();
+        return LogEvent.find(LogEvent.class, "survey = ?", idAsString);
     }
 
     public void setAgentName(String agentName) {
