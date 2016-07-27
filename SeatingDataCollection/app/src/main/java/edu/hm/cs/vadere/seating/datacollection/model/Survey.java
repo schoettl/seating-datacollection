@@ -3,6 +3,7 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 import com.orm.SugarRecord;
 
 import java.util.List;
+import java.util.Locale;
 
 public class Survey extends SugarRecord {
     private String agentName;
@@ -101,5 +102,11 @@ public class Survey extends SugarRecord {
 
     public void setTrainNumber(String trainNumber) {
         this.trainNumber = trainNumber;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "survey %d - %s - %s %s",
+                getId(), date, line, destination);
     }
 }
