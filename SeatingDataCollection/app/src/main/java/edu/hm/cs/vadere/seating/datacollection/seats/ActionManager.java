@@ -129,8 +129,13 @@ public class ActionManager {
         }
     }
 
-    public void actionMarkAgent(Survey survey) {
-        pendingAction = new MarkAgentAction(this, survey);
+    public void actionMarkAgent(Survey survey, OnOptionsMenuInvalidatedListener invalidatedListener) {
+        if (!isActionPending(MarkAgentAction.class)) {
+            pendingAction = new MarkAgentAction(this, survey, invalidatedListener);
+        } else {
+            clearPendingAction();
+        }
+        invalidatedListener.onOptionsMenuInvalidated();
     }
 
     public void finishActionPlaceBaggage(Person person, Seat otherSeat) {
