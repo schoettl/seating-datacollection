@@ -60,12 +60,12 @@ public class CollectDataActivity extends AppCompatActivity {
             case R.id.action_door_release:
                 trainState = TrainState.DOORS_OPENED;
                 logEventWriter.logTrainEvent(LogEventType.DOOR_RELEASE);
-                supportInvalidateOptionsMenu();
+                invalidateOptionsMenu();
                 return true;
             case R.id.action_train_starts:
                 trainState = TrainState.DOORS_CLOSED;
                 logEventWriter.logTrainEvent(LogEventType.TRAIN_STARTS);
-                supportInvalidateOptionsMenu();
+                invalidateOptionsMenu();
                 return true;
             case R.id.action_count_standing_persons:
                 actionCountStandingPersons();
