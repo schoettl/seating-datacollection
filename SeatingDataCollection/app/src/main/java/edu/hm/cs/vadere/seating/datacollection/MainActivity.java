@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         UiHelper.setToolbar(this);
 
         List<Survey> allSurveys = Survey.listAll(Survey.class); // TODO maybe use findAll instead for an iterator
-        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.plain_textview, allSurveys);
+        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.item_plain_textview, allSurveys);
 //        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.item_survey, allSurveys);
         ListView listView = (ListView) findViewById(R.id.listViewSurvey);
         listView.setAdapter(adapter);
