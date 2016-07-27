@@ -62,11 +62,13 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     }
 
     private void exportAllTables() throws IOException {
-//        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
-//            throw new IOException("external storage must be mounted writable");
+        // This throws an exception with no real external SD card!
+        //if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
+        //    throw new IOException("external storage must be mounted writable");
 
-//        File directory = Environment.getExternalStorageDirectory();
-        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File directory = Environment.getExternalStorageDirectory();
+//        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+//        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         logDirExist(directory);
         directory = new File(directory, "SeatingDataCollection");
         directory.mkdirs();
