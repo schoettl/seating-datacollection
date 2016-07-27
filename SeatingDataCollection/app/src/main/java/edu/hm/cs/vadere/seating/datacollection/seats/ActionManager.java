@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import java.util.List;
+
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
@@ -156,14 +158,18 @@ public class ActionManager {
     }
 
     private void removeBaggageForPerson(final Person person) {
-        GridView gridView = (GridView) hostFragment.getView();
-        FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
-        for (Seat seat : adapter.getSeats()) {
+        for (Seat seat : getSeatsOfSeatsFragments()) {
             SeatTaker seatTaker = seat.getSeatTaker();
             if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
                 actionRemoveBaggage(seat);
             }
         }
+    }
+
+    private List<Seat> getSeatsOfSeatsFragments() {
+        GridView gridView = (GridView) hostFragment.getView();
+        FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
+        return adapter.getSeats();
     }
 
     private void removeBaggageIfAny(Seat seat) {
