@@ -6,6 +6,8 @@ import com.orm.dsl.Ignore;
 public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean disturbing;
+    @Ignore
+    private boolean agent;
 
     private Gender gender = Gender.NA;
     private AgeGroup ageGroup = AgeGroup.NA;
@@ -15,6 +17,11 @@ public class Person extends SugarRecord implements SeatTaker {
 
     public boolean isDisturbing() {
         return disturbing;
+    }
+
+    /** Get the value set by {@link #setAgent(boolean)}. */
+    public boolean isAgent() {
+        return agent;
     }
 
     public Gender getGender() {
@@ -31,6 +38,14 @@ public class Person extends SugarRecord implements SeatTaker {
 
     public void setDisturbing(boolean disruptive) {
         this.disturbing = disruptive;
+    }
+
+    /**
+     * Mark this person as the agent conducting the data collection.
+     * Only one person should be marked as agent!
+     */
+    public void setAgent(boolean agent) {
+        this.agent = agent;
     }
 
     public void setGender(Gender gender) {
