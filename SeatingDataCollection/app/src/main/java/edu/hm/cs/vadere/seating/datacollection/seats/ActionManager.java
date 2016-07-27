@@ -85,18 +85,24 @@ public class ActionManager {
     }
 
     public void actionSitDown(Seat seat) {
+        if (isSeatOccupiedByPerson(seat)) {
+            Log.wtf(TAG, "it should not be possible to trigger this action under this circumstances");
+            return;
+        }
+
         Person person = new Person();
         person.save();
-        checkSeatNotOccupiedByPerson(seat);
         removeBaggageIfAny(seat);
         seat.setSeatTaker(person);
         logEventWriter.logSeatEvent(SIT_DOWN, seat, person);
     }
 
-    private void checkSeatNotOccupiedByPerson(Seat seat) {
-        if (seat.getSeatTaker() instanceof Person) {
-            throw new IllegalStateException("seat is occupied by another person");
-        }
+    private void showError(int message) {
+        UiHelper.showErrorToast(hostFragment.getContext(), message);
+    }
+
+    private boolean isSeatOccupiedByPerson(Seat seat) {
+        return (seat.getSeatTaker() instanceof Person);
     }
 
     public void actionChangeSeat(Seat seat) {
@@ -127,13 +133,22 @@ public class ActionManager {
     }
 
     public void finishActionPlaceBaggage(Person person, Seat otherSeat) {
+        if (isSeatOccupiedByPerson(otherSeat)) {
+            showError(R.string.error_seat_occupied_by_person);
+            return;
+        }
+
         HandBaggage baggage = new HandBaggage(person);
         otherSeat.setSeatTaker(baggage);
         logEventWriter.logSeatEvent(LogEventType.PLACE_BAGGAGE, otherSeat, person);
     }
 
     public void finishActionChangeSeat(Seat seat, Seat newSeat) {
-        checkSeatNotOccupiedByPerson(newSeat);
+
+        if (isSeatOccupiedByPerson(newSeat)) {
+            showError(R.string.error_seat_occupied_by_person);
+            return;
+        }
 
         Person person = (Person) seat.getSeatTaker();
         seat.clearSeat();
