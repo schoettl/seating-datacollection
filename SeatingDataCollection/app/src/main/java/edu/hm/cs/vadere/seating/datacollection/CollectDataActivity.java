@@ -85,9 +85,12 @@ public class CollectDataActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int count = Integer.parseInt(editTextCount.getText().toString());
-                // TODO catch exception
-                logEventWriter.logCountStandingPersons(count);
+                try {
+                    int count = Integer.parseInt(editTextCount.getText().toString());
+                    logEventWriter.logCountStandingPersons(count);
+                } catch (NumberFormatException e) {
+                    UiHelper.showErrorToast(CollectDataActivity.this, R.string.error_invalid_number_for_count);
+                }
             }
         });
         UiHelper.setDefaultNegativeButton(builder);

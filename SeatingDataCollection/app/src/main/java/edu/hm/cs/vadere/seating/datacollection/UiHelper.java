@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
@@ -53,4 +55,9 @@ public class UiHelper {
         return fragment;
     }
 
+    /** Show a small hint for non-severe errors. */
+    public static void showErrorToast(Context context, int message) {
+        Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }
