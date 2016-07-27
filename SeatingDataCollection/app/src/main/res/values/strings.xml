@@ -40,4 +40,5 @@
     <string name="error_invalid_number_for_count">Invalid number</string>
     <string name="error_please_select_a_person">Please select a person</string>
     <string name="error_seat_occupied_by_person">Seat is occupied by another person</string>
+    <string name="action_undo">Undo</string>
 </resources>
