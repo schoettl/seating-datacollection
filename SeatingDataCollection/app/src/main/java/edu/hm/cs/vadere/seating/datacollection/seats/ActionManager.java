@@ -13,7 +13,6 @@ import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
-import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
@@ -144,9 +143,25 @@ public class ActionManager {
         logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
     }
 
-    public void finishActionMarkAgent(Survey survey, Person person) {
-        survey.setAgent(person);
-        survey.save();
+    public void finishActionMarkAgent(Survey survey, Seat seat) {
+        if (seat.getSeatTaker() instanceof Person) {
+            Person person = (Person) seat.getSeatTaker();
+            makeNoPersonBeingAgent();
+            person.setAgent(true);
+            survey.setAgent(person);
+            survey.save();
+            clearPendingAction();
+        } else {
+            UiHelper.showErrorToast(hostFragment.getContext(), R.string.error_please_select_a_person);
+        }
+    }
+
+    private void makeNoPersonBeingAgent() {
+        for (Seat s : getSeatsOfSeatsFragments()) {
+            if (s.getSeatTaker() instanceof Person) {
+                ((Person) s.getSeatTaker()).setAgent(false);
+            }
+        }
     }
 
     public void seatSelected(Seat seat) {

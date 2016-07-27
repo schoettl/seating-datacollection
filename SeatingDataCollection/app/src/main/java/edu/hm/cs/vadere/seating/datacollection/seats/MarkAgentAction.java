@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
-import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
@@ -14,12 +13,6 @@ public class MarkAgentAction extends PendingAction {
 
     @Override
     public void seatSelected(Seat seat) {
-        if (seat.getSeatTaker() instanceof Person) {
-            Person p = (Person) seat.getSeatTaker();
-            getActionManager().finishActionMarkAgent(survey, p);
-            clearThisPendingAction();
-        } else {
-            // TODO hint to the user
-        }
+        getActionManager().finishActionMarkAgent(survey, seat);
     }
 }

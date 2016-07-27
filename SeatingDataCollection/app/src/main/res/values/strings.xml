@@ -38,4 +38,5 @@
     <string name="dialog_confirm_end_data_collection">Really end the data collection?</string>
     <string name="start_new_survey">Start new survey</string>
     <string name="error_invalid_number_for_count">Invalid number</string>
+    <string name="error_please_select_a_person">Please select a person</string>
 </resources>
