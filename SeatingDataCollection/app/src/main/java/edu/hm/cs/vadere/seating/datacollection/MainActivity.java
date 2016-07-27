@@ -5,12 +5,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
+
+import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UiHelper.setToolbar(this);
+
+        List<Survey> allSurveys = Survey.listAll(Survey.class); // TODO maybe use findAll instead for an iterator
+        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.plain_textview, allSurveys);
+//        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.item_survey, allSurveys);
+        ListView listView = (ListView) findViewById(R.id.listViewSurvey);
+        listView.setAdapter(adapter);
     }
 
     public void startNewSurvey(View view) {
