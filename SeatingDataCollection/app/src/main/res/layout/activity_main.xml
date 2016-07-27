@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="edu.hm.cs.vadere.seating.datacollection.MainActivity">
+    tools:context=".MainActivity">
 
     <include layout="@layout/app_toolbar" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1"
         android:id="@+id/listViewSurvey"
         android:layout_gravity="center_horizontal" />
 

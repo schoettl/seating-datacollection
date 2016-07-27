@@ -3,6 +3,8 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import edu.hm.cs.vadere.seating.datacollection.Utils;
+
 public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean disturbing;
@@ -63,6 +65,6 @@ public class Person extends SugarRecord implements SeatTaker {
 
     @Override
     public String toString() {
-        return String.format("person %d (%s, %s, %s)", getId(), getGender(), getAgeGroup(), getGroup());
+        return Utils.formatString("person %d (%s, %s, %s)", getId(), getGender(), getAgeGroup(), getGroup());
     }
 }

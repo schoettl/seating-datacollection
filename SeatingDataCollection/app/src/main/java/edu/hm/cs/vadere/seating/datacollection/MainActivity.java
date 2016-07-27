@@ -11,9 +11,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Iterator;
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
@@ -30,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UiHelper.setToolbar(this);
 
-        List<Survey> allSurveys = Survey.listAll(Survey.class); // TODO maybe use findAll instead for an iterator
-        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.item_plain_textview, allSurveys);
-//        ArrayAdapter<Survey> adapter = new ArrayAdapter<>(this, R.layout.item_survey, allSurveys);
+        List<Survey> allSurveys = Survey.listAll(Survey.class); // findAll's iterator cannot be used in an adapter
+        SurveyListAdapter adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
+        // For the CursorAdapter I need to know database details :/
+        //CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_survey, cursor, columns, toViewIds, 0);
         ListView listView = (ListView) findViewById(R.id.listViewSurvey);
         listView.setAdapter(adapter);
     }

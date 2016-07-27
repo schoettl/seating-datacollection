@@ -6,6 +6,7 @@ import com.orm.util.NamingHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
@@ -34,8 +35,22 @@ public class Utils {
         // in next release of Sugar ORM it will be com.orm.helper.NamingHelper#toTableName(Class<?>)
     }
 
+    /**
+     * fieldName -> FIELD_NAME
+     * It does not look good if used in queries, though.
+     * I will not use this method but it is good to look up the rules!
+     */
+    public static String toSugarFieldName(String fieldName) {
+        return NamingHelper.toSQLNameDefault(fieldName);
+        // in next release of Sugar ORM it will be com.orm.helper.NamingHelper#to???
+    }
+
     public static String getTodaysDateIsoFormat() {
         return new SimpleDateFormat(ISO_DATE_FORMAT).format(new Date());
+    }
+
+    public static String formatString(String formatString, Object... args) {
+        return String.format(Locale.getDefault(), formatString, args);
     }
 
 }

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 
@@ -49,7 +51,7 @@ public class FloorRectAdapter extends BaseAdapter {
         } else {
             List<Seat> result = state.restoreSeats();
             if (result.size() != SEAT_COUNT)
-                throw new IllegalArgumentException(String.format(Locale.getDefault(),
+                throw new IllegalArgumentException(Utils.formatString(
                         "state has wrong number of seats. expected: %d, actual: %d",
                         SEAT_COUNT, result.size()));
 

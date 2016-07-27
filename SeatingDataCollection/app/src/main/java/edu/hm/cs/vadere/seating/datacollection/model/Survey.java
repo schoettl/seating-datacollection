@@ -3,7 +3,8 @@ package edu.hm.cs.vadere.seating.datacollection.model;
 import com.orm.SugarRecord;
 
 import java.util.List;
-import java.util.Locale;
+
+import edu.hm.cs.vadere.seating.datacollection.Utils;
 
 public class Survey extends SugarRecord {
     private String agentName;
@@ -64,6 +65,18 @@ public class Survey extends SugarRecord {
         return LogEvent.find(LogEvent.class, "survey = ?", idAsString);
     }
 
+    public String getStartTime() {
+        List<LogEvent> results = LogEvent.find(LogEvent.class, "survey = ? AND event_type = ?",
+                getId().toString(),
+                LogEventType.INITIALIZATION_END.toString());
+
+        if (results.isEmpty()) {
+            return null;
+        } else {
+            return results.get(0).getTime();
+        }
+    }
+
     public void setAgentName(String agentName) {
         this.agentName = agentName;
     }
@@ -106,7 +119,7 @@ public class Survey extends SugarRecord {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "survey %d - %s - %s %s",
+        return Utils.formatString("survey %d - %s - %s %s",
                 getId(), date, line, destination);
     }
 }

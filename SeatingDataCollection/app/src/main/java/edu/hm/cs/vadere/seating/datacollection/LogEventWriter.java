@@ -78,6 +78,6 @@ public class LogEventWriter implements Serializable {
     }
 
     private void logcatInfo(String info, LogEventType event) {
-        Log.i(TAG, String.format("%s (%s)", info, event));
+        Log.i(TAG, Utils.formatString("%s (%s)", info, event));
     }
 }
