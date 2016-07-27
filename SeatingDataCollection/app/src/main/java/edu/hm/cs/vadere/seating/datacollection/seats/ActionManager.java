@@ -10,6 +10,7 @@ import android.widget.GridView;
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
@@ -119,7 +120,7 @@ public class ActionManager {
     }
 
     public void actionDefineGroup() {
-        if (pendingAction instanceof DefineGroupAction) {
+        if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
             ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
         } else {
@@ -158,7 +159,7 @@ public class ActionManager {
         logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
     }
 
-    public void finishActionMarkAgent(Survey survey, Seat seat) {
+    public void finishActionMarkAgent(Survey survey, Seat seat, OnOptionsMenuInvalidatedListener invalidatedListener) {
         if (seat.getSeatTaker() instanceof Person) {
             Person person = (Person) seat.getSeatTaker();
             makeNoPersonBeingAgent();
@@ -166,6 +167,7 @@ public class ActionManager {
             survey.setAgent(person);
             survey.save();
             clearPendingAction();
+            invalidatedListener.onOptionsMenuInvalidated();
         } else {
             UiHelper.showErrorToast(hostFragment.getContext(), R.string.error_please_select_a_person);
         }
@@ -185,6 +187,10 @@ public class ActionManager {
 
     public boolean isActionPending() {
         return pendingAction != null;
+    }
+
+    public boolean isActionPending(Class<? extends PendingAction> pendingActionClass) {
+        return pendingAction != null && pendingAction.getClass() == pendingActionClass;
     }
 
     private void removeBaggageForPerson(final Person person) {

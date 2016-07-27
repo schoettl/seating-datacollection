@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -60,4 +61,9 @@ public class UiHelper {
         Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.show();
     }
+
+    public static void dyeIconOfMenuItem(MenuItem item, int color) {
+        item.getIcon().setTint(color);
+    }
+
 }

@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,10 +10,12 @@ import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.MarkAgentAction;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
-public class InitCollectionActivity extends AppCompatActivity {
+public class InitCollectionActivity extends AppCompatActivity implements OnOptionsMenuInvalidatedListener {
 
+    private static final String TAG = "InitCollectionActivity";
     private Survey survey;
     private LogEventWriter logEventWriter;
     private SeatsFragment seatsFragment;
@@ -41,11 +44,23 @@ public class InitCollectionActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_mark_agent:
                 SeatsFragment fragment = getSeatsFragment();
-                fragment.getActionManager().actionMarkAgent(survey);
+                fragment.getActionManager().actionMarkAgent(survey, this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        SeatsFragment fragment = getSeatsFragment();
+        MenuItem item = menu.findItem(R.id.action_mark_agent);
+        if (fragment.getActionManager().isActionPending(MarkAgentAction.class)) {
+            UiHelper.dyeIconOfMenuItem(item, Color.RED);
+        } else {
+            UiHelper.dyeIconOfMenuItem(item, Color.BLACK);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public void startDataCollection(View view) {
@@ -64,4 +79,8 @@ public class InitCollectionActivity extends AppCompatActivity {
         return seatsFragment;
     }
 
+    @Override
+    public void onOptionsMenuInvalidated() {
+        invalidateOptionsMenu();
+    }
 }

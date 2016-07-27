@@ -1,18 +1,21 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
+import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class MarkAgentAction extends PendingAction {
     private final Survey survey;
+    private final OnOptionsMenuInvalidatedListener optionsMenuInvalidatedListener;
 
-    public MarkAgentAction(ActionManager actionManager, Survey survey) {
+    public MarkAgentAction(ActionManager actionManager, Survey survey, OnOptionsMenuInvalidatedListener invalidatedListener) {
         super(actionManager);
         this.survey = survey;
+        this.optionsMenuInvalidatedListener = invalidatedListener;
     }
 
     @Override
     public void seatSelected(Seat seat) {
-        getActionManager().finishActionMarkAgent(survey, seat);
+        getActionManager().finishActionMarkAgent(survey, seat, optionsMenuInvalidatedListener);
     }
 }
