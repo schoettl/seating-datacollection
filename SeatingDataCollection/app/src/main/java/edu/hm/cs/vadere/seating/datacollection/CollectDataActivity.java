@@ -115,7 +115,7 @@ public class CollectDataActivity extends AppCompatActivity {
         UiHelper.showConfirmDialog(this, R.string.dialog_confirm_end_data_collection, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(CollectDataActivity.this, StartSurveyActivity.class);
+                Intent intent = new Intent(CollectDataActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
