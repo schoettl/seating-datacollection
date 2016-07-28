@@ -56,9 +56,9 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         SeatsFragment fragment = getSeatsFragment();
         MenuItem item = menu.findItem(R.id.action_mark_agent);
         if (fragment.getActionManager().isActionPending(MarkAgentAction.class)) {
-            UiHelper.dyeIconOfMenuItem(item, Color.RED);
+            UiHelper.tintIconOfMenuItem(item, Color.RED);
         } else {
-            UiHelper.dyeIconOfMenuItem(item, Color.BLACK);
+            UiHelper.tintIconOfMenuItem(item, Color.BLACK);
         }
         return super.onPrepareOptionsMenu(menu);
     }

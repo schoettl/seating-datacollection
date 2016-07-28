@@ -62,7 +62,11 @@ public class UiHelper {
         toast.show();
     }
 
-    public static void dyeIconOfMenuItem(MenuItem item, int color) {
+    /**
+     * Tint an icon of a MenuItem. Default color (dark on light background) is black at 54 % opacity.
+     * See https://google.github.io/material-design-icons/ > Coloring
+     */
+    public static void tintIconOfMenuItem(MenuItem item, int color) {
         item.getIcon().setTint(color);
     }
 
