@@ -40,7 +40,7 @@ public class MarkAgentAction extends PendingAction {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         makeNoPersonBeingAgent();
         survey.setAgent(null);
         survey.save();

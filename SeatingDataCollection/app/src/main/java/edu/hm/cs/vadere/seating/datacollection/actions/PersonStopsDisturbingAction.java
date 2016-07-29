@@ -18,7 +18,7 @@ public class PersonStopsDisturbingAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         person.setDisturbing(true);
         deleteLogEvent(logEventId);
     }

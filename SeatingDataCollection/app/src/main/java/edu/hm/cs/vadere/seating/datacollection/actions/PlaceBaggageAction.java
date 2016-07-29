@@ -36,7 +36,7 @@ public class PlaceBaggageAction extends PendingAction {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         otherSeat.clearSeat();
         deleteLogEvent(logEventId);
     }

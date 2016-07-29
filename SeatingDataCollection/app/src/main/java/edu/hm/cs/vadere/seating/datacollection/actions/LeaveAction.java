@@ -25,7 +25,7 @@ public class LeaveAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         seat.setSeatTaker(person);
         deleteLogEvent(logEventId);
     }

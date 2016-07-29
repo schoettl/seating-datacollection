@@ -34,7 +34,7 @@ public class DefineGroupAction extends PendingAction {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         // This is not perfect. Previous groups are lost and have to be reassigned manually.
         for (Person p : persons) {
             p.setGroup(null);

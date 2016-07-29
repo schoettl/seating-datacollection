@@ -26,11 +26,11 @@ public class UpdatePersonPropertiesAction extends Action {
                 person.save();
             }
         });
-        dialog.show(getActionManager().hostFragment.getActivity().getSupportFragmentManager(), PersonDialogFragment.FRAGMENT_TAG);
+        dialog.show(getActionManager().getSeatsFragment().getActivity().getSupportFragmentManager(), PersonDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
-        UiHelper.showInfoDialog(getActionManager().hostFragment.getActivity(), R.string.dialog_info_undo_update_person);
+    public void undo() {
+        UiHelper.showInfoDialog(getActionManager().getSeatsFragment().getActivity(), R.string.dialog_info_undo_update_person);
     }
 }

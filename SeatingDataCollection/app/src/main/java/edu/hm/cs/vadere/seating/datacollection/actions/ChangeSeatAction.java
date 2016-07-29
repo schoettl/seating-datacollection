@@ -38,7 +38,7 @@ public class ChangeSeatAction extends PendingAction {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         if (newSeat.getSeatTaker() == person)
             newSeat.clearSeat();
         oldSeat.setSeatTaker(person);

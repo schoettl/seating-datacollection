@@ -24,7 +24,7 @@ public class RemoveBaggageAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         seat.setSeatTaker(new HandBaggage(owner));
         deleteLogEvent(logEventId);
     }

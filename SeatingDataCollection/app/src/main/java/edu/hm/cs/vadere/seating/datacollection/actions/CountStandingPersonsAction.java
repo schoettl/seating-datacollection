@@ -42,7 +42,7 @@ public class CountStandingPersonsAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         if (logEventId != null)
             deleteLogEvent(logEventId);
     }

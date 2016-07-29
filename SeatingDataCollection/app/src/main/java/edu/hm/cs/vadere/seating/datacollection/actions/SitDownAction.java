@@ -31,7 +31,7 @@ public class SitDownAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         seat.clearSeat();
         person.delete();
         deleteLogEvent(logEventId);

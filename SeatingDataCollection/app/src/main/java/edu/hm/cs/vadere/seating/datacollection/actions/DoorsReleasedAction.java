@@ -14,7 +14,7 @@ public class DoorsReleasedAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         deleteLogEvent(logEventId);
     }
 

@@ -22,14 +22,14 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class ActionManager {
     private static final String TAG = "ActionManager";
-    final SeatsFragment hostFragment;
+    final SeatsFragment seatsFragment;
     final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
     private Stack<Action> actionStack = new Stack<>();
 
-    public ActionManager(SeatsFragment hostFragment, LogEventWriter logEventWriter) {
+    public ActionManager(SeatsFragment seatsFragment, LogEventWriter logEventWriter) {
         this.logEventWriter = logEventWriter;
-        this.hostFragment = hostFragment;
+        this.seatsFragment = seatsFragment;
     }
 
     public void clearPendingAction() {
@@ -66,7 +66,7 @@ public class ActionManager {
     }
 
     void showError(int message) {
-        UiHelper.showErrorToast(hostFragment.getContext(), message);
+        UiHelper.showErrorToast(seatsFragment.getContext(), message);
     }
 
     boolean isSeatOccupiedByPerson(Seat seat) {
@@ -86,11 +86,11 @@ public class ActionManager {
         if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
             pendingAction.perform();
-            hostFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
+            seatsFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
         } else {
             Log.d(TAG, "starting defining group");
             addPendingActionToStack(new DefineGroupAction(this));
-            hostFragment.onOptionsMenuInvalidated();
+            seatsFragment.onOptionsMenuInvalidated();
         }
     }
 
@@ -129,7 +129,7 @@ public class ActionManager {
     }
 
     List<Seat> getSeatsOfSeatsFragments() {
-        GridView gridView = (GridView) hostFragment.getView();
+        GridView gridView = (GridView) seatsFragment.getView();
         FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
         return adapter.getSeats();
     }
@@ -148,7 +148,7 @@ public class ActionManager {
     private void addPendingActionToStack(PendingAction action) {
         actionStack.push(action);
         pendingAction = action;
-        UiHelper.showInfoToast(hostFragment.getContext(), R.string.info_pending_action);
+        UiHelper.showInfoToast(seatsFragment.getContext(), R.string.info_pending_action);
     }
 
     public boolean tryUndoLastAction() {
@@ -176,5 +176,9 @@ public class ActionManager {
 
     public void actionCountStandingPersons(Activity activity) {
         performActionAndAddToStack(new CountStandingPersonsAction(this, activity));
+    }
+
+    public SeatsFragment getSeatsFragment() {
+        return seatsFragment;
     }
 }

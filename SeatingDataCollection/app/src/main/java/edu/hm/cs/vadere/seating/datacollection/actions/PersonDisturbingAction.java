@@ -19,9 +19,9 @@ public class PersonDisturbingAction extends Action {
 
     @Override
     public void perform() {
-        final EditText editTextReason = new EditText(getActionManager().hostFragment.getContext());
+        final EditText editTextReason = new EditText(getActionManager().getSeatsFragment().getContext());
         final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(editTextReason);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActionManager().hostFragment.getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActionManager().getSeatsFragment().getContext());
         builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
         builder.setPositiveButton(R.string.dialog_ok, okClickListener);
@@ -42,7 +42,7 @@ public class PersonDisturbingAction extends Action {
     }
 
     @Override
-    public void undo() throws UnsupportedOperationException {
+    public void undo() {
         person.setDisturbing(false);
         deleteLogEvent(logEventId);
     }
