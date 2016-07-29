@@ -73,8 +73,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         //    throw new IOException("external storage must be mounted writable");
 
         File directory = Environment.getExternalStorageDirectory();
-//        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        //File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS); // as alternative
         logDirExist(directory);
         directory = new File(directory, "SeatingDataCollection");
         directory.mkdirs();
