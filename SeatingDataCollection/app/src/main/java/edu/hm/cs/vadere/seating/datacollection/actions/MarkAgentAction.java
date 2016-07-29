@@ -1,8 +1,9 @@
-package edu.hm.cs.vadere.seating.datacollection.seats;
+package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
 
 public class MarkAgentAction extends PendingAction {
     private final Survey survey;

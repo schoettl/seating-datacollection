@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.seats;
+package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +21,9 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.FloorRectAdapter;
+import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
@@ -197,6 +200,10 @@ public class ActionManager {
 
     public boolean isActionPending(Class<? extends PendingAction> pendingActionClass) {
         return pendingAction != null && pendingAction.getClass() == pendingActionClass;
+    }
+
+    public boolean isActionPending(PendingAction otherAction) {
+        return pendingAction == otherAction;
     }
 
     private void removeBaggageForPerson(final Person person) {

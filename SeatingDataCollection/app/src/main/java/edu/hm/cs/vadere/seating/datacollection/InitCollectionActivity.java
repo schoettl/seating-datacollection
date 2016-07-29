@@ -10,7 +10,7 @@ import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
-import edu.hm.cs.vadere.seating.datacollection.seats.MarkAgentAction;
+import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class InitCollectionActivity extends AppCompatActivity implements OnOptionsMenuInvalidatedListener {

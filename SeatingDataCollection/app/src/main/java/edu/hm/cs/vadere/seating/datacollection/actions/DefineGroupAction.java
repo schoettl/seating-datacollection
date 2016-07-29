@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.seats;
+package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import android.util.Log;
 
@@ -9,6 +9,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
+import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
 
 public class DefineGroupAction extends PendingAction {
     private static final String TAG = "DefineGroupAction";

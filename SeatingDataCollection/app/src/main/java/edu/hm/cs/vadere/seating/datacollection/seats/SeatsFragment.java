@@ -21,6 +21,8 @@ import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
+import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
+import edu.hm.cs.vadere.seating.datacollection.actions.DefineGroupAction;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
