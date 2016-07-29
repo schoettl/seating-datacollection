@@ -39,6 +39,13 @@ public class MarkAgentAction extends PendingAction {
         optionsMenuInvalidatedListener.onOptionsMenuInvalidated();
     }
 
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        makeNoPersonBeingAgent();
+        survey.setAgent(null);
+        survey.save();
+    }
+
     private void makeNoPersonBeingAgent() {
         for (Seat s : getActionManager().getSeatsOfSeatsFragments()) {
             if (s.getSeatTaker() instanceof Person) {
