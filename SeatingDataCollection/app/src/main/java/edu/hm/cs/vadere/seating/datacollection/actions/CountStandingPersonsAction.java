@@ -11,6 +11,7 @@ import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 
 public class CountStandingPersonsAction extends Action {
     private final Activity activity;
+    private Long logEventId = null;
 
     protected CountStandingPersonsAction(ActionManager actionManager, Activity activity) {
         super(actionManager);
@@ -30,7 +31,7 @@ public class CountStandingPersonsAction extends Action {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     int count = Integer.parseInt(editTextCount.getText().toString());
-                    getLogEventWriter().logCountStandingPersons(count);
+                    logEventId = getLogEventWriter().logCountStandingPersons(count);
                 } catch (NumberFormatException e) {
                     UiHelper.showErrorToast(activity, R.string.error_invalid_number_for_count);
                 }
@@ -38,6 +39,12 @@ public class CountStandingPersonsAction extends Action {
         });
         UiHelper.setDefaultNegativeButton(builder);
         UiHelper.createAndShowAlertWithSoftKeyboard(builder);
+    }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        if (logEventId != null)
+            deleteLogEvent(logEventId);
     }
 
 }
