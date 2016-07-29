@@ -2,6 +2,7 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -52,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
         ProgressDialog progressDialog = new ProgressDialog(this);
         AsyncTask<Void, ?, ?> task = new DatabaseExportTask(this, progressDialog);
         task.execute();
+    }
+
+    public void deleteDatabase(View view) {
+        UiHelper.showConfirmDialog(this, R.string.dialog_confirm_delete_db, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i(TAG, "deleting database");
+                deleteDatabase(SeatingDataCollectionApp.DATABASE_NAME);
+                // TODO list of surveys only gets updated onCreate
+            }
+        });
     }
 
     private boolean requestPermissions() {

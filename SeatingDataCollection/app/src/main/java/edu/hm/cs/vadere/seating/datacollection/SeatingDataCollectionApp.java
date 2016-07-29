@@ -1,7 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
-import android.util.Log;
-
 import com.orm.SugarApp;
 
 public class SeatingDataCollectionApp extends SugarApp {
@@ -12,12 +10,7 @@ public class SeatingDataCollectionApp extends SugarApp {
 
     @Override
     public void onCreate() {
-//        deleteDatabase();
         super.onCreate();
     }
 
-    private void deleteDatabase() {
-        Log.i(TAG, "deleting database");
-        deleteDatabase(DATABASE_NAME);
-    }
 }
