@@ -11,6 +11,8 @@ public abstract class Action {
         return actionManager;
     }
 
+    public abstract void perform();
+
     public void undo() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("undo not supported");
     }

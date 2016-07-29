@@ -23,11 +23,18 @@ public abstract class PendingAction extends Action {
         }
     }
 
-    protected abstract void undoFinishedAction();
+    /** Please override this in subclasses. */
+    protected void undoFinishedAction() {
+        throw new UnsupportedOperationException("undo not supported for pending action");
+    }
 
     public void clearThisPendingAction() {
         Log.d(TAG, "clearing pending action");
         getActionManager().clearPendingAction();
+    }
+
+    public boolean isThisActionPending() {
+        return getActionManager().isActionPending(this);
     }
 
     public abstract void seatSelected(Seat seat);

@@ -20,6 +20,11 @@ public class DefineGroupAction extends PendingAction {
     }
 
     @Override
+    public void perform() {
+        setCommonGroupForSelectedPersons();
+    }
+
+    @Override
     public void seatSelected(Seat seat) {
         SeatTaker seatTaker = seat.getSeatTaker();
         if (seatTaker instanceof Person) {

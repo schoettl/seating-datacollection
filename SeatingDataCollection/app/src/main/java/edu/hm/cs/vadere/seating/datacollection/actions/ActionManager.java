@@ -16,7 +16,6 @@ import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
-import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
@@ -32,7 +31,7 @@ import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOW
 public class ActionManager {
     private static final String TAG = "ActionManager";
     private final SeatsFragment hostFragment;
-    private final LogEventWriter logEventWriter;
+    final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
 
     public ActionManager(SeatsFragment hostFragment, LogEventWriter logEventWriter) {
@@ -100,11 +99,11 @@ public class ActionManager {
         logEventWriter.logSeatEvent(SIT_DOWN, seat, person);
     }
 
-    private void showError(int message) {
+    void showError(int message) {
         UiHelper.showErrorToast(hostFragment.getContext(), message);
     }
 
-    private boolean isSeatOccupiedByPerson(Seat seat) {
+    boolean isSeatOccupiedByPerson(Seat seat) {
         return (seat.getSeatTaker() instanceof Person);
     }
 
@@ -124,7 +123,7 @@ public class ActionManager {
     public void actionDefineGroup() {
         if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
-            ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
+            pendingAction.perform();
             hostFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
         } else {
             Log.d(TAG, "starting defining group");
@@ -140,54 +139,6 @@ public class ActionManager {
             clearPendingAction();
         }
         invalidatedListener.onOptionsMenuInvalidated();
-    }
-
-    public void finishActionPlaceBaggage(Person person, Seat otherSeat) {
-        if (isSeatOccupiedByPerson(otherSeat)) {
-            showError(R.string.error_seat_occupied_by_person);
-            return;
-        }
-
-        HandBaggage baggage = new HandBaggage(person);
-        otherSeat.setSeatTaker(baggage);
-        logEventWriter.logSeatEvent(LogEventType.PLACE_BAGGAGE, otherSeat, person);
-    }
-
-    public void finishActionChangeSeat(Seat seat, Seat newSeat) {
-
-        if (isSeatOccupiedByPerson(newSeat)) {
-            showError(R.string.error_seat_occupied_by_person);
-            return;
-        }
-
-        Person person = (Person) seat.getSeatTaker();
-        seat.clearSeat();
-
-        removeBaggageIfAny(newSeat);
-        newSeat.setSeatTaker(person);
-        logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
-    }
-
-    public void finishActionMarkAgent(Survey survey, Seat seat, OnOptionsMenuInvalidatedListener invalidatedListener) {
-        if (seat.getSeatTaker() instanceof Person) {
-            Person person = (Person) seat.getSeatTaker();
-            makeNoPersonBeingAgent();
-            person.setAgent(true);
-            survey.setAgent(person);
-            survey.save();
-            clearPendingAction();
-            invalidatedListener.onOptionsMenuInvalidated();
-        } else {
-            UiHelper.showErrorToast(hostFragment.getContext(), R.string.error_please_select_a_person);
-        }
-    }
-
-    private void makeNoPersonBeingAgent() {
-        for (Seat s : getSeatsOfSeatsFragments()) {
-            if (s.getSeatTaker() instanceof Person) {
-                ((Person) s.getSeatTaker()).setAgent(false);
-            }
-        }
     }
 
     public void seatSelected(Seat seat) {
@@ -206,7 +157,7 @@ public class ActionManager {
         return pendingAction == otherAction;
     }
 
-    private void removeBaggageForPerson(final Person person) {
+    void removeBaggageForPerson(final Person person) {
         for (Seat seat : getSeatsOfSeatsFragments()) {
             SeatTaker seatTaker = seat.getSeatTaker();
             if (seatTaker instanceof HandBaggage && ((HandBaggage) seatTaker).getOwner() == person) {
@@ -215,13 +166,13 @@ public class ActionManager {
         }
     }
 
-    private List<Seat> getSeatsOfSeatsFragments() {
+    List<Seat> getSeatsOfSeatsFragments() {
         GridView gridView = (GridView) hostFragment.getView();
         FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
         return adapter.getSeats();
     }
 
-    private void removeBaggageIfAny(Seat seat) {
+    void removeBaggageIfAny(Seat seat) {
         if (seat.getSeatTaker() instanceof HandBaggage) {
             actionRemoveBaggage(seat);
         }
