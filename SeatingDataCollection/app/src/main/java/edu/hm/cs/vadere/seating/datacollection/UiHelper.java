@@ -25,7 +25,7 @@ public class UiHelper {
             };
 
     public static void setDefaultNegativeButton(AlertDialog.Builder alertDialogBuilder) {
-        alertDialogBuilder.setNegativeButton(R.string.cancel, alertDialogDefaultListener);
+        alertDialogBuilder.setNegativeButton(R.string.dialog_cancel, alertDialogDefaultListener);
     }
 
     public static void showAlertWithSoftKeyboard(AlertDialog.Builder alertDialogBuilder) {
@@ -37,7 +37,7 @@ public class UiHelper {
     public static void showConfirmDialog(Activity activity, int message, DialogInterface.OnClickListener positiveButtonListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(message);
-        builder.setPositiveButton(R.string.ok, positiveButtonListener);
+        builder.setPositiveButton(R.string.dialog_ok, positiveButtonListener);
         setDefaultNegativeButton(builder);
         builder.show();
     }
@@ -45,7 +45,7 @@ public class UiHelper {
     public static void showInfoDialog(Activity activity, int message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(message);
-        builder.setPositiveButton(R.string.ok, alertDialogDefaultListener);
+        builder.setPositiveButton(R.string.dialog_ok, alertDialogDefaultListener);
         builder.show();
     }
 

@@ -50,7 +50,7 @@ public class ActionManager {
         final AlertDialog.Builder builder = new AlertDialog.Builder(hostFragment.getContext());
         builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
-        builder.setPositiveButton(R.string.ok, okClickListener);
+        builder.setPositiveButton(R.string.dialog_ok, okClickListener);
         UiHelper.showAlertWithSoftKeyboard(builder);
     }
 

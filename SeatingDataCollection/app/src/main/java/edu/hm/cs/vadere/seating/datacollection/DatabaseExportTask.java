@@ -49,9 +49,9 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     protected void onPostExecute(Boolean success) {
         progressDialog.dismiss();
         if (success) {
-            UiHelper.showInfoDialog(activity, R.string.info_export_success);
+            UiHelper.showInfoDialog(activity, R.string.dialog_info_export_success);
         } else {
-            UiHelper.showInfoDialog(activity, R.string.info_export_fail);
+            UiHelper.showInfoDialog(activity, R.string.dialog_info_export_fail);
         }
     }
 
