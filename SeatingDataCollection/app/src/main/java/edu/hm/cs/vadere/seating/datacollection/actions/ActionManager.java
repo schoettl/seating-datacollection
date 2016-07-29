@@ -3,6 +3,7 @@ package edu.hm.cs.vadere.seating.datacollection.actions;
 import android.util.Log;
 import android.widget.GridView;
 
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
@@ -148,12 +149,12 @@ public class ActionManager {
     }
 
     public boolean tryUndoLastAction() {
-        Action action = actionStack.peek();
         try {
+            Action action = actionStack.peek();
             action.undo();
             actionStack.pop();
             return true;
-        } catch (UnsupportedOperationException e) {
+        } catch (EmptyStackException | UnsupportedOperationException e) {
             return false;
         }
     }
