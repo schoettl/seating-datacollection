@@ -77,4 +77,8 @@ public class UiHelper {
         item.getIcon().setTint(color);
     }
 
+    public static void showInfoToast(Context context, int message) {
+        Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
+        toast.show();
+    }
 }

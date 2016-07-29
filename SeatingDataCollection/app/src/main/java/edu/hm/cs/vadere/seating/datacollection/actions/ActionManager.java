@@ -10,6 +10,7 @@ import java.util.Stack;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
+import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -147,6 +148,7 @@ public class ActionManager {
     private void addPendingActionToStack(PendingAction action) {
         actionStack.push(action);
         pendingAction = action;
+        UiHelper.showInfoToast(hostFragment.getContext(), R.string.info_pending_action);
     }
 
     public boolean tryUndoLastAction() {

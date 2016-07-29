@@ -45,4 +45,5 @@
     <string name="dialog_confirm_delete_db">Really delete the database?</string>
     <string name="delete_database">Delete database</string>
     <string name="error_cannot_undo">Cannot undo last action</string>
+    <string name="info_pending_action">Select seat(s) for pending action</string>
 </resources>
