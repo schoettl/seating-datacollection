@@ -6,24 +6,23 @@ import android.widget.EditText;
 
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class PersonDisturbingAction extends Action {
-    private final Seat seat;
+    private Person person;
+    private long logEventId;
 
     protected PersonDisturbingAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
-        this.seat = seat;
+        this.person = (Person) seat.getSeatTaker();
     }
 
     @Override
     public void perform() {
-        Person p = (Person) seat.getSeatTaker();
-        // Action is done in the okClickListener
-
         final EditText editTextReason = new EditText(getActionManager().hostFragment.getContext());
-        final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(p, editTextReason);
+        final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(editTextReason);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActionManager().hostFragment.getContext());
         builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
@@ -33,17 +32,21 @@ public class PersonDisturbingAction extends Action {
     }
 
     private class DisturbingReasonOkClickListener implements DialogInterface.OnClickListener {
-        private Person p;
         private EditText edit;
-        public DisturbingReasonOkClickListener(Person p, EditText edit) {
-            this.p = p;
+        public DisturbingReasonOkClickListener(EditText edit) {
             this.edit = edit;
         }
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            p.setDisturbing(true);
-            getActionManager().logEventWriter.logDisturbingPerson(p, edit.getText().toString());
+            person.setDisturbing(true);
+            logEventId = getLogEventWriter().logDisturbingPerson(person, edit.getText().toString());
         }
     }
 
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        person.setDisturbing(false);
+        LogEvent event = LogEvent.findById(LogEvent.class, logEventId);
+        event.delete();
+    }
 }
