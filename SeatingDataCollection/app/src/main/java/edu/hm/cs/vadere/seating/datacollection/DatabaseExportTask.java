@@ -2,9 +2,11 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -91,6 +93,15 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
                 exportTable(db, tableName, directory);
             }
         }
+
+        triggerMediaScan();
+    }
+
+    /** Trigger media scan to make new files visible for MTP clients. */
+    private void triggerMediaScan() {
+        // http://muzso.hu/2014/05/11/manually-running-a-media-scan-on-android
+        Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageState()));
+        // not tested
     }
 
     private void logDirExist(File directory) {
