@@ -8,6 +8,8 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 public class ChangeSeatAction extends PendingAction {
     private Seat oldSeat;
     private Seat newSeat;
+    private Person person;
+    private long logEventId;
 
     public ChangeSeatAction(ActionManager actionManager, Seat oldSeat) {
         super(actionManager);
@@ -27,12 +29,19 @@ public class ChangeSeatAction extends PendingAction {
 
     @Override
     public void perform() {
-        Person person = (Person) oldSeat.getSeatTaker();
+        person = (Person) oldSeat.getSeatTaker();
         oldSeat.clearSeat();
 
         getActionManager().removeBaggageIfAny(newSeat);
         newSeat.setSeatTaker(person);
-        getActionManager().logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
+        logEventId = getActionManager().logEventWriter.logSeatEvent(LogEventType.CHANGE_SEAT, newSeat, person);
     }
 
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        if (newSeat.getSeatTaker() == person)
+            newSeat.clearSeat();
+        oldSeat.setSeatTaker(person);
+        deleteLogEvent(logEventId);
+    }
 }
