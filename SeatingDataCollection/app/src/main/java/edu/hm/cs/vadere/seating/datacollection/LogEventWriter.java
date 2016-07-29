@@ -25,48 +25,49 @@ public class LogEventWriter implements Serializable {
         this.survey = survey;
     }
 
-    public void logInitializationEnd() {
+    public long logInitializationEnd() {
         logcatInfo("initialization end", INITIALIZATION_END);
-        logEvent(createLogEvent(INITIALIZATION_END, null, null));
+        return logEvent(createLogEvent(INITIALIZATION_END, null, null));
     }
 
-    public void logSeatEvent(LogEventType eventType, Seat seat, Person person) {
+    public long logSeatEvent(LogEventType eventType, Seat seat, Person person) {
         logcatInfo("seat event", eventType);
-        logEvent(createLogEvent(eventType, seat.getId(), person));
+        return logEvent(createLogEvent(eventType, seat.getId(), person));
     }
 
-    public void logTrainEvent(LogEventType eventType) {
+    public long logTrainEvent(LogEventType eventType) {
         logcatInfo("train event (seat, person)", eventType);
-        logEvent(createLogEvent(eventType, null, null));
+        return logEvent(createLogEvent(eventType, null, null));
     }
 
-    public void logCountStandingPersons(int count) {
+    public long logCountStandingPersons(int count) {
         logcatInfo("count standing persons", COUNT_STANDING_PERSONS);
-        logEvent(createLogEvent(COUNT_STANDING_PERSONS, null, null, count, null));
+        return logEvent(createLogEvent(COUNT_STANDING_PERSONS, null, null, count, null));
     }
 
-    public void logDisturbingPerson(Person person, String reason) {
+    public long logDisturbingPerson(Person person, String reason) {
         logcatInfo("disturbing person: " + reason, DISTURBING);
-        logEvent(createLogEvent(DISTURBING, null, person, null, reason));
+        return logEvent(createLogEvent(DISTURBING, null, person, null, reason));
     }
 
-    public void logDisturbingSeat(Seat seat, String reason) {
+    public long logDisturbingSeat(Seat seat, String reason) {
         logcatInfo("disturbing seat: " + reason, DISTURBING);
-        logEvent(createLogEvent(DISTURBING, seat.getId(), null, null, reason));
+        return logEvent(createLogEvent(DISTURBING, seat.getId(), null, null, reason));
     }
 
-    public void logStopsDisturbingPerson(Person p) {
+    public long logStopsDisturbingPerson(Person p) {
         logcatInfo("stops disturbing person", DISTURBING);
-        logEvent(createLogEvent(STOPS_DISTURBING, null, p));
+        return logEvent(createLogEvent(STOPS_DISTURBING, null, p));
     }
 
-    public void logStopsDisturbingSeat(Seat s) {
+    public long logStopsDisturbingSeat(Seat s) {
         logcatInfo("stops disturbing seat", DISTURBING);
-        logEvent(createLogEvent(STOPS_DISTURBING, s.getId(), null));
+        return logEvent(createLogEvent(STOPS_DISTURBING, s.getId(), null));
     }
 
-    private void logEvent(LogEvent e) {
+    private long logEvent(LogEvent e) {
         e.save();
+        return e.getId();
     }
 
     private LogEvent createLogEvent(LogEventType eventType, Integer seat, Person person, Integer extraInt, String extraString) {
