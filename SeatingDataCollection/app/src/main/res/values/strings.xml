@@ -40,4 +40,6 @@
     <string name="error_please_select_a_person">Please select a person</string>
     <string name="error_seat_occupied_by_person">Seat is occupied by another person</string>
     <string name="action_undo">Undo</string>
+    <string name="info_export_success">Export successfully finished</string>
+    <string name="info_export_fail">Export failed</string>
 </resources>

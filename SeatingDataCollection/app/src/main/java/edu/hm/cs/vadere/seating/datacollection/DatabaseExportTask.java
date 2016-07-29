@@ -1,7 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -25,11 +25,11 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     private static final String TAG = "DatabaseExport";
 
-    private final Context context;
+    private final Activity activity;
     private final ProgressDialog progressDialog;
 
-    public DatabaseExportTask(Context context, ProgressDialog progressDialog) {
-        this.context = context;
+    public DatabaseExportTask(Activity activity, ProgressDialog progressDialog) {
+        this.activity = activity;
         this.progressDialog = progressDialog;
     }
 
@@ -44,9 +44,13 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean aBoolean) {
+    protected void onPostExecute(Boolean success) {
         progressDialog.dismiss();
-        // TODO show dialog?
+        if (success) {
+            UiHelper.showInfoDialog(activity, R.string.info_export_success);
+        } else {
+            UiHelper.showInfoDialog(activity, R.string.info_export_fail);
+        }
     }
 
     @Override
@@ -75,7 +79,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         logDirExist(directory);
 
         // Open db
-        SQLiteOpenHelper helper = new MySQLiteOpenHelper(context, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
+        SQLiteOpenHelper helper = new MySQLiteOpenHelper(activity, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
         try (SQLiteDatabase db = helper.getWritableDatabase()) {
 
             List<String> tableNames = getTableList();

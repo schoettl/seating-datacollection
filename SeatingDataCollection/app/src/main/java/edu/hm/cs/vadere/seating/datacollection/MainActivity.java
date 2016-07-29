@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i(TAG, "starting export");
         ProgressDialog progressDialog = new ProgressDialog(this);
-        AsyncTask<Void, ?, ?> task = new DatabaseExportTask(getBaseContext(), progressDialog);
+        AsyncTask<Void, ?, ?> task = new DatabaseExportTask(this, progressDialog);
         task.execute();
     }
 

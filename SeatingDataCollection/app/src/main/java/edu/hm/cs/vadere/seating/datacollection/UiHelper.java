@@ -18,14 +18,14 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class UiHelper {
 
-    private static final DialogInterface.OnClickListener alertDialogDefaultNegativeListener =
+    private static final DialogInterface.OnClickListener alertDialogDefaultListener =
             new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) { }
             };
 
     public static void setDefaultNegativeButton(AlertDialog.Builder alertDialogBuilder) {
-        alertDialogBuilder.setNegativeButton(R.string.cancel, alertDialogDefaultNegativeListener);
+        alertDialogBuilder.setNegativeButton(R.string.cancel, alertDialogDefaultListener);
     }
 
     public static void showAlertWithSoftKeyboard(AlertDialog.Builder alertDialogBuilder) {
@@ -39,6 +39,13 @@ public class UiHelper {
         builder.setMessage(message);
         builder.setPositiveButton(R.string.ok, positiveButtonListener);
         setDefaultNegativeButton(builder);
+        builder.show();
+    }
+
+    public static void showInfoDialog(Activity activity, int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.ok, alertDialogDefaultListener);
         builder.show();
     }
 
