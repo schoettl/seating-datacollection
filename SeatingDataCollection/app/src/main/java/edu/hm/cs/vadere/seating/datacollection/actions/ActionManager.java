@@ -1,5 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.GridView;
 
@@ -159,4 +160,19 @@ public class ActionManager {
         }
     }
 
+    public void actionDirectionChange() {
+        performActionAndAddToStack(new DirectionChangeAction(this));
+    }
+
+    public void actionDoorsReleased() {
+        performActionAndAddToStack(new DoorsReleasedAction(this));
+    }
+
+    public void actionTrainStarts() {
+        performActionAndAddToStack(new TrainStartsAction(this));
+    }
+
+    public void actionCountStandingPersons(Activity activity) {
+        performActionAndAddToStack(new CountStandingPersonsAction(this, activity));
+    }
 }
