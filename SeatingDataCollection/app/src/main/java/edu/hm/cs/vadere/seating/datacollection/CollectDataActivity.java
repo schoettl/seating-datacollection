@@ -94,7 +94,7 @@ public class CollectDataActivity extends AppCompatActivity {
             }
         });
         UiHelper.setDefaultNegativeButton(builder);
-        UiHelper.showAlertWithSoftKeyboard(builder);
+        UiHelper.createAndShowAlertWithSoftKeyboard(builder);
     }
 
     @Override

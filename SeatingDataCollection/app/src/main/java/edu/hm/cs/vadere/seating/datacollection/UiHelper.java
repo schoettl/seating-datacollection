@@ -28,7 +28,7 @@ public class UiHelper {
         alertDialogBuilder.setNegativeButton(R.string.dialog_cancel, alertDialogDefaultListener);
     }
 
-    public static void showAlertWithSoftKeyboard(AlertDialog.Builder alertDialogBuilder) {
+    public static void createAndShowAlertWithSoftKeyboard(AlertDialog.Builder alertDialogBuilder) {
         AlertDialog dialog = alertDialogBuilder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.show();

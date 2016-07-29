@@ -51,7 +51,7 @@ public class ActionManager {
         builder.setTitle(R.string.dialog_disturbing_reason);
         builder.setView(editTextReason);
         builder.setPositiveButton(R.string.dialog_ok, okClickListener);
-        UiHelper.showAlertWithSoftKeyboard(builder);
+        UiHelper.createAndShowAlertWithSoftKeyboard(builder);
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {
