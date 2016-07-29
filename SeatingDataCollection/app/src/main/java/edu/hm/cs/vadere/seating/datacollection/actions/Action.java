@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
 
 public abstract class Action {
     private ActionManager actionManager;
@@ -22,4 +23,10 @@ public abstract class Action {
     public void undo() throws UnsupportedOperationException {
         throw new UnsupportedOperationException("undo not supported");
     }
+
+    protected void deleteLogEvent(long id) {
+        LogEvent event = LogEvent.findById(LogEvent.class, id);
+        event.delete();
+    }
+
 }

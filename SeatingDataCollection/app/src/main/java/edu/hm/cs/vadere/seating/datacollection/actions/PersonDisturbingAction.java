@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
-import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
@@ -46,7 +45,7 @@ public class PersonDisturbingAction extends Action {
     @Override
     public void undo() throws UnsupportedOperationException {
         person.setDisturbing(false);
-        LogEvent event = LogEvent.findById(LogEvent.class, logEventId);
-        event.delete();
+        deleteLogEvent(logEventId);
     }
+
 }

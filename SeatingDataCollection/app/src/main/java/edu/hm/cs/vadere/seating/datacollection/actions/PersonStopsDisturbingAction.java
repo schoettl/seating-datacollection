@@ -4,17 +4,23 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class PersonStopsDisturbingAction extends Action {
-    private final Seat seat;
+    private final Person person;
+    private long logEventId;
 
     protected PersonStopsDisturbingAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
-        this.seat = seat;
+        this.person = (Person) seat.getSeatTaker();
     }
 
     @Override
     public void perform() {
-        Person p = (Person) seat.getSeatTaker();
-        p.setDisturbing(false);
-        getLogEventWriter().logStopsDisturbingPerson(p);
+        person.setDisturbing(false);
+        logEventId = getLogEventWriter().logStopsDisturbingPerson(person);
+    }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        person.setDisturbing(true);
+        deleteLogEvent(logEventId);
     }
 }
