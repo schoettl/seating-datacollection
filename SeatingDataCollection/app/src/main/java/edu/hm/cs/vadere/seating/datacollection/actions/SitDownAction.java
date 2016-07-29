@@ -8,6 +8,9 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class SitDownAction extends Action {
     private Seat seat;
+    private Person person;
+    private long logEventId;
+
     protected SitDownAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
@@ -20,11 +23,19 @@ public class SitDownAction extends Action {
             return;
         }
 
-        Person person = new Person();
+        person = new Person();
         person.save();
         getActionManager().removeBaggageIfAny(seat);
         seat.setSeatTaker(person);
-        getLogEventWriter().logSeatEvent(LogEventType.SIT_DOWN, seat, person);
+        logEventId = getLogEventWriter().logSeatEvent(LogEventType.SIT_DOWN, seat, person);
+    }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        seat.clearSeat();
+        person.delete();
+        deleteLogEvent(logEventId);
+        // Note: perform seems to be atomic but can consist of multiple actions (removeBaggeIfAny)
     }
 }
 
