@@ -6,6 +6,8 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class LeaveAction extends Action {
     private final Seat seat;
+    private Person person;
+    private long logEventId;
 
     protected LeaveAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
@@ -14,11 +16,18 @@ public class LeaveAction extends Action {
 
     @Override
     public void perform() {
-        Person person = (Person) seat.getSeatTaker();
+        person = (Person) seat.getSeatTaker();
 
         getActionManager().removeBaggageForPerson(person);
 
         seat.clearSeat();
-        getLogEventWriter().logSeatEvent(LogEventType.LEAVE, seat, person);
+        logEventId = getLogEventWriter().logSeatEvent(LogEventType.LEAVE, seat, person);
     }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        seat.setSeatTaker(person);
+        deleteLogEvent(logEventId);
+    }
+
 }
