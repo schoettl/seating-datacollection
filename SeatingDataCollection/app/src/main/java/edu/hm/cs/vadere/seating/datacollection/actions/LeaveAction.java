@@ -9,7 +9,7 @@ public class LeaveAction extends Action {
     private Person person;
     private long logEventId;
 
-    protected LeaveAction(ActionManager actionManager, Seat seat) {
+    public LeaveAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
     }

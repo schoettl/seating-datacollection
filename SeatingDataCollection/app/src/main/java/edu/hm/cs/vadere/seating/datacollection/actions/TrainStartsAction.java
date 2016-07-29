@@ -5,7 +5,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 public class TrainStartsAction extends Action {
     private long logEventId;
 
-    protected TrainStartsAction(ActionManager actionManager) {
+    public TrainStartsAction(ActionManager actionManager) {
         super(actionManager);
     }
 

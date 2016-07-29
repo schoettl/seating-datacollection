@@ -10,7 +10,7 @@ public class RemoveBaggageAction extends Action {
     private Person owner;
     private long logEventId;
 
-    protected RemoveBaggageAction(ActionManager actionManager, Seat seat) {
+    public RemoveBaggageAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
     }

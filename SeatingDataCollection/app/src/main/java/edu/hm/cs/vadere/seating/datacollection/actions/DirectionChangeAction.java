@@ -5,7 +5,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 public class DirectionChangeAction extends Action {
     private long logEventId;
 
-    protected DirectionChangeAction(ActionManager actionManager) {
+    public DirectionChangeAction(ActionManager actionManager) {
         super(actionManager);
     }
 

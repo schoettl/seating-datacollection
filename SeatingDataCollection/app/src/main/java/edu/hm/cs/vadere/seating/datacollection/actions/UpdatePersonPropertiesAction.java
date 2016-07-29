@@ -9,7 +9,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 public class UpdatePersonPropertiesAction extends Action {
     private final Seat seat;
 
-    protected UpdatePersonPropertiesAction(ActionManager actionManager, Seat seat) {
+    public UpdatePersonPropertiesAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
     }

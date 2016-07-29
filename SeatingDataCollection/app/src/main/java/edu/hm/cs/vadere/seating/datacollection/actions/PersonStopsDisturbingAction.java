@@ -7,7 +7,7 @@ public class PersonStopsDisturbingAction extends Action {
     private final Person person;
     private long logEventId;
 
-    protected PersonStopsDisturbingAction(ActionManager actionManager, Seat seat) {
+    public PersonStopsDisturbingAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.person = (Person) seat.getSeatTaker();
     }

@@ -13,7 +13,7 @@ public class CountStandingPersonsAction extends Action {
     private final Activity activity;
     private Long logEventId = null;
 
-    protected CountStandingPersonsAction(ActionManager actionManager, Activity activity) {
+    public CountStandingPersonsAction(ActionManager actionManager, Activity activity) {
         super(actionManager);
         this.activity = activity;
     }

@@ -13,7 +13,7 @@ public class PersonDisturbingAction extends Action {
     private Person person;
     private long logEventId;
 
-    protected PersonDisturbingAction(ActionManager actionManager, Seat seat) {
+    public PersonDisturbingAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.person = (Person) seat.getSeatTaker();
     }

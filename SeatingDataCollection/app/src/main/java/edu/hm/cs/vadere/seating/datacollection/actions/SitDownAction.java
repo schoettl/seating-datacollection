@@ -11,7 +11,7 @@ public class SitDownAction extends Action {
     private Person person;
     private long logEventId;
 
-    protected SitDownAction(ActionManager actionManager, Seat seat) {
+    public SitDownAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
     }

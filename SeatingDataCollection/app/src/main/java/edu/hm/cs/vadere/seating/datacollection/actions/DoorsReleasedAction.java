@@ -4,7 +4,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 
 public class DoorsReleasedAction extends Action {
     private long logEventId;
-    protected DoorsReleasedAction(ActionManager actionManager) {
+    public DoorsReleasedAction(ActionManager actionManager) {
         super(actionManager);
     }
 
