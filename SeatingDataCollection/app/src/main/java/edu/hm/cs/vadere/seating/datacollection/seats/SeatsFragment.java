@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
@@ -26,7 +28,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
-public class SeatsFragment extends Fragment {
+public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener {
 
     private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
     private static final String ARG_SURVEY_ID_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
@@ -77,6 +79,17 @@ public class SeatsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_seats_fragment, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_define_group);
+        if (actionManager.isActionPending(DefineGroupAction.class)) {
+            UiHelper.tintIconOfMenuItem(item, Color.RED);
+        } else {
+            UiHelper.tintIconOfMenuItem(item, Color.BLACK);
+        }
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -174,6 +187,11 @@ public class SeatsFragment extends Fragment {
     private View getViewFromMenuInfo(ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         return info.targetView; //floorRectAdapter.getItem(menuInfo.position);
+    }
+
+    @Override
+    public void onOptionsMenuInvalidated() {
+        getActivity().invalidateOptionsMenu();
     }
 
     private class FloorRectClickListener implements ListView.OnItemClickListener {

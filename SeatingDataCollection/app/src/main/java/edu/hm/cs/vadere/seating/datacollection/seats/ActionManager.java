@@ -1,7 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.DialogInterface;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
@@ -29,11 +28,11 @@ import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOW
 
 public class ActionManager {
     private static final String TAG = "ActionManager";
-    private final Fragment hostFragment;
+    private final SeatsFragment hostFragment;
     private final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
 
-    public ActionManager(Fragment hostFragment, LogEventWriter logEventWriter) {
+    public ActionManager(SeatsFragment hostFragment, LogEventWriter logEventWriter) {
         this.logEventWriter = logEventWriter;
         this.hostFragment = hostFragment;
     }
@@ -123,9 +122,11 @@ public class ActionManager {
         if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
             ((DefineGroupAction) pendingAction).setCommonGroupForSelectedPersons();
+            hostFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
         } else {
             Log.d(TAG, "starting defining group");
             pendingAction = new DefineGroupAction(this);
+            hostFragment.onOptionsMenuInvalidated();
         }
     }
 

@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.Iterator;
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
