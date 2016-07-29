@@ -4,7 +4,6 @@ import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
-import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
 
 public class ChangeSeatAction extends PendingAction {
     private Seat oldSeat;

@@ -21,7 +21,6 @@ import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.FloorRectAdapter;
-import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;

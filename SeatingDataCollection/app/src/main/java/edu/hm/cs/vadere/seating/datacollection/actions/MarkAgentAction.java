@@ -6,7 +6,6 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
-import edu.hm.cs.vadere.seating.datacollection.seats.PendingAction;
 
 public class MarkAgentAction extends PendingAction {
     private final Survey survey;

@@ -1,4 +1,4 @@
-package edu.hm.cs.vadere.seating.datacollection.seats;
+package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import android.util.Log;
 
