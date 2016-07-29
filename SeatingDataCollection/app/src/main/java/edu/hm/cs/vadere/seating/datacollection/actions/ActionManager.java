@@ -37,17 +37,17 @@ public class ActionManager {
     }
 
     public void actionPersonDisturbing(Seat seat) {
-        Action action = new PersonDisturbingAction(this, seat);
+        Action action = new PersonDisturbingAction(this, (Person) seat.getSeatTaker());
         performActionAndAddToStack(action);
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {
-        Action action = new PersonStopsDisturbingAction(this, seat);
+        Action action = new PersonStopsDisturbingAction(this, (Person) seat.getSeatTaker());
         performActionAndAddToStack(action);
     }
 
     public void actionSetPersonProperties(Seat seat) {
-        Action action = new UpdatePersonPropertiesAction(this, seat);
+        Action action = new UpdatePersonPropertiesAction(this, (Person) seat.getSeatTaker());
         performActionAndAddToStack(action);
     }
 

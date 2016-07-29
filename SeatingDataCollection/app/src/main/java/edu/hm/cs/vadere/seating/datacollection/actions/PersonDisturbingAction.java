@@ -7,15 +7,14 @@ import android.widget.EditText;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class PersonDisturbingAction extends Action {
     private Person person;
     private long logEventId;
 
-    public PersonDisturbingAction(ActionManager actionManager, Seat seat) {
+    public PersonDisturbingAction(ActionManager actionManager, Person person) {
         super(actionManager);
-        this.person = (Person) seat.getSeatTaker();
+        this.person = person;
     }
 
     @Override

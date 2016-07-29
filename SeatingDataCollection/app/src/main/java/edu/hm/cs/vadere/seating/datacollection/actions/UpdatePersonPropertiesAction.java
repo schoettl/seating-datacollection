@@ -4,19 +4,17 @@ import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
-import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class UpdatePersonPropertiesAction extends Action {
-    private final Seat seat;
+    private final Person person;
 
-    public UpdatePersonPropertiesAction(ActionManager actionManager, Seat seat) {
+    public UpdatePersonPropertiesAction(ActionManager actionManager, Person person) {
         super(actionManager);
-        this.seat = seat;
+        this.person = person;
     }
 
     @Override
     public void perform() {
-        final Person person = (Person) seat.getSeatTaker();
         PersonDialogFragment dialog = PersonDialogFragment.newInstance(person);
         dialog.setOkClickListener(new PersonDialogFragment.PositiveClickListener() {
             @Override
