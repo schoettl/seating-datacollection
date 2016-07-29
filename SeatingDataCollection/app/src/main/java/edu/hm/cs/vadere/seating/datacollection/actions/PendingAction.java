@@ -2,8 +2,6 @@ package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import android.util.Log;
 
-import edu.hm.cs.vadere.seating.datacollection.actions.Action;
-import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public abstract class PendingAction extends Action {

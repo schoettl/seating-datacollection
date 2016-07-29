@@ -1,20 +1,13 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.GridView;
 
 import java.util.List;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
-import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
-import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
-import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
-import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -23,13 +16,9 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.FloorRectAdapter;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.LEAVE;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.REMOVE_BAGGAGE;
-import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.SIT_DOWN;
-
 public class ActionManager {
     private static final String TAG = "ActionManager";
-    private final SeatsFragment hostFragment;
+    final SeatsFragment hostFragment;
     final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
 
@@ -43,36 +32,18 @@ public class ActionManager {
     }
 
     public void actionPersonDisturbing(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        // Action is done in the okClickListener
-
-        final EditText editTextReason = new EditText(hostFragment.getContext());
-        final DisturbingReasonOkClickListener okClickListener = new DisturbingReasonOkClickListener(p, editTextReason);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(hostFragment.getContext());
-        builder.setTitle(R.string.dialog_disturbing_reason);
-        builder.setView(editTextReason);
-        builder.setPositiveButton(R.string.dialog_ok, okClickListener);
-        UiHelper.createAndShowAlertWithSoftKeyboard(builder);
+        Action action = new PersonDisturbingAction(this, seat);
+        action.perform();
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {
-        Person p = (Person) seat.getSeatTaker();
-        p.setDisturbing(false);
-        logEventWriter.logStopsDisturbingPerson(p);
+        Action action = new PersonStopsDisturbingAction(this, seat);
+        action.perform();
     }
 
     public void actionSetPersonProperties(Seat seat) {
-        final Person person = (Person) seat.getSeatTaker();
-        PersonDialogFragment dialog = PersonDialogFragment.newInstance(person);
-        dialog.setOkClickListener(new PersonDialogFragment.PositiveClickListener() {
-            @Override
-            public void onPersonDialogOkClick(Gender gender, AgeGroup ageGroup) {
-                person.setGender(gender);
-                person.setAgeGroup(ageGroup);
-                person.save();
-            }
-        });
-        dialog.show(hostFragment.getActivity().getSupportFragmentManager(), PersonDialogFragment.FRAGMENT_TAG);
+        Action action = new UpdatePersonPropertiesAction(this, seat);
+        action.perform();
     }
 
     public void actionPlaceBaggage(Seat seat) {
@@ -80,22 +51,13 @@ public class ActionManager {
     }
 
     public void actionRemoveBaggage(Seat seat) {
-        HandBaggage b = (HandBaggage) seat.getSeatTaker();
-        seat.clearSeat();
-        logEventWriter.logSeatEvent(REMOVE_BAGGAGE, seat, b.getOwner());
+        Action action = new RemoveBaggageAction(this, seat);
+        action.perform();
     }
 
     public void actionSitDown(Seat seat) {
-        if (isSeatOccupiedByPerson(seat)) {
-            Log.wtf(TAG, "it should not be possible to trigger this action under this circumstances");
-            return;
-        }
-
-        Person person = new Person();
-        person.save();
-        removeBaggageIfAny(seat);
-        seat.setSeatTaker(person);
-        logEventWriter.logSeatEvent(SIT_DOWN, seat, person);
+        Action action = new SitDownAction(this, seat);
+        action.perform();
     }
 
     void showError(int message) {
@@ -111,12 +73,8 @@ public class ActionManager {
     }
 
     public void actionLeave(Seat seat) {
-        Person person = (Person) seat.getSeatTaker();
-
-        removeBaggageForPerson(person);
-
-        seat.clearSeat();
-        logEventWriter.logSeatEvent(LEAVE, seat, person);
+        Action action = new LeaveAction(this, seat);
+        action.perform();
     }
 
     public void actionDefineGroup() {
@@ -174,20 +132,6 @@ public class ActionManager {
     void removeBaggageIfAny(Seat seat) {
         if (seat.getSeatTaker() instanceof HandBaggage) {
             actionRemoveBaggage(seat);
-        }
-    }
-
-    private class DisturbingReasonOkClickListener implements DialogInterface.OnClickListener {
-        private Person p;
-        private EditText edit;
-        public DisturbingReasonOkClickListener(Person p, EditText edit) {
-            this.p = p;
-            this.edit = edit;
-        }
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            p.setDisturbing(true);
-            logEventWriter.logDisturbingPerson(p, edit.getText().toString());
         }
     }
 

@@ -1,5 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
+import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
+
 public abstract class Action {
     private ActionManager actionManager;
 
@@ -9,6 +11,10 @@ public abstract class Action {
 
     protected ActionManager getActionManager() {
         return actionManager;
+    }
+
+    protected LogEventWriter getLogEventWriter() {
+        return actionManager.logEventWriter;
     }
 
     public abstract void perform();
