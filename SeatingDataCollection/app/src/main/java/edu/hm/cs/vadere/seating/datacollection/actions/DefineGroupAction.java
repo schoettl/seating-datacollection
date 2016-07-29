@@ -21,6 +21,7 @@ public class DefineGroupAction extends PendingAction {
     @Override
     public void perform() {
         setCommonGroupForSelectedPersons();
+        clearThisPendingAction(); // TODO is this the correct place for this?
     }
 
     @Override
@@ -32,8 +33,16 @@ public class DefineGroupAction extends PendingAction {
         }
     }
 
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        // This is not perfect. Previous groups are lost and have to be reassigned manually.
+        for (Person p : persons) {
+            p.setGroup(null);
+            p.save();
+        }
+    }
+
     public void setCommonGroupForSelectedPersons() {
-        clearThisPendingAction();
 
         if (persons.isEmpty())
             return;
