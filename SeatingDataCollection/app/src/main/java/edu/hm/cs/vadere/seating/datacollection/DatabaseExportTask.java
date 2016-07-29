@@ -16,6 +16,7 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,6 +120,11 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         final File exportFile = new File(directory, tableName + ".csv");
         try (CSVWriter writer = new CSVWriter(new FileWriter(exportFile), ',')) {
             final Cursor cursor = queryTable(db, tableName);
+            // Write headers
+            final String[] columnNames = cursor.getColumnNames();
+            Log.d(TAG, "column names: " + Arrays.asList(columnNames));
+            writer.writeNext(columnNames);
+            // Write rows
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 final String[] fields = getFieldsAsStringArray(cursor);
