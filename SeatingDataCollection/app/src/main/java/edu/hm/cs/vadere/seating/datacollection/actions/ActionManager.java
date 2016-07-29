@@ -65,6 +65,11 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
+    public void actionSitDownAndPlaceBaggage(Seat seat) {
+        performActionAndAddToStack(new SitDownAction(this, seat));
+        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker()));
+    }
+
     void showError(int message) {
         UiHelper.showErrorToast(seatsFragment.getContext(), message);
     }

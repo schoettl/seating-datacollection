@@ -151,6 +151,9 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
             case R.id.action_sit_down:
                 actionManager.actionSitDown(seat);
                 return true;
+            case R.id.action_sit_down_place_baggage:
+                actionManager.actionSitDownAndPlaceBaggage(seat);
+                return true;
             case R.id.action_change_place:
                 actionManager.actionChangeSeat(seat);
                 return true;

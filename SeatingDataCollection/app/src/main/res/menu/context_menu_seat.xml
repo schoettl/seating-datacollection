@@ -5,4 +5,7 @@
     <item android:id="@+id/action_sit_down"
         android:title="@string/action_sit_down" />
 
+    <item android:id="@+id/action_sit_down_place_baggage"
+        android:title="@string/action_sit_down_place_baggage" />
+
 </menu>

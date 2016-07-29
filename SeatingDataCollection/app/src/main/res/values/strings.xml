@@ -47,4 +47,5 @@
     <string name="error_cannot_undo">Cannot undo last action</string>
     <string name="info_pending_action">Select seat(s) for pending action</string>
     <string name="dialog_info_undo_update_person">Could not restore previous person properties. Please fix this by hand.</string>
+    <string name="action_sit_down_place_baggage"><![CDATA[Sit down & place baggage]]></string>
 </resources>
