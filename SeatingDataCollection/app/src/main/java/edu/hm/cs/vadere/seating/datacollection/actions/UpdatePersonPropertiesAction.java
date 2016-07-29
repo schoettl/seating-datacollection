@@ -1,6 +1,8 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import edu.hm.cs.vadere.seating.datacollection.PersonDialogFragment;
+import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -25,5 +27,10 @@ public class UpdatePersonPropertiesAction extends Action {
             }
         });
         dialog.show(getActionManager().hostFragment.getActivity().getSupportFragmentManager(), PersonDialogFragment.FRAGMENT_TAG);
+    }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        UiHelper.showInfoDialog(getActionManager().hostFragment.getActivity(), R.string.dialog_info_undo_update_person);
     }
 }
