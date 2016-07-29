@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_undo"
+        android:title="@string/action_undo"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_undo_black_18dp"
+        />
+
     <item android:id="@+id/action_mark_agent"
         android:title="@string/action_mark_agent"
         android:icon="@drawable/ic_my_location_black_18dp"

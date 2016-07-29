@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
@@ -41,10 +42,13 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final ActionManager actionManager = getSeatsFragment().getActionManager();
         switch (item.getItemId()) {
             case R.id.action_mark_agent:
-                SeatsFragment fragment = getSeatsFragment();
-                fragment.getActionManager().actionMarkAgent(survey, this);
+                actionManager.actionMarkAgent(survey, this);
+                return true;
+            case R.id.action_undo:
+                UiHelper.undoOrShowToast(actionManager);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

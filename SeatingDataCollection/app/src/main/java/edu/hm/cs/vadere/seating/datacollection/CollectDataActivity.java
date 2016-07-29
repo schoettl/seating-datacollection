@@ -71,9 +71,8 @@ public class CollectDataActivity extends AppCompatActivity {
                 actionManager.actionCountStandingPersons(this);
                 return true;
             case R.id.action_undo:
-                if (!actionManager.tryUndoLastAction()) {
-                    UiHelper.showErrorToast(this, R.string.error_cannot_undo);
-                }
+                UiHelper.undoOrShowToast(actionManager);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

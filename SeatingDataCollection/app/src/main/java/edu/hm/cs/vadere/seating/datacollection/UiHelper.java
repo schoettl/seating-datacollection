@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
@@ -81,4 +82,13 @@ public class UiHelper {
         Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
         toast.show();
     }
+
+    public static void undoOrShowToast(ActionManager actionManager) {
+        final Activity activity = actionManager.getSeatsFragment().getActivity();
+        if (!actionManager.tryUndoLastAction()) {
+            UiHelper.showErrorToast(activity, R.string.error_cannot_undo);
+        }
+    }
+
+
 }
