@@ -2,10 +2,14 @@ package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
+import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public class RemoveBaggageAction extends Action {
     private Seat seat;
+    private Person owner;
+    private long logEventId;
+
     protected RemoveBaggageAction(ActionManager actionManager, Seat seat) {
         super(actionManager);
         this.seat = seat;
@@ -13,8 +17,15 @@ public class RemoveBaggageAction extends Action {
 
     @Override
     public void perform() {
-        HandBaggage b = (HandBaggage) seat.getSeatTaker();
+        final HandBaggage baggage = (HandBaggage) seat.getSeatTaker();
+        owner = baggage.getOwner();
         seat.clearSeat();
-        getLogEventWriter().logSeatEvent(LogEventType.REMOVE_BAGGAGE, seat, b.getOwner());
+        logEventId = getLogEventWriter().logSeatEvent(LogEventType.REMOVE_BAGGAGE, seat, owner);
+    }
+
+    @Override
+    public void undo() throws UnsupportedOperationException {
+        seat.setSeatTaker(new HandBaggage(owner));
+        deleteLogEvent(logEventId);
     }
 }
