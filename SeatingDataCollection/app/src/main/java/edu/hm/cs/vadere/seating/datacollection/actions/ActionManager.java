@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.GridView;
 
 import java.util.List;
+import java.util.Stack;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
@@ -21,6 +22,7 @@ public class ActionManager {
     final SeatsFragment hostFragment;
     final LogEventWriter logEventWriter;
     private PendingAction pendingAction = null;
+    private Stack<Action> actionStack = new Stack<>();
 
     public ActionManager(SeatsFragment hostFragment, LogEventWriter logEventWriter) {
         this.logEventWriter = logEventWriter;
@@ -33,31 +35,31 @@ public class ActionManager {
 
     public void actionPersonDisturbing(Seat seat) {
         Action action = new PersonDisturbingAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     public void actionPersonStopsDisturbing(Seat seat) {
         Action action = new PersonStopsDisturbingAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     public void actionSetPersonProperties(Seat seat) {
         Action action = new UpdatePersonPropertiesAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     public void actionPlaceBaggage(Seat seat) {
-        pendingAction = new PlaceBaggageAction(this, (Person) seat.getSeatTaker());
+        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker()));
     }
 
     public void actionRemoveBaggage(Seat seat) {
         Action action = new RemoveBaggageAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     public void actionSitDown(Seat seat) {
         Action action = new SitDownAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     void showError(int message) {
@@ -69,12 +71,12 @@ public class ActionManager {
     }
 
     public void actionChangeSeat(Seat seat) {
-        pendingAction = new ChangeSeatAction(this, seat);
+        addPendingActionToStack(new ChangeSeatAction(this, seat));
     }
 
     public void actionLeave(Seat seat) {
         Action action = new LeaveAction(this, seat);
-        action.perform();
+        performActionAndAddToStack(action);
     }
 
     public void actionDefineGroup() {
@@ -84,14 +86,14 @@ public class ActionManager {
             hostFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
         } else {
             Log.d(TAG, "starting defining group");
-            pendingAction = new DefineGroupAction(this);
+            addPendingActionToStack(new DefineGroupAction(this));
             hostFragment.onOptionsMenuInvalidated();
         }
     }
 
     public void actionMarkAgent(Survey survey, OnOptionsMenuInvalidatedListener invalidatedListener) {
         if (!isActionPending(MarkAgentAction.class)) {
-            pendingAction = new MarkAgentAction(this, survey, invalidatedListener);
+            addPendingActionToStack(new MarkAgentAction(this, survey, invalidatedListener));
         } else {
             clearPendingAction();
         }
@@ -132,6 +134,27 @@ public class ActionManager {
     void removeBaggageIfAny(Seat seat) {
         if (seat.getSeatTaker() instanceof HandBaggage) {
             actionRemoveBaggage(seat);
+        }
+    }
+
+    private void performActionAndAddToStack(Action action) {
+        action.perform();
+        actionStack.push(action);
+    }
+
+    private void addPendingActionToStack(PendingAction action) {
+        actionStack.push(action);
+        pendingAction = action;
+    }
+
+    public boolean tryUndoLastAction() {
+        Action action = actionStack.peek();
+        try {
+            action.undo();
+            actionStack.pop();
+            return true;
+        } catch (UnsupportedOperationException e) {
+            return false;
         }
     }
 
