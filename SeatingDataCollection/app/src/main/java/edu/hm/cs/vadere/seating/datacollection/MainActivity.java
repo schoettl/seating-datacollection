@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UiHelper.setToolbar(this);
 
-        List<Survey> allSurveys = Survey.listAll(Survey.class); // findAll's iterator cannot be used in an adapter
+        List<Survey> allSurveys = Survey.listAll(Survey.class, "id DESC"); // findAll's iterator cannot be used in an adapter
         SurveyListAdapter adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
         // For the CursorAdapter I need to know database details :/
         //CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_survey, cursor, columns, toViewIds, 0);
