@@ -18,13 +18,9 @@ public class CollectDataActivity extends AppCompatActivity {
     public static final String EXTRA_STATE_KEY = "da0a846ffbbf4436f239cc1b84af4d2a52c5d616";
 
     private Survey survey;
-    private LogEventWriter logEventWriter;
     private SeatsFragment seatsFragment;
 
-    /**
-     * State of the train. Currently, initialized with UNKNOWN.
-     * TODO In future saved and restored (activity lifecycle?).
-     */
+    /** State of the train. Currently, initialized with UNKNOWN. */
     private TrainState trainState = TrainState.UNKNOWN;
 
     @Override
@@ -35,7 +31,6 @@ public class CollectDataActivity extends AppCompatActivity {
 
         survey = Utils.getSurveyFromIntent(getIntent());
         SeatsState state = getStateFromIntent();
-        logEventWriter = new LogEventWriter(survey);
 
         seatsFragment = UiHelper.startAndReturnSeatsFragment(this, survey, state);
     }
@@ -46,6 +41,7 @@ public class CollectDataActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_collect_data, menu);
         return true;
     }
@@ -80,6 +76,7 @@ public class CollectDataActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
         // (To trigger this callback, call invalidateOptionsMenu())
         switch (trainState) {
             case DOORS_CLOSED:
@@ -92,7 +89,7 @@ public class CollectDataActivity extends AppCompatActivity {
             default:
                 break;
         }
-        return super.onPrepareOptionsMenu(menu);
+        return true;
     }
 
     public void endDataCollection(View view) {

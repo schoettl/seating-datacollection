@@ -62,6 +62,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 
         final SeatsState state = (SeatsState) getArguments().getSerializable(ARG_STATE_KEY);
         final long surveyId = getArguments().getLong(ARG_SURVEY_ID_KEY);
