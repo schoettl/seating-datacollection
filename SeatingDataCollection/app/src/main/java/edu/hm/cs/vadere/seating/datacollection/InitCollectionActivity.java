@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
+import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
-import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class InitCollectionActivity extends AppCompatActivity implements OnOptionsMenuInvalidatedListener {
@@ -23,6 +24,7 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "entering activity's onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initcollection);
         UiHelper.setToolbar(this);
@@ -30,8 +32,13 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
 
+        // Should not be created when activity is recreated because
+        // creation of fragment happens earlier in super.onCreate.
         seatsFragment = UiHelper.startAndReturnSeatsFragment(this, survey, null);
-        getSeatsFragment().getActionManager();
+        // But I have to create the fragment to get a reference of it!
+        // This does not work:
+        //seatsFragment = (SeatsFragment) getSupportFragmentManager().findFragmentById(R.id.seats_fragment);
+        Log.d(TAG, "leaving activity's onCreate");
     }
 
     @Override
@@ -72,7 +79,7 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         logEventWriter.logInitializationEnd();
         Intent intent = new Intent(this, CollectDataActivity.class);
         intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, survey.getId());
-        SeatsState state = getSeatsFragment().getState();
+        SeatsState state = getSeatsFragment().getCurrentState();
         intent.putExtra(CollectDataActivity.EXTRA_STATE_KEY, state);
         startActivity(intent);
     }

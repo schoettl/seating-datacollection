@@ -3,11 +3,13 @@ package edu.hm.cs.vadere.seating.datacollection;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class UiHelper {
 
+    private static final String TAG = "UiHelper";
     private static final DialogInterface.OnClickListener alertDialogDefaultListener =
             new DialogInterface.OnClickListener() {
                 @Override
@@ -55,11 +58,11 @@ public class UiHelper {
         activity.setSupportActionBar(toolbar);
     }
 
-    /** Start a SeatsFragment. The state can be null. */
-    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, SeatsState state) {
-        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state) {
+        final SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
+        final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.seats_fragment_placeholder, fragment);
+        Log.d(TAG, "committing fragment transaction");
         ft.commit();
         return fragment;
     }

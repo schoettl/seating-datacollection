@@ -3,6 +3,7 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -32,12 +33,16 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener {
 
+    private static final String TAG = "SeatsFragment";
     private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
     private static final String ARG_SURVEY_ID_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
-    public static final String TAG = "SeatsFragment";
 
     private FloorRectAdapter floorRectAdapter;
     private ActionManager actionManager;
+
+    public static SeatsFragment newInstance(Survey survey) {
+        return newInstance(survey, null);
+    }
 
     public static SeatsFragment newInstance(Survey survey, SeatsState state) {
         Bundle bundle = new Bundle();
@@ -49,33 +54,50 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         return fragment;
     }
 
-    public static SeatsFragment newInstance(Survey survey) {
-        return newInstance(survey, null);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        // onCreate gets called twice when the activity is recreated:
+        // SeatsFragment is created twice!!
+        // 1th time with the savedInstanceState
+        // 2nd time with the arguments
+        Log.w(TAG, "fragment onCreate: " + this);
+
+        final SeatsState state = getSeatsStateFromBundleOrArgs(savedInstanceState);
+        Log.d(TAG, "restoring state: " + state);
+        final long surveyId = getArguments().getLong(ARG_SURVEY_ID_KEY);
+        final Survey survey = Utils.getSurvey(surveyId);
+        final LogEventWriter logEventWriter = new LogEventWriter(survey);
+        actionManager = new ActionManager(this, logEventWriter);
+        floorRectAdapter = new FloorRectAdapter(getContext(), state);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
-        final SeatsState state = (SeatsState) getArguments().getSerializable(ARG_STATE_KEY);
-        final long surveyId = getArguments().getLong(ARG_SURVEY_ID_KEY);
-        final Survey survey = Utils.getSurvey(surveyId);
-        LogEventWriter logEventWriter = new LogEventWriter(survey);
-        actionManager = new ActionManager(this, logEventWriter);
-        floorRectAdapter = new FloorRectAdapter(getContext(), state);
+        Log.d(TAG, "fragment's on create view");
 
         GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
         view.setOnItemClickListener(new FloorRectClickListener());
         view.setAdapter(floorRectAdapter);
         registerForContextMenu(view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "fragment's on activity created");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "saving instance state");
+        outState.putSerializable(ARG_STATE_KEY, getCurrentState());
     }
 
     @Override
@@ -186,7 +208,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         return actionManager;
     }
 
-    public SeatsState getState() {
+    public SeatsState getCurrentState() {
         return new SeatsState(floorRectAdapter.getSeats());
     }
 
@@ -237,6 +259,23 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                 actionManager.actionLeave(seat);
             }
         });
+    }
+
+    @Nullable
+    private SeatsState getSeatsStateFromBundleOrArgs(Bundle savedInstanceState) {
+        SeatsState state = null;
+        if (savedInstanceState != null) {
+            Log.d(TAG, "saved instance state available, using that state");
+            state = getSeatsStateFromBundle(savedInstanceState);
+        } else if (getArguments() != null) {
+            Log.d(TAG, "arguments available, using that state");
+            state = getSeatsStateFromBundle(getArguments());
+        }
+        return state;
+    }
+
+    private SeatsState getSeatsStateFromBundle(Bundle bundle) {
+        return (SeatsState) bundle.getSerializable(ARG_STATE_KEY);
     }
 
 }
