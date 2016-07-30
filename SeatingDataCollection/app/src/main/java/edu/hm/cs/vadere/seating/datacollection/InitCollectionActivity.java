@@ -32,12 +32,8 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         survey = Utils.getSurveyFromIntent(getIntent());
         logEventWriter = new LogEventWriter(survey);
 
-        // Should not be created when activity is recreated because
-        // creation of fragment happens earlier in super.onCreate.
-        seatsFragment = UiHelper.startAndReturnSeatsFragment(this, survey, null);
-        // But I have to create the fragment to get a reference of it!
-        // This does not work:
-        //seatsFragment = (SeatsFragment) getSupportFragmentManager().findFragmentById(R.id.seats_fragment);
+        seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, null);
+
         Log.d(TAG, "leaving activity's onCreate");
     }
 

@@ -37,6 +37,8 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
     private static final String ARG_SURVEY_ID_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
 
+    public static final String TAG_SEATING_FRAGMENT = "9995463f9f1dfb976b0a274dd34cc8fb36e47ded";
+
     private FloorRectAdapter floorRectAdapter;
     private ActionManager actionManager;
 

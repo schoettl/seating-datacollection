@@ -3,6 +3,7 @@ package edu.hm.cs.vadere.seating.datacollection;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -58,15 +59,6 @@ public class UiHelper {
         activity.setSupportActionBar(toolbar);
     }
 
-    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state) {
-        final SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
-        final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.seats_fragment_placeholder, fragment);
-        Log.d(TAG, "committing fragment transaction");
-        ft.commit();
-        return fragment;
-    }
-
     /** Show a small hint for non-severe errors. */
     public static void showErrorToast(Context context, int message) {
         Toast toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
@@ -93,5 +85,29 @@ public class UiHelper {
         }
     }
 
+    public static SeatsFragment createAndStartSeatsFragmentIfThisIsNoRecreation(AppCompatActivity activity, Bundle savedInstanceState, Survey survey, @Nullable SeatsState seatsState) {
+        if (savedInstanceState != null) {
+            // Fragment has already been created.
+            // Try to find it ;)
+            Log.d(TAG, "fragment found: " + activity.getSupportFragmentManager().findFragmentById(R.id.seats_fragment)); // null
+            Log.d(TAG, "fragment found: " + activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT)); // works!!
+            Log.d(TAG, "fragment found: " + activity.getFragmentManager().findFragmentById(R.id.seats_fragment)); // null
+            Log.d(TAG, "fragment found: " + activity.getFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT)); // null
+            return (SeatsFragment) activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT);
+        } else {
+            // Should not be created when activity is recreated because.
+            // creation of fragment happens earlier in activity's super.onCreate.
+            return UiHelper.startAndReturnSeatsFragment(activity, survey, seatsState);
+        }
+    }
+
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state) {
+        final SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
+        final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.seats_fragment_placeholder, fragment, SeatsFragment.TAG_SEATING_FRAGMENT);
+        Log.d(TAG, "committing fragment transaction");
+        ft.commit();
+        return fragment;
+    }
 
 }

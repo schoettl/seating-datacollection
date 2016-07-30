@@ -32,7 +32,7 @@ public class CollectDataActivity extends AppCompatActivity {
         survey = Utils.getSurveyFromIntent(getIntent());
         SeatsState state = getStateFromIntent();
 
-        seatsFragment = UiHelper.startAndReturnSeatsFragment(this, survey, state);
+        seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, state);
     }
 
     private SeatsState getStateFromIntent() {
