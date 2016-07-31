@@ -2,24 +2,32 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
+import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
+import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
+import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 
 public class SeatWidget extends FloorRectWidget {
     private static final String TAG = "SeatWidget";
     private Seat seat;
     private ImageView ivSeatIcon;
     private TextView tvMain;
-    private TextView tvTest;
+    private TextView tvGroup;
     private TextView tvSeatNumber;
+    private TextView tvProperties;
 
     public SeatWidget(Seat seat, Context context) {
         super(context);
@@ -33,8 +41,9 @@ public class SeatWidget extends FloorRectWidget {
 
         ivSeatIcon = (ImageView) findViewById(R.id.ivSeatIcon);
         tvMain = (TextView) findViewById(R.id.tvMain);
-        tvTest = (TextView) findViewById(R.id.tvTest);
+        tvGroup = (TextView) findViewById(R.id.tvGroup);
         tvSeatNumber = (TextView) findViewById(R.id.tvSeatNumber);
+        tvProperties = (TextView) findViewById(R.id.tvProperties);
 
         tvSeatNumber.setText(String.valueOf(getSeat().getId()));
     }
@@ -52,23 +61,60 @@ public class SeatWidget extends FloorRectWidget {
 
     private void updateUiForCurrentState() {
         SeatTaker seatTaker = seat.getSeatTaker();
+        String mainString;
+        String propertiesString;
+        String groupString;
         switch (getSeatState()) {
             case PERSON:
                 ivSeatIcon.setImageResource(R.drawable.ic_person_black_18dp);
                 final Person person = (Person) seatTaker;
-                tvMain.setText(Utils.formatString("person #%d", person.getId()));
+                mainString = Utils.formatString("person #%d", person.getId());
+                propertiesString = getPropertiesString(person);
+                groupString = getGroupString(person);
                 break;
             case BAGGAGE:
                 ivSeatIcon.setImageResource(R.drawable.ic_work_black_18dp);
                 final HandBaggage baggage = (HandBaggage) seatTaker;
-                tvMain.setText(Utils.formatString("baggage of #%d", baggage.getOwner().getId()));
+                mainString = Utils.formatString("baggage of #%d", baggage.getOwner().getId());
+                propertiesString = "";
+                groupString = "";
                 break;
             case EMPTY:
             default:
                 ivSeatIcon.setImageDrawable(null);
-                tvMain.setText("emtpy");
+                mainString = "emtpy";
+                propertiesString = "";
+                groupString = "";
                 break;
         }
+        tvMain.setText(mainString);
+        tvProperties.setText(propertiesString);
+        tvGroup.setText(groupString);
+    }
+
+    private String getGroupString(Person person) {
+        MGroup g = person.getGroup();
+        if (g == null)
+            return "";
+        return "grp. " + g.getId();
+    }
+
+    private String getPropertiesString(Person person) {
+        List<Object> propertyList = new LinkedList<>();
+        if (person.getGender() != Gender.NA || person.getAgeGroup() != AgeGroup.NA) {
+            propertyList.add(person.getGender());
+            propertyList.add(person.getAgeGroup());
+        }
+        if (person.isAgent())
+            propertyList.add("agent");
+        if (person.isDisturbing())
+            propertyList.add("disturbing");
+
+        String result = TextUtils.join(", ", propertyList);
+        if (result.isEmpty())
+            return "";
+
+        return "(" + result + ")";
     }
 
     private SeatState getSeatState() {

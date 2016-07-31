@@ -10,16 +10,18 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="seat number placeholder"
         android:id="@+id/tvSeatNumber"
-        android:paddingStart="4dip" />
+        android:paddingStart="4dip"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text=""
-        android:id="@+id/tvTest"
+        android:text="group placeholder"
+        android:id="@+id/tvGroup"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
+        android:paddingEnd="4dip"
         android:layout_alignParentEnd="true" />
 
     <ImageView
@@ -40,5 +42,15 @@
         android:textAlignment="center"
         android:layout_below="@+id/ivSeatIcon"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="propetries placeholder"
+        android:id="@+id/tvProperties"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
