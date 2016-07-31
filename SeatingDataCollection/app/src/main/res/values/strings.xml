@@ -2,7 +2,7 @@
     <string name="app_name">Seating Data Collection</string>
     <string name="start_survey">Start survey</string>
     <string name="start_data_collection">Start data collection</string>
-    <string name="agent_name_default">Jakob Schöttl</string>
+    <string name="agent_name_hint">Your name</string>
     <string name="startingat_hint">Starting at e.g. Otterfing</string>
     <string name="direction_hint">Direction e.g. Mammendorf</string>
     <string name="line_hint">Train line e.g. S3</string>
