@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -237,7 +236,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                     SeatTaker seatTaker = seat.getSeatTaker();
                     if (seatTaker instanceof Person) {
                         Log.d(TAG, "person");
-                        actionPersonLeave(seat);
+                        actionManager.actionLeave(seat);
 
                     } else if (seatTaker instanceof HandBaggage) {
                         Log.d(TAG, "baggage");
@@ -252,15 +251,6 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                 Log.d(TAG, "not a seat - ignoring click");
             }
         }
-    }
-
-    private void actionPersonLeave(final Seat seat) {
-        UiHelper.showConfirmDialog(getActivity(), R.string.dialog_confirm_leave, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                actionManager.actionLeave(seat);
-            }
-        });
     }
 
     @Nullable
