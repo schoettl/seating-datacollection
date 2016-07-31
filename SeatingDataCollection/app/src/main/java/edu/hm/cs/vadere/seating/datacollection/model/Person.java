@@ -1,7 +1,10 @@
 package edu.hm.cs.vadere.seating.datacollection.model;
 
+import android.support.annotation.NonNull;
+
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
+import com.orm.dsl.NotNull;
 
 import edu.hm.cs.vadere.seating.datacollection.Utils;
 
@@ -11,7 +14,9 @@ public class Person extends SugarRecord implements SeatTaker {
     @Ignore
     private boolean agent;
 
+    @NotNull
     private Gender gender = Gender.NA;
+    @NotNull
     private AgeGroup ageGroup = AgeGroup.NA;
     private MGroup mGroup = null;
 
@@ -50,11 +55,11 @@ public class Person extends SugarRecord implements SeatTaker {
         this.agent = agent;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(@NonNull Gender gender) {
         this.gender = gender;
     }
 
-    public void setAgeGroup(AgeGroup ageGroup) {
+    public void setAgeGroup(@NonNull AgeGroup ageGroup) {
         this.ageGroup = ageGroup;
     }
 

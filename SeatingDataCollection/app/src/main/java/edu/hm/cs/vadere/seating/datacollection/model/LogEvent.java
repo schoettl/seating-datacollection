@@ -1,6 +1,7 @@
 package edu.hm.cs.vadere.seating.datacollection.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,9 +9,12 @@ import java.util.Date;
 public class LogEvent extends SugarRecord {
     public static final String TIME_FORMAT = "HH:mm:ss";
 
+    @NotNull
     private String time;
+    @NotNull
     private Survey survey;
 
+    @NotNull
     private LogEventType eventType;
     private Integer seat;
     private Person person;
