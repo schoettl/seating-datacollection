@@ -89,12 +89,6 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "fragment's on activity created");
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "saving instance state");

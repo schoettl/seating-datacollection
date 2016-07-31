@@ -3,7 +3,6 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +14,10 @@ import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.AgeGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
+import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
-import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 
 public class SeatWidget extends FloorRectWidget {
     private static final String TAG = "SeatWidget";
@@ -50,7 +49,7 @@ public class SeatWidget extends FloorRectWidget {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d(TAG, "drawing seat widged");
+        //Log.d(TAG, "drawing seat widget");
         super.onDraw(canvas);
         updateUiForCurrentState();
     }
