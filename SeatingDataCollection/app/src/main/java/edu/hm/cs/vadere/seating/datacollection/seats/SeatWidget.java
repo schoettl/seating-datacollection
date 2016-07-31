@@ -2,22 +2,24 @@ package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.view.Gravity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 
 public class SeatWidget extends FloorRectWidget {
+    private static final String TAG = "SeatWidget";
     private Seat seat;
     private ImageView ivSeatIcon;
-    private TextView tvPerson;
+    private TextView tvMain;
     private TextView tvTest;
+    private TextView tvSeatNumber;
 
     public SeatWidget(Seat seat, Context context) {
         super(context);
@@ -27,36 +29,44 @@ public class SeatWidget extends FloorRectWidget {
     private void init(Seat seat) {
         this.seat = seat;
         inflate(getContext(), R.layout.seat_widget, this);
-        ivSeatIcon = (ImageView) findViewById(R.id.ivSeatIcon);
-        tvPerson = (TextView) findViewById(R.id.tvPerson);
-        tvTest = (TextView) findViewById(R.id.tvTest);
+        setWillNotDraw(false); // not even mentioned in Google's guide for custom components / drawing
 
-        setBackgroundColor(Color.BLUE);
-        setGravity(Gravity.CENTER);
+        ivSeatIcon = (ImageView) findViewById(R.id.ivSeatIcon);
+        tvMain = (TextView) findViewById(R.id.tvMain);
+        tvTest = (TextView) findViewById(R.id.tvTest);
+        tvSeatNumber = (TextView) findViewById(R.id.tvSeatNumber);
+
+        tvSeatNumber.setText(String.valueOf(getSeat().getId()));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        tvPerson.setText(seat.toString());
-        setIconForCurrentSeatState();
+        Log.d(TAG, "drawing seat widged");
         super.onDraw(canvas);
+        updateUiForCurrentState();
     }
 
     public Seat getSeat() {
         return seat;
     }
 
-    private void setIconForCurrentSeatState() {
+    private void updateUiForCurrentState() {
+        SeatTaker seatTaker = seat.getSeatTaker();
         switch (getSeatState()) {
             case PERSON:
                 ivSeatIcon.setImageResource(R.drawable.ic_person_black_18dp);
+                final Person person = (Person) seatTaker;
+                tvMain.setText(Utils.formatString("person #%d", person.getId()));
                 break;
             case BAGGAGE:
                 ivSeatIcon.setImageResource(R.drawable.ic_work_black_18dp);
+                final HandBaggage baggage = (HandBaggage) seatTaker;
+                tvMain.setText(Utils.formatString("baggage of #%d", baggage.getOwner().getId()));
                 break;
             case EMPTY:
             default:
                 ivSeatIcon.setImageDrawable(null);
+                tvMain.setText("emtpy");
                 break;
         }
     }

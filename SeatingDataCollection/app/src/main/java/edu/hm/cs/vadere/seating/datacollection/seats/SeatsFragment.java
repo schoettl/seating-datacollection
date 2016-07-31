@@ -247,6 +247,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                         actionManager.actionSitDown(seat);
                     }
                 }
+                seatWidget.invalidate();
             } else {
                 Log.d(TAG, "not a seat - ignoring click");
             }

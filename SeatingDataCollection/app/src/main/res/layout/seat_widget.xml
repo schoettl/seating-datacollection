@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/seat_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,23 +8,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text=""
-        android:id="@+id/tvTest"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivSeatIcon"
-        android:layout_gravity="center_horizontal" />
+        android:text="seat number placeholder"
+        android:id="@+id/tvSeatNumber"
+        android:paddingStart="4dip" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text=""
-        android:id="@+id/tvPerson"
+        android:id="@+id/tvTest"
         android:layout_gravity="center_horizontal"
-        android:textAlignment="center" />
-</LinearLayout>
+        android:textAlignment="center"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivSeatIcon"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/tvSeatNumber"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=""
+        android:id="@+id/tvMain"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_below="@+id/ivSeatIcon"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
