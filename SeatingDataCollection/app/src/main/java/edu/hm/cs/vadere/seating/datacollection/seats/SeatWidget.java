@@ -124,4 +124,5 @@ public class SeatWidget extends FloorRectWidget {
     private enum SeatState {
         EMPTY, PERSON, BAGGAGE;
     }
+
 }

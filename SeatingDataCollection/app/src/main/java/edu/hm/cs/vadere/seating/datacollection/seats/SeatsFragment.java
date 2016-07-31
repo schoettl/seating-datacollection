@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
@@ -40,6 +41,10 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private FloorRectAdapter floorRectAdapter;
     private ActionManager actionManager;
+    private Direction direction = Direction.UP;
+
+    private ImageView ivDirection;
+    private GridView gridView;
 
     public static SeatsFragment newInstance(Survey survey) {
         return newInstance(survey, null);
@@ -81,9 +86,21 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "fragment's on create view");
 
-        GridView view = (GridView) inflater.inflate(R.layout.fragment_seats, container, false);
-        view.setOnItemClickListener(new FloorRectClickListener());
-        view.setAdapter(floorRectAdapter);
+        View view = inflater.inflate(R.layout.fragment_seats, container, false);
+        gridView = (GridView) view.findViewById(R.id.seats_grid);
+        gridView.setOnItemClickListener(new FloorRectClickListener());
+        gridView.setOnCreateContextMenuListener(this);
+        gridView.setAdapter(floorRectAdapter);
+        ivDirection = (ImageView) view.findViewById(R.id.ivDirection);
+        ivDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invertDirection();
+                setCurrentDirectionIcon();
+            }
+        });
+        setCurrentDirectionIcon();
+
         registerForContextMenu(view);
         return view;
     }
@@ -113,9 +130,13 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View gridView, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         Log.d(TAG, "on create context menu");
-        super.onCreateContextMenu(menu, gridView, menuInfo);
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        // Only create context menu for the seats grid
+        if (!(view instanceof GridView))
+            return;
 
         View v = getViewFromMenuInfo(menuInfo);
 
@@ -212,9 +233,17 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         return info.targetView; //floorRectAdapter.getItem(menuInfo.position);
     }
 
+    private void setCurrentDirectionIcon() {
+        ivDirection.setImageResource(direction.getIconResourceId());
+    }
+
     @Override
     public void onOptionsMenuInvalidated() {
         getActivity().invalidateOptionsMenu();
+    }
+
+    public GridView getGridView() {
+        return gridView;
     }
 
     private class FloorRectClickListener implements ListView.OnItemClickListener {
@@ -263,6 +292,22 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private SeatsState getSeatsStateFromBundle(Bundle bundle) {
         return (SeatsState) bundle.getSerializable(ARG_STATE_KEY);
+    }
+
+    private void invertDirection() {
+        direction = (direction == Direction.UP) ? Direction.DOWN : Direction.UP;
+    }
+    private enum Direction {
+        UP(R.drawable.ic_arrow_upward_black_18dp),
+        DOWN(R.drawable.ic_arrow_downward_black_18dp);
+
+        private int iconResourceId;
+        Direction(int iconResource) {
+            iconResourceId = iconResource;
+        }
+        public int getIconResourceId() {
+            return iconResourceId;
+        }
     }
 
 }

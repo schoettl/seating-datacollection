@@ -134,7 +134,7 @@ public class ActionManager {
     }
 
     List<Seat> getSeatsOfSeatsFragments() {
-        GridView gridView = (GridView) seatsFragment.getView();
+        GridView gridView = seatsFragment.getGridView();
         FloorRectAdapter adapter = (FloorRectAdapter) gridView.getAdapter();
         return adapter.getSeats();
     }
