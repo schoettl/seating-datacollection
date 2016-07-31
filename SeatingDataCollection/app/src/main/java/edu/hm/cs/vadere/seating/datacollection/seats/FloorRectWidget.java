@@ -1,9 +1,9 @@
 package edu.hm.cs.vadere.seating.datacollection.seats;
 
 import android.content.Context;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-public class FloorRectWidget extends TextView {
+public class FloorRectWidget extends RelativeLayout {
     public FloorRectWidget(Context context) {
         super(context);
     }
