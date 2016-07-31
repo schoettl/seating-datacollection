@@ -62,8 +62,8 @@ public class SeatWidget extends FloorRectWidget {
     private void updateUiForCurrentState() {
         SeatTaker seatTaker = seat.getSeatTaker();
         String mainString;
-        String propertiesString;
-        String groupString;
+        String propertiesString = "";
+        String groupString = "";
         switch (getSeatState()) {
             case PERSON:
                 ivSeatIcon.setImageResource(R.drawable.ic_person_black_18dp);
@@ -76,15 +76,11 @@ public class SeatWidget extends FloorRectWidget {
                 ivSeatIcon.setImageResource(R.drawable.ic_work_black_18dp);
                 final HandBaggage baggage = (HandBaggage) seatTaker;
                 mainString = Utils.formatString("baggage of #%d", baggage.getOwner().getId());
-                propertiesString = "";
-                groupString = "";
                 break;
             case EMPTY:
             default:
                 ivSeatIcon.setImageDrawable(null);
                 mainString = "emtpy";
-                propertiesString = "";
-                groupString = "";
                 break;
         }
         tvMain.setText(mainString);
@@ -110,10 +106,10 @@ public class SeatWidget extends FloorRectWidget {
         if (person.isDisturbing())
             propertyList.add("disturbing");
 
-        String result = TextUtils.join(", ", propertyList);
-        if (result.isEmpty())
+        if (propertyList.isEmpty())
             return "";
 
+        String result = TextUtils.join(", ", propertyList);
         return "(" + result + ")";
     }
 
