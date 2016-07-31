@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Seating Data Collection</string>
+    <string name="app_name">Seating DC</string>
     <string name="start_survey">Start survey</string>
     <string name="start_data_collection">Start data collection</string>
     <string name="agent_name_hint">Your name</string>
