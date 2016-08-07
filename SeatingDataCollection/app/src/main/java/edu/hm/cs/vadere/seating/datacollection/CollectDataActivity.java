@@ -16,6 +16,7 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 public class CollectDataActivity extends AppCompatActivity {
 
     public static final String EXTRA_STATE_KEY = "da0a846ffbbf4436f239cc1b84af4d2a52c5d616";
+    public static final String EXTRA_DIRECTION_KEY = "fd2d3ed50627a5804fc241bf5f07005b30e41c6f";
 
     private Survey survey;
     private SeatsFragment seatsFragment;
@@ -30,13 +31,18 @@ public class CollectDataActivity extends AppCompatActivity {
         UiHelper.setToolbar(this);
 
         survey = Utils.getSurveyFromIntent(getIntent());
-        SeatsState state = getStateFromIntent();
+        final SeatsState state = getStateFromIntent();
+        final SeatsFragment.Direction direction = getDirectionFromIntent();
 
-        seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, state);
+        seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, state, direction);
     }
 
     private SeatsState getStateFromIntent() {
         return (SeatsState) getIntent().getSerializableExtra(EXTRA_STATE_KEY);
+    }
+
+    private SeatsFragment.Direction getDirectionFromIntent() {
+        return (SeatsFragment.Direction) getIntent().getSerializableExtra(EXTRA_DIRECTION_KEY);
     }
 
     @Override

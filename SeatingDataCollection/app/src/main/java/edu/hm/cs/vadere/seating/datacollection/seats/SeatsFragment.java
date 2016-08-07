@@ -35,6 +35,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private static final String TAG = "SeatsFragment";
     private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
+    private static final String ARG_DIRECTION_KEY = "da5cdc08303f8829862418afbf74b5ced6405fb4";
     private static final String ARG_SURVEY_ID_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
 
     public static final String TAG_SEATING_FRAGMENT = "9995463f9f1dfb976b0a274dd34cc8fb36e47ded";
@@ -46,12 +47,13 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     private ImageView ivDirection;
     private GridView gridView;
 
-    public static SeatsFragment newInstance(Survey survey, @Nullable SeatsState state) {
+    public static SeatsFragment newInstance(Survey survey, @Nullable SeatsState state, Direction direction) {
         Bundle bundle = new Bundle();
         SeatsFragment fragment = new SeatsFragment();
 
         bundle.putLong(ARG_SURVEY_ID_KEY, survey.getId());
         bundle.putSerializable(ARG_STATE_KEY, state);
+        bundle.putSerializable(ARG_DIRECTION_KEY, direction);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -67,13 +69,12 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         // 2nd time with the arguments
         Log.w(TAG, "fragment onCreate: " + this);
 
-        final SeatsState state = getSeatsStateFromBundleOrArgs(savedInstanceState);
-        Log.d(TAG, "restoring state: " + state);
+        restoreStateFromBundleOrArgs(savedInstanceState);
+
         final long surveyId = getArguments().getLong(ARG_SURVEY_ID_KEY);
         final Survey survey = Utils.getSurvey(surveyId);
         final LogEventWriter logEventWriter = new LogEventWriter(survey);
         actionManager = new ActionManager(this, logEventWriter);
-        floorRectAdapter = new FloorRectAdapter(getContext(), state);
     }
 
     @Override
@@ -106,6 +107,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         super.onSaveInstanceState(outState);
         Log.d(TAG, "saving instance state");
         outState.putSerializable(ARG_STATE_KEY, getCurrentState());
+        outState.putSerializable(ARG_DIRECTION_KEY, direction);
     }
 
     @Override
@@ -244,6 +246,10 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         return gridView;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
     private class FloorRectClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -275,27 +281,37 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         }
     }
 
-    @Nullable
-    private SeatsState getSeatsStateFromBundleOrArgs(Bundle savedInstanceState) {
+    private void restoreStateFromBundleOrArgs(Bundle savedInstanceState) {
         SeatsState state = null;
+        Direction dir = Direction.UP;
         if (savedInstanceState != null) {
             Log.d(TAG, "saved instance state available, using that state");
             state = getSeatsStateFromBundle(savedInstanceState);
+            dir = getDirectionFromBundle(savedInstanceState);
         } else if (getArguments() != null) {
             Log.d(TAG, "arguments available, using that state");
             state = getSeatsStateFromBundle(getArguments());
+            dir = getDirectionFromBundle(getArguments());
         }
-        return state;
+
+        Log.d(TAG, "restoring directoin and state: " + state);
+        floorRectAdapter = new FloorRectAdapter(getContext(), state);
+        direction = (dir == null) ? Direction.UP : dir;
     }
 
     private SeatsState getSeatsStateFromBundle(Bundle bundle) {
         return (SeatsState) bundle.getSerializable(ARG_STATE_KEY);
     }
 
+    private Direction getDirectionFromBundle(Bundle bundle) {
+        return (Direction) bundle.getSerializable(ARG_DIRECTION_KEY);
+    }
+
     private void invertDirection() {
         direction = (direction == Direction.UP) ? Direction.DOWN : Direction.UP;
     }
-    private enum Direction {
+
+    public enum Direction {
         UP(R.drawable.ic_arrow_upward_black_18dp),
         DOWN(R.drawable.ic_arrow_downward_black_18dp);
 

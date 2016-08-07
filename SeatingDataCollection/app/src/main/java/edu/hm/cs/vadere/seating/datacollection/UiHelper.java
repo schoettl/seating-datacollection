@@ -85,7 +85,7 @@ public class UiHelper {
         }
     }
 
-    public static SeatsFragment createAndStartSeatsFragmentIfThisIsNoRecreation(AppCompatActivity activity, Bundle savedInstanceState, Survey survey, @Nullable SeatsState seatsState) {
+    public static SeatsFragment createAndStartSeatsFragmentIfThisIsNoRecreation(AppCompatActivity activity, Bundle savedInstanceState, Survey survey, @Nullable SeatsState seatsState, @Nullable SeatsFragment.Direction direction) {
         if (savedInstanceState != null) {
             // Fragment has already been created.
             // Try to find it ;)
@@ -97,12 +97,12 @@ public class UiHelper {
         } else {
             // Should not be created when activity is recreated because.
             // creation of fragment happens earlier in activity's super.onCreate.
-            return UiHelper.startAndReturnSeatsFragment(activity, survey, seatsState);
+            return UiHelper.startAndReturnSeatsFragment(activity, survey, seatsState, direction);
         }
     }
 
-    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state) {
-        final SeatsFragment fragment = SeatsFragment.newInstance(survey, state);
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state, @Nullable SeatsFragment.Direction direction) {
+        final SeatsFragment fragment = SeatsFragment.newInstance(survey, state, direction);
         final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.seats_fragment_placeholder, fragment, SeatsFragment.TAG_SEATING_FRAGMENT);
         Log.d(TAG, "committing fragment transaction");
