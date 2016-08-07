@@ -79,7 +79,7 @@ public class SeatWidget extends FloorRectWidget {
             case EMPTY:
             default:
                 ivSeatIcon.setImageDrawable(null);
-                mainString = "emtpy";
+                mainString = "empty";
                 break;
         }
         tvMain.setText(mainString);
