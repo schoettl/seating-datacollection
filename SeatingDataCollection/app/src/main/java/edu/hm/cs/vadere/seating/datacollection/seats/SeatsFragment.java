@@ -42,7 +42,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private FloorRectAdapter floorRectAdapter;
     private ActionManager actionManager;
-    private Direction direction = Direction.UP;
+    private Direction direction = Direction.FORWARD;
 
     private ImageView ivDirection;
     private GridView gridView;
@@ -283,7 +283,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private void restoreStateFromBundleOrArgs(Bundle savedInstanceState) {
         SeatsState state = null;
-        Direction dir = Direction.UP;
+        Direction dir = Direction.FORWARD;
         if (savedInstanceState != null) {
             Log.d(TAG, "saved instance state available, using that state");
             state = getSeatsStateFromBundle(savedInstanceState);
@@ -296,7 +296,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
         Log.d(TAG, "restoring directoin and state: " + state);
         floorRectAdapter = new FloorRectAdapter(getContext(), state);
-        direction = (dir == null) ? Direction.UP : dir;
+        direction = (dir == null) ? Direction.FORWARD : dir;
     }
 
     private SeatsState getSeatsStateFromBundle(Bundle bundle) {
@@ -308,12 +308,12 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     private void invertDirection() {
-        direction = (direction == Direction.UP) ? Direction.DOWN : Direction.UP;
+        direction = (direction == Direction.FORWARD) ? Direction.BACKWARD : Direction.FORWARD;
     }
 
     public enum Direction {
-        UP(R.drawable.ic_arrow_upward_black_18dp),
-        DOWN(R.drawable.ic_arrow_downward_black_18dp);
+        FORWARD(R.drawable.ic_arrow_upward_black_18dp),
+        BACKWARD(R.drawable.ic_arrow_downward_black_18dp);
 
         private int iconResourceId;
         Direction(int iconResource) {
