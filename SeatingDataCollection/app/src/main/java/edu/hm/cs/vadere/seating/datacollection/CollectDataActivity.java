@@ -57,7 +57,7 @@ public class CollectDataActivity extends AppCompatActivity {
         ActionManager actionManager = seatsFragment.getActionManager();
         switch (item.getItemId()) {
             case R.id.action_direction_change:
-                actionManager.actionDirectionChange();
+                actionManager.actionDirectionChange(seatsFragment);
                 return true;
             case R.id.action_door_release:
                 actionManager.actionDoorsReleased();

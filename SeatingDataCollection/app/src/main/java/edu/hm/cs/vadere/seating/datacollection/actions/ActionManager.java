@@ -171,8 +171,8 @@ public class ActionManager {
         }
     }
 
-    public void actionDirectionChange() {
-        performActionAndAddToStack(new DirectionChangeAction(this));
+    public void actionDirectionChange(DirectionChangeAction.DirectionChangeListener listener) {
+        performActionAndAddToStack(new DirectionChangeAction(this, listener));
     }
 
     public void actionDoorsReleased() {
