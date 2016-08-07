@@ -34,11 +34,11 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener {
 
     private static final String TAG = "SeatsFragment";
-    private static final String ARG_STATE_KEY = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
-    private static final String ARG_DIRECTION_KEY = "da5cdc08303f8829862418afbf74b5ced6405fb4";
-    private static final String ARG_SURVEY_ID_KEY = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
+    private static final String ARG_STATE = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
+    private static final String ARG_DIRECTION = "da5cdc08303f8829862418afbf74b5ced6405fb4";
+    private static final String ARG_SURVEY_ID = "2f78552dc00b45e7a0f18701fe3a5b5994eb4d55";
 
-    public static final String TAG_SEATING_FRAGMENT = "9995463f9f1dfb976b0a274dd34cc8fb36e47ded";
+    public static final String FRAGMENT_TAG = "9995463f9f1dfb976b0a274dd34cc8fb36e47ded";
 
     private FloorRectAdapter floorRectAdapter;
     private ActionManager actionManager;
@@ -51,9 +51,9 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         Bundle bundle = new Bundle();
         SeatsFragment fragment = new SeatsFragment();
 
-        bundle.putLong(ARG_SURVEY_ID_KEY, survey.getId());
-        bundle.putSerializable(ARG_STATE_KEY, state);
-        bundle.putSerializable(ARG_DIRECTION_KEY, direction);
+        bundle.putLong(ARG_SURVEY_ID, survey.getId());
+        bundle.putSerializable(ARG_STATE, state);
+        bundle.putSerializable(ARG_DIRECTION, direction);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -71,7 +71,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
         restoreStateFromBundleOrArgs(savedInstanceState);
 
-        final long surveyId = getArguments().getLong(ARG_SURVEY_ID_KEY);
+        final long surveyId = getArguments().getLong(ARG_SURVEY_ID);
         final Survey survey = Utils.getSurvey(surveyId);
         final LogEventWriter logEventWriter = new LogEventWriter(survey);
         actionManager = new ActionManager(this, logEventWriter);
@@ -106,8 +106,8 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "saving instance state");
-        outState.putSerializable(ARG_STATE_KEY, getCurrentState());
-        outState.putSerializable(ARG_DIRECTION_KEY, direction);
+        outState.putSerializable(ARG_STATE, getCurrentState());
+        outState.putSerializable(ARG_DIRECTION, direction);
     }
 
     @Override
@@ -300,11 +300,11 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     private SeatsState getSeatsStateFromBundle(Bundle bundle) {
-        return (SeatsState) bundle.getSerializable(ARG_STATE_KEY);
+        return (SeatsState) bundle.getSerializable(ARG_STATE);
     }
 
     private Direction getDirectionFromBundle(Bundle bundle) {
-        return (Direction) bundle.getSerializable(ARG_DIRECTION_KEY);
+        return (Direction) bundle.getSerializable(ARG_DIRECTION);
     }
 
     private void invertDirection() {

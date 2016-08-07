@@ -16,9 +16,9 @@ public class Utils {
 
     public static Survey getSurveyFromIntent(Intent intent) {
         final int invalidId = 0;
-        long surveyId = intent.getLongExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, invalidId);
+        long surveyId = intent.getLongExtra(StartSurveyActivity.EXTRA_SURVEY_ID, invalidId);
         if (surveyId == invalidId)
-            throw new IllegalArgumentException("missing intent extra: " + StartSurveyActivity.EXTRA_SURVEY_ID_KEY);
+            throw new IllegalArgumentException("missing intent extra: " + StartSurveyActivity.EXTRA_SURVEY_ID);
         return getSurvey(surveyId);
     }
 

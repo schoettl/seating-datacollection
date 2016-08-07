@@ -16,17 +16,17 @@ import edu.hm.cs.vadere.seating.datacollection.model.Gender;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 
 public class PersonDialogFragment extends DialogFragment {
-    public static final String FRAGMENT_TAG = "500718720dfb5c64e96622f91a9e3786969a9fe2";
     private static final String TAG = "PersonDialog";
-    private static final String ARG_PERSON_GENDER_KEY = "bad8cbcf94421963bf863495daba5afd4fe644d4";
-    private static final String ARG_PERSON_AGE_GROUP_KEY = "77640998084251deb1926451b2bb2bc5763a9143";
+    public static final String FRAGMENT_TAG = "500718720dfb5c64e96622f91a9e3786969a9fe2";
+    private static final String ARG_PERSON_GENDER = "bad8cbcf94421963bf863495daba5afd4fe644d4";
+    private static final String ARG_PERSON_AGE_GROUP = "77640998084251deb1926451b2bb2bc5763a9143";
 
     private PositiveClickListener listener;
 
     public static PersonDialogFragment newInstance(Person person) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PERSON_GENDER_KEY, person.getGender());
-        args.putSerializable(ARG_PERSON_AGE_GROUP_KEY, person.getAgeGroup());
+        args.putSerializable(ARG_PERSON_GENDER, person.getGender());
+        args.putSerializable(ARG_PERSON_AGE_GROUP, person.getAgeGroup());
 
         PersonDialogFragment dialog = new PersonDialogFragment();
         dialog.setArguments(args);
@@ -38,8 +38,8 @@ public class PersonDialogFragment extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         Log.d(TAG, "on create dialog");
 
-        Gender personGender = (Gender) getArguments().get(ARG_PERSON_GENDER_KEY);
-        AgeGroup personAgeGroup = (AgeGroup) getArguments().get(ARG_PERSON_AGE_GROUP_KEY);
+        Gender personGender = (Gender) getArguments().get(ARG_PERSON_GENDER);
+        AgeGroup personAgeGroup = (AgeGroup) getArguments().get(ARG_PERSON_AGE_GROUP);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_person_message);

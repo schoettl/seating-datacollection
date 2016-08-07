@@ -74,11 +74,11 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         // TODO check if agent is marked (but it should be optional - the agent may be standing)
         logEventWriter.logInitializationEnd();
         Intent intent = new Intent(this, CollectDataActivity.class);
-        intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID_KEY, survey.getId());
+        intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID, survey.getId());
         SeatsState state = getSeatsFragment().getCurrentState();
         SeatsFragment.Direction direction = getSeatsFragment().getDirection();
-        intent.putExtra(CollectDataActivity.EXTRA_STATE_KEY, state);
-        intent.putExtra(CollectDataActivity.EXTRA_DIRECTION_KEY, direction);
+        intent.putExtra(CollectDataActivity.EXTRA_STATE, state);
+        intent.putExtra(CollectDataActivity.EXTRA_DIRECTION, direction);
         startActivity(intent);
     }
 

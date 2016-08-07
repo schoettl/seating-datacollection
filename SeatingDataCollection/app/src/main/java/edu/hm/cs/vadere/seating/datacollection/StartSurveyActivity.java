@@ -11,7 +11,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 public class StartSurveyActivity extends AppCompatActivity {
 
     private static final String TAG = "StartSurveyActivity";
-    public static final String EXTRA_SURVEY_ID_KEY = "44cb788eb14b3d9a670962249fb0da402999aa72";
+    public static final String EXTRA_SURVEY_ID = "44cb788eb14b3d9a670962249fb0da402999aa72";
 
 
     @Override
@@ -32,7 +32,7 @@ public class StartSurveyActivity extends AppCompatActivity {
         try {
             Survey survey = saveSurvey();
             Intent intent = new Intent(this, InitCollectionActivity.class);
-            intent.putExtra(EXTRA_SURVEY_ID_KEY, survey.getId());
+            intent.putExtra(EXTRA_SURVEY_ID, survey.getId());
             startActivity(intent);
         } catch (NumberFormatException e) { // TODO catch date format exception and check for date format in saveSurvey()
             // TODO Error message

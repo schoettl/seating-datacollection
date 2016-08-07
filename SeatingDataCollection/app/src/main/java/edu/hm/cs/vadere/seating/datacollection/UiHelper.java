@@ -90,10 +90,10 @@ public class UiHelper {
             // Fragment has already been created.
             // Try to find it ;)
             Log.d(TAG, "fragment found: " + activity.getSupportFragmentManager().findFragmentById(R.id.seats_fragment)); // null
-            Log.d(TAG, "fragment found: " + activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT)); // works!!
+            Log.d(TAG, "fragment found: " + activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.FRAGMENT_TAG)); // works!!
             Log.d(TAG, "fragment found: " + activity.getFragmentManager().findFragmentById(R.id.seats_fragment)); // null
-            Log.d(TAG, "fragment found: " + activity.getFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT)); // null
-            return (SeatsFragment) activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.TAG_SEATING_FRAGMENT);
+            Log.d(TAG, "fragment found: " + activity.getFragmentManager().findFragmentByTag(SeatsFragment.FRAGMENT_TAG)); // null
+            return (SeatsFragment) activity.getSupportFragmentManager().findFragmentByTag(SeatsFragment.FRAGMENT_TAG);
         } else {
             // Should not be created when activity is recreated because.
             // creation of fragment happens earlier in activity's super.onCreate.
@@ -104,7 +104,7 @@ public class UiHelper {
     public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state, @Nullable SeatsFragment.Direction direction) {
         final SeatsFragment fragment = SeatsFragment.newInstance(survey, state, direction);
         final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.seats_fragment_placeholder, fragment, SeatsFragment.TAG_SEATING_FRAGMENT);
+        ft.replace(R.id.seats_fragment_placeholder, fragment, SeatsFragment.FRAGMENT_TAG);
         Log.d(TAG, "committing fragment transaction");
         ft.commit();
         return fragment;
