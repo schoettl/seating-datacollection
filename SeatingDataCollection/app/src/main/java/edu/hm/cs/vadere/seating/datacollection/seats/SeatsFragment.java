@@ -46,11 +46,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     private ImageView ivDirection;
     private GridView gridView;
 
-    public static SeatsFragment newInstance(Survey survey) {
-        return newInstance(survey, null);
-    }
-
-    public static SeatsFragment newInstance(Survey survey, SeatsState state) {
+    public static SeatsFragment newInstance(Survey survey, @Nullable SeatsState state) {
         Bundle bundle = new Bundle();
         SeatsFragment fragment = new SeatsFragment();
 
