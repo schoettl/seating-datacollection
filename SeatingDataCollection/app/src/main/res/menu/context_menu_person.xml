@@ -13,5 +13,7 @@
         android:title="@string/action_person_disturbing" />
     <item android:id="@+id/action_person_stops_disturbing"
         android:title="@string/action_person_stops_disturbing" />
+    <item android:id="@+id/action_remove_from_group"
+        android:title="@string/action_remove_from_group" />
 
 </menu>

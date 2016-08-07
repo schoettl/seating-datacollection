@@ -214,6 +214,8 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
             case R.id.action_person_stops_disturbing:
                 actionManager.actionPersonStopsDisturbing(seat);
                 return true;
+            case R.id.action_remove_from_group:
+                actionManager.actionRemoveFromGroup(seat);
             default:
                 Log.w(TAG, "context menu item not implemented");
                 return super.onContextItemSelected(item);

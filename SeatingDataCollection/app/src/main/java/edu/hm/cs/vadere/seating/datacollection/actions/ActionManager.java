@@ -108,6 +108,10 @@ public class ActionManager {
         invalidatedListener.onOptionsMenuInvalidated();
     }
 
+    public void actionRemoveFromGroup(Seat seat) {
+        performActionAndAddToStack(new RemoveFromGroupAction(this, (Person) seat.getSeatTaker()));
+    }
+
     public void seatSelected(Seat seat) {
         pendingAction.seatSelected(seat);
     }
@@ -186,4 +190,5 @@ public class ActionManager {
     public SeatsFragment getSeatsFragment() {
         return seatsFragment;
     }
+
 }
