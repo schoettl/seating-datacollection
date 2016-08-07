@@ -11,6 +11,7 @@ import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
+import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
@@ -76,7 +77,7 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         Intent intent = new Intent(this, CollectDataActivity.class);
         intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID, survey.getId());
         SeatsState state = getSeatsFragment().getCurrentState();
-        SeatsFragment.Direction direction = getSeatsFragment().getDirection();
+        Direction direction = getSeatsFragment().getDirection();
         intent.putExtra(CollectDataActivity.EXTRA_STATE, state);
         intent.putExtra(CollectDataActivity.EXTRA_DIRECTION, direction);
         startActivity(intent);

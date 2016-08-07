@@ -12,6 +12,7 @@ import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
 import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
+import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -171,7 +172,7 @@ public class ActionManager {
         }
     }
 
-    public void actionDirectionChange(DirectionChangeAction.DirectionChangeListener listener, SeatsFragment.Direction newDirection) {
+    public void actionDirectionChange(Direction.DirectionChangeListener listener, Direction newDirection) {
         performActionAndAddToStack(new DirectionChangeAction(this, newDirection, listener));
     }
 

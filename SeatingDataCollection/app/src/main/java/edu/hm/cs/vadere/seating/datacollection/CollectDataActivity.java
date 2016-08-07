@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
+import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
@@ -32,7 +33,7 @@ public class CollectDataActivity extends AppCompatActivity {
 
         survey = Utils.getSurveyFromIntent(getIntent());
         final SeatsState state = getStateFromIntent();
-        final SeatsFragment.Direction direction = getDirectionFromIntent();
+        final Direction direction = getDirectionFromIntent();
 
         seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, state, direction);
     }
@@ -41,8 +42,8 @@ public class CollectDataActivity extends AppCompatActivity {
         return (SeatsState) getIntent().getSerializableExtra(EXTRA_STATE);
     }
 
-    private SeatsFragment.Direction getDirectionFromIntent() {
-        return (SeatsFragment.Direction) getIntent().getSerializableExtra(EXTRA_DIRECTION);
+    private Direction getDirectionFromIntent() {
+        return (Direction) getIntent().getSerializableExtra(EXTRA_DIRECTION);
     }
 
     @Override

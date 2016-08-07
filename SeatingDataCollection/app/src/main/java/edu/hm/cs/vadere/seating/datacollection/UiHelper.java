@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
+import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
@@ -85,7 +86,7 @@ public class UiHelper {
         }
     }
 
-    public static SeatsFragment createAndStartSeatsFragmentIfThisIsNoRecreation(AppCompatActivity activity, Bundle savedInstanceState, Survey survey, @Nullable SeatsState seatsState, @Nullable SeatsFragment.Direction direction) {
+    public static SeatsFragment createAndStartSeatsFragmentIfThisIsNoRecreation(AppCompatActivity activity, Bundle savedInstanceState, Survey survey, @Nullable SeatsState seatsState, @Nullable Direction direction) {
         if (savedInstanceState != null) {
             // Fragment has already been created.
             // Try to find it ;)
@@ -101,7 +102,7 @@ public class UiHelper {
         }
     }
 
-    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state, @Nullable SeatsFragment.Direction direction) {
+    public static SeatsFragment startAndReturnSeatsFragment(FragmentActivity activity, Survey survey, @Nullable SeatsState state, @Nullable Direction direction) {
         final SeatsFragment fragment = SeatsFragment.newInstance(survey, state, direction);
         final FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.seats_fragment_placeholder, fragment, SeatsFragment.FRAGMENT_TAG);

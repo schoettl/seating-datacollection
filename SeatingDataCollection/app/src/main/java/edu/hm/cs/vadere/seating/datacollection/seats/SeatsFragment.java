@@ -24,7 +24,7 @@ import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.actions.DefineGroupAction;
-import edu.hm.cs.vadere.seating.datacollection.actions.DirectionChangeAction;
+import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.HandBaggage;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -32,7 +32,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
-public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener, DirectionChangeAction.DirectionChangeListener {
+public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener, Direction.DirectionChangeListener {
 
     private static final String TAG = "SeatsFragment";
     private static final String ARG_STATE = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
@@ -314,24 +314,6 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
 
     private Direction getDirectionFromBundle(Bundle bundle) {
         return (Direction) bundle.getSerializable(ARG_DIRECTION);
-    }
-
-    public enum Direction {
-        FORWARD(R.drawable.ic_arrow_upward_black_18dp),
-        BACKWARD(R.drawable.ic_arrow_downward_black_18dp);
-
-        private int iconResourceId;
-        Direction(int iconResource) {
-            iconResourceId = iconResource;
-        }
-        public int getIconResourceId() {
-            return iconResourceId;
-        }
-
-        public Direction invert() {
-            return (this == FORWARD) ? BACKWARD : FORWARD;
-        }
-
     }
 
 }
