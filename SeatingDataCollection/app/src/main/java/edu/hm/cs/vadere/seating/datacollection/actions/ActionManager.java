@@ -171,8 +171,8 @@ public class ActionManager {
         }
     }
 
-    public void actionDirectionChange(DirectionChangeAction.DirectionChangeListener listener) {
-        performActionAndAddToStack(new DirectionChangeAction(this, listener));
+    public void actionDirectionChange(DirectionChangeAction.DirectionChangeListener listener, SeatsFragment.Direction newDirection) {
+        performActionAndAddToStack(new DirectionChangeAction(this, newDirection, listener));
     }
 
     public void actionDoorsReleased() {

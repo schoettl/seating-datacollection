@@ -93,7 +93,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         ivDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionManager.actionDirectionChange(SeatsFragment.this);
+                actionManager.actionDirectionChange(SeatsFragment.this, direction.invert());
             }
         });
         setCurrentDirectionIcon();
@@ -163,6 +163,9 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_direction_change:
+                actionManager.actionDirectionChange(this, direction.invert());
+                return true;
             case R.id.action_define_group:
                 actionManager.actionDefineGroup();
                 return true;
@@ -251,8 +254,8 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     @Override
-    public void onDirectionChange() {
-        invertDirection();
+    public void onDirectionChange(Direction newDirection) {
+        direction = newDirection;
         setCurrentDirectionIcon();
     }
 
@@ -313,10 +316,6 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         return (Direction) bundle.getSerializable(ARG_DIRECTION);
     }
 
-    private void invertDirection() {
-        direction = (direction == Direction.FORWARD) ? Direction.BACKWARD : Direction.FORWARD;
-    }
-
     public enum Direction {
         FORWARD(R.drawable.ic_arrow_upward_black_18dp),
         BACKWARD(R.drawable.ic_arrow_downward_black_18dp);
@@ -328,6 +327,11 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
         public int getIconResourceId() {
             return iconResourceId;
         }
+
+        public Direction invert() {
+            return (this == FORWARD) ? BACKWARD : FORWARD;
+        }
+
     }
 
 }

@@ -26,11 +26,4 @@
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/action_direction_change"
-        android:title="@string/action_direction_change"
-        android:icon="@drawable/ic_swap_horiz_black_18dp"
-        app:showAsAction="ifRoom"
-        />
-    <!-- alternative icons: keyboard return, swap horiz, compare arrows -->
-
 </menu>

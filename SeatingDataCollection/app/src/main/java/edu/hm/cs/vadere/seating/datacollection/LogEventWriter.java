@@ -9,6 +9,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.COUNT_STANDING_PERSONS;
 import static edu.hm.cs.vadere.seating.datacollection.model.LogEventType.DISTURBING;
@@ -38,6 +39,11 @@ public class LogEventWriter implements Serializable {
     public long logTrainEvent(LogEventType eventType) {
         logcatInfo("train event (seat, person)", eventType);
         return logEvent(createLogEvent(eventType, null, null));
+    }
+
+    public long logTrainDirectionEvent(LogEventType eventType, SeatsFragment.Direction newDirection) {
+        logcatInfo("train event (seat, person)", eventType);
+        return logEvent(createLogEvent(eventType, null, null, null, newDirection.toString()));
     }
 
     public long logCountStandingPersons(int count) {
