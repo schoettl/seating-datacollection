@@ -120,9 +120,9 @@ public class SeatsFragment extends Fragment implements PendingActionListener, Di
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.action_define_group);
         if (actionManager.isActionPending(DefineGroupAction.class)) {
-            UiHelper.tintIconOfMenuItem(item, Color.RED);
+            UiHelper.tintMenuItem(item, Color.RED);
         } else {
-            UiHelper.tintIconOfMenuItem(item, Color.BLACK);
+            UiHelper.tintMenuItem(item, Color.BLACK);
         }
         super.onPrepareOptionsMenu(menu);
     }

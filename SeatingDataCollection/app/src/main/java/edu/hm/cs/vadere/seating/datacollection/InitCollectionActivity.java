@@ -65,9 +65,9 @@ public class InitCollectionActivity extends AppCompatActivity implements Pending
         SeatsFragment fragment = getSeatsFragment();
         MenuItem item = menu.findItem(R.id.action_mark_agent);
         if (fragment.getActionManager().isActionPending(MarkAgentAction.class)) {
-            UiHelper.tintIconOfMenuItem(item, Color.RED);
+            UiHelper.tintMenuItem(item, Color.RED);
         } else {
-            UiHelper.tintIconOfMenuItem(item, Color.BLACK);
+            UiHelper.tintMenuItem(item, Color.BLACK);
         }
         return super.onPrepareOptionsMenu(menu);
     }

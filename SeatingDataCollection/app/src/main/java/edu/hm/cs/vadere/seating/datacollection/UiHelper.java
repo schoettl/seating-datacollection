@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -67,11 +69,15 @@ public class UiHelper {
     }
 
     /**
-     * Tint an icon of a MenuItem. Default color (dark on light background) is black at 54 % opacity.
+     * Tint an icon and text of a MenuItem. Default color (dark on light background) is black at 54 % opacity.
      * See https://google.github.io/material-design-icons/ > Coloring
      */
-    public static void tintIconOfMenuItem(MenuItem item, int color) {
+    public static void tintMenuItem(MenuItem item, int color) {
         item.getIcon().setTint(color);
+
+        SpannableString coloredTitle = new SpannableString(item.getTitle().toString());
+        coloredTitle.setSpan(new ForegroundColorSpan(color), 0, coloredTitle.length(), 0);
+        item.setTitle(coloredTitle);
     }
 
     public static void showInfoToast(Context context, int message) {
