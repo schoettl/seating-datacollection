@@ -30,7 +30,7 @@ public class InitCollectionActivity extends AppCompatActivity implements Pending
         setContentView(R.layout.activity_initcollection);
         UiHelper.setToolbar(this);
 
-        survey = Utils.getSurveyFromIntent(getIntent());
+        survey = Utils.getSurveyFromIntent(this);
         logEventWriter = new LogEventWriter(survey);
 
         seatsFragment = UiHelper.createAndStartSeatsFragmentIfThisIsNoRecreation(this, savedInstanceState, survey, null, null);

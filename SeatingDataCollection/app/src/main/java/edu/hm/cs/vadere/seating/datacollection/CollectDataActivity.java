@@ -35,7 +35,7 @@ public class CollectDataActivity extends AppCompatActivity implements TrainState
         setContentView(R.layout.activity_collectdata);
         UiHelper.setToolbar(this);
 
-        survey = Utils.getSurveyFromIntent(getIntent());
+        survey = Utils.getSurveyFromIntent(this);
         final SeatsState state = getStateFromIntent();
         final Direction direction = getDirectionFromIntent();
 

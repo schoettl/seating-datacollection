@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int EXPORT_DATA_REQUEST_CODE = 1;
     private static final String[] REQUIRED_PERMISSIONS = { Manifest.permission.WRITE_EXTERNAL_STORAGE };
 
+    private Long lastSurveyId = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         UiHelper.setToolbar(this);
 
         List<Survey> allSurveys = Survey.listAll(Survey.class, "id DESC"); // findAll's iterator cannot be used in an adapter
+        if (!allSurveys.isEmpty())
+            lastSurveyId = allSurveys.get(0).getId();
         SurveyListAdapter adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
         // For the CursorAdapter I need to know database details :/
         //CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_survey, cursor, columns, toViewIds, 0);
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startNewSurvey(View view) {
         Intent intent = new Intent(this, StartSurveyActivity.class);
+        intent.putExtra(StartSurveyActivity.EXTRA_SURVEY_ID, lastSurveyId); // as a template
         startActivity(intent);
     }
 

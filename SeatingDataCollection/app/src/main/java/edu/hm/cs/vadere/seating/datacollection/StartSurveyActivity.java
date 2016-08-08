@@ -13,7 +13,6 @@ public class StartSurveyActivity extends AppCompatActivity {
     private static final String TAG = "StartSurveyActivity";
     public static final String EXTRA_SURVEY_ID = "44cb788eb14b3d9a670962249fb0da402999aa72";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +23,18 @@ public class StartSurveyActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String todayStr = Utils.getTodaysDateIsoFormat();
-        getEditTextById(R.id.editTextDate).setText(todayStr);
+        final String todayStr = Utils.getTodaysDateIsoFormat();
+        setTextOfEdit(R.id.editTextDate, todayStr);
+
+        try {
+            final Survey survey = Utils.getSurveyFromIntent(this);
+            setTextOfEdit(R.id.editTextName, survey.getAgentName());
+            setTextOfEdit(R.id.editTextStartingAt, survey.getStartingAt());
+            setTextOfEdit(R.id.editTextDirection, survey.getDestination());
+            setTextOfEdit(R.id.editTextLine, survey.getLine());
+        } catch (IllegalArgumentException e) {
+            // no valid survey id passed - ignore
+        }
     }
 
     public void startSurvey(View view) {
@@ -52,6 +61,9 @@ public class StartSurveyActivity extends AppCompatActivity {
         survey.setTrainNumber(getTextFromEdit(R.id.editTextTrainNo));
         survey.save();
         return survey;
+    }
+    private void setTextOfEdit(int viewId, String text) {
+        getEditTextById(viewId).setText(text);
     }
 
     private EditText getEditTextById(int viewId) {

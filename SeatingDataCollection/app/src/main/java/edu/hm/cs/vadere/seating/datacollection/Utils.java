@@ -1,5 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.orm.util.NamingHelper;
@@ -14,7 +15,8 @@ public class Utils {
 
     public static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
 
-    public static Survey getSurveyFromIntent(Intent intent) {
+    public static Survey getSurveyFromIntent(Activity activity) throws IllegalArgumentException {
+        final Intent intent = activity.getIntent();
         final int invalidId = 0;
         long surveyId = intent.getLongExtra(StartSurveyActivity.EXTRA_SURVEY_ID, invalidId);
         if (surveyId == invalidId)
@@ -22,7 +24,7 @@ public class Utils {
         return getSurvey(surveyId);
     }
 
-    public static Survey getSurvey(long surveyId) {
+    public static Survey getSurvey(long surveyId) throws IllegalArgumentException {
         Survey survey = Survey.findById(Survey.class, surveyId);
         if (survey == null)
             throw new IllegalArgumentException("invalid survey id: " + surveyId);
