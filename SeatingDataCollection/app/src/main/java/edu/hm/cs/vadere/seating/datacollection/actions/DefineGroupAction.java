@@ -25,12 +25,13 @@ public class DefineGroupAction extends PendingAction {
     public void perform() {
         if (persons.size() < 2) {
             UiHelper.showErrorToast(getActionManager().getSeatsFragment().getContext(), R.string.error_group_must_have_more);
+            cancelThisPendingAction();
             firePendingActionCanceled();
         } else {
             setCommonGroupForSelectedPersons();
+            clearThisPendingAction();
             firePendingActionFinished();
         }
-        clearThisPendingAction();
     }
 
     @Override

@@ -35,6 +35,10 @@ public abstract class PendingAction extends Action {
         getActionManager().clearPendingAction();
     }
 
+    public final void cancelThisPendingAction() {
+        getActionManager().cancelPendingAction();
+    }
+
     public final boolean isThisActionPending() {
         return getActionManager().isActionPending(this);
     }

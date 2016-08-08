@@ -34,6 +34,13 @@ public class ActionManager {
         this.seatsFragment = seatsFragment;
     }
 
+    public void cancelPendingAction() {
+        if (pendingAction == actionStack.peek()) {
+            actionStack.pop();
+            clearPendingAction();
+        }
+    }
+
     public void clearPendingAction() {
         pendingAction = null;
     }
