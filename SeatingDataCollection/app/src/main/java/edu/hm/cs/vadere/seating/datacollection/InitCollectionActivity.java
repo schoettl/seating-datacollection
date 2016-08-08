@@ -16,7 +16,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
-public class InitCollectionActivity extends AppCompatActivity implements OnOptionsMenuInvalidatedListener {
+public class InitCollectionActivity extends AppCompatActivity implements PendingActionListener {
 
     private static final String TAG = "InitCollectionActivity";
     private Survey survey;
@@ -50,6 +50,7 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
         switch (item.getItemId()) {
             case R.id.action_mark_agent:
                 actionManager.actionMarkAgent(survey, this);
+                invalidateOptionsMenu();
                 return true;
             case R.id.action_undo:
                 UiHelper.undoOrShowToast(actionManager);
@@ -90,7 +91,7 @@ public class InitCollectionActivity extends AppCompatActivity implements OnOptio
     }
 
     @Override
-    public void onOptionsMenuInvalidated() {
+    public void onPendingActionFinished(boolean wasCanceled) {
         invalidateOptionsMenu();
     }
 }

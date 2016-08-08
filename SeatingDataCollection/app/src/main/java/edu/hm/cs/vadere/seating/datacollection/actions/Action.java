@@ -10,11 +10,11 @@ public abstract class Action {
         this.actionManager = actionManager;
     }
 
-    protected ActionManager getActionManager() {
+    protected final ActionManager getActionManager() {
         return actionManager;
     }
 
-    protected LogEventWriter getLogEventWriter() {
+    protected final LogEventWriter getLogEventWriter() {
         return actionManager.logEventWriter;
     }
 
@@ -24,7 +24,7 @@ public abstract class Action {
         throw new UnsupportedOperationException("undo not supported");
     }
 
-    protected void deleteLogEvent(long id) {
+    protected final void deleteLogEvent(long id) {
         LogEvent event = LogEvent.findById(LogEvent.class, id);
         event.delete();
     }

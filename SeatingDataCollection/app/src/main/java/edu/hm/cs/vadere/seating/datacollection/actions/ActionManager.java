@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Stack;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
-import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
+import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.Direction;
@@ -53,8 +53,8 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionPlaceBaggage(Seat seat) {
-        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker()));
+    public void actionPlaceBaggage(Seat seat, PendingActionListener listener) {
+        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker(), listener));
     }
 
     public void actionRemoveBaggage(Seat seat) {
@@ -67,9 +67,9 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionSitDownAndPlaceBaggage(Seat seat) {
+    public void actionSitDownAndPlaceBaggage(Seat seat, PendingActionListener listener) {
         performActionAndAddToStack(new SitDownAction(this, seat));
-        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker()));
+        addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker(), listener));
     }
 
     void showError(int message) {
@@ -80,8 +80,8 @@ public class ActionManager {
         return (seat.getSeatTaker() instanceof Person);
     }
 
-    public void actionChangeSeat(Seat seat) {
-        addPendingActionToStack(new ChangeSeatAction(this, seat));
+    public void actionChangeSeat(Seat seat, PendingActionListener listener) {
+        addPendingActionToStack(new ChangeSeatAction(this, seat, listener));
     }
 
     public void actionLeave(Seat seat) {
@@ -89,25 +89,22 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionDefineGroup() {
+    public void actionDefineGroup(PendingActionListener listener) {
         if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
             pendingAction.perform();
-            seatsFragment.onOptionsMenuInvalidated(); // TODO onOptionsMenuInvalidated - better call in action itself? How did I do it in the MarkAgentAction?
         } else {
             Log.d(TAG, "starting defining group");
-            addPendingActionToStack(new DefineGroupAction(this));
-            seatsFragment.onOptionsMenuInvalidated();
+            addPendingActionToStack(new DefineGroupAction(this, listener));
         }
     }
 
-    public void actionMarkAgent(Survey survey, OnOptionsMenuInvalidatedListener invalidatedListener) {
-        if (!isActionPending(MarkAgentAction.class)) {
-            addPendingActionToStack(new MarkAgentAction(this, survey, invalidatedListener));
-        } else {
+    public void actionMarkAgent(Survey survey, PendingActionListener listener) {
+        if (isActionPending(MarkAgentAction.class)) {
             clearPendingAction();
+        } else {
+            addPendingActionToStack(new MarkAgentAction(this, survey, listener));
         }
-        invalidatedListener.onOptionsMenuInvalidated();
     }
 
     public void actionRemoveFromGroup(Seat seat) {

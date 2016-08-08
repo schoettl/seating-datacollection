@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -14,14 +15,15 @@ public class DefineGroupAction extends PendingAction {
     private static final String TAG = "DefineGroupAction";
     private Set<Person> persons = new HashSet<>();
 
-    public DefineGroupAction(ActionManager actionManager) {
-        super(actionManager);
+    public DefineGroupAction(ActionManager actionManager, PendingActionListener listener) {
+        super(actionManager, listener);
     }
 
     @Override
     public void perform() {
         setCommonGroupForSelectedPersons();
-        clearThisPendingAction(); // TODO is this the correct place for this?
+        clearThisPendingAction();
+        firePendingActionFinished();
     }
 
     @Override
@@ -34,7 +36,7 @@ public class DefineGroupAction extends PendingAction {
     }
 
     @Override
-    public void undo() {
+    protected void undoFinishedAction() {
         // This is not perfect. Previous groups are lost and have to be reassigned manually.
         for (Person p : persons) {
             p.setGroup(null);
@@ -43,7 +45,6 @@ public class DefineGroupAction extends PendingAction {
     }
 
     public void setCommonGroupForSelectedPersons() {
-
         if (persons.isEmpty())
             return;
 

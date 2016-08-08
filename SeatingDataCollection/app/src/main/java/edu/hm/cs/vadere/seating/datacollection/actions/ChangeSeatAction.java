@@ -1,5 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
+import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.model.LogEventType;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
@@ -11,8 +12,8 @@ public class ChangeSeatAction extends PendingAction {
     private Person person;
     private long logEventId;
 
-    public ChangeSeatAction(ActionManager actionManager, Seat oldSeat) {
-        super(actionManager);
+    public ChangeSeatAction(ActionManager actionManager, Seat oldSeat, PendingActionListener listener) {
+        super(actionManager, listener);
         this.oldSeat = oldSeat;
     }
 
@@ -38,10 +39,11 @@ public class ChangeSeatAction extends PendingAction {
     }
 
     @Override
-    public void undo() {
+    protected void undoFinishedAction() {
         if (newSeat.getSeatTaker() == person)
             newSeat.clearSeat();
         oldSeat.setSeatTaker(person);
         deleteLogEvent(logEventId);
     }
+
 }

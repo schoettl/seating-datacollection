@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
-import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
+import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.Utils;
@@ -32,7 +32,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
-public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedListener, Direction.DirectionChangeListener {
+public class SeatsFragment extends Fragment implements PendingActionListener, Direction.DirectionChangeListener {
 
     private static final String TAG = "SeatsFragment";
     private static final String ARG_STATE = "1f90620b42228f9dbb029a80a79c95d1119c9ea0";
@@ -167,7 +167,8 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                 actionManager.actionDirectionChange(this, direction.invert());
                 return true;
             case R.id.action_define_group:
-                actionManager.actionDefineGroup();
+                actionManager.actionDefineGroup(this);
+                invalidateActivityOptionsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -192,16 +193,16 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
                 actionManager.actionSitDown(seat);
                 return true;
             case R.id.action_sit_down_place_baggage:
-                actionManager.actionSitDownAndPlaceBaggage(seat);
+                actionManager.actionSitDownAndPlaceBaggage(seat, this);
                 return true;
             case R.id.action_change_place:
-                actionManager.actionChangeSeat(seat);
+                actionManager.actionChangeSeat(seat, this);
                 return true;
             case R.id.action_leave:
                 actionManager.actionLeave(seat);
                 return true;
             case R.id.action_place_baggage:
-                actionManager.actionPlaceBaggage(seat);
+                actionManager.actionPlaceBaggage(seat, this);
                 return true;
             case R.id.action_remove_baggage:
                 actionManager.actionRemoveBaggage(seat);
@@ -241,7 +242,11 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     @Override
-    public void onOptionsMenuInvalidated() {
+    public void onPendingActionFinished(boolean wasCanceled) {
+        invalidateActivityOptionsMenu();
+    }
+
+    private void invalidateActivityOptionsMenu() {
         getActivity().invalidateOptionsMenu();
     }
 
@@ -303,7 +308,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
             dir = getDirectionFromBundle(getArguments());
         }
 
-        Log.d(TAG, "restoring directoin and state: " + state);
+        Log.d(TAG, "restoring direction and state: " + state);
         floorRectAdapter = new FloorRectAdapter(getContext(), state);
         direction = (dir == null) ? Direction.FORWARD : dir;
     }

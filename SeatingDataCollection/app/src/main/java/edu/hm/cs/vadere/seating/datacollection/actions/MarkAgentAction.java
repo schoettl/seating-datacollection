@@ -1,6 +1,6 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
-import edu.hm.cs.vadere.seating.datacollection.OnOptionsMenuInvalidatedListener;
+import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -9,13 +9,11 @@ import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class MarkAgentAction extends PendingAction {
     private final Survey survey;
-    private final OnOptionsMenuInvalidatedListener optionsMenuInvalidatedListener;
     private Person person;
 
-    public MarkAgentAction(ActionManager actionManager, Survey survey, OnOptionsMenuInvalidatedListener invalidatedListener) {
-        super(actionManager);
+    public MarkAgentAction(ActionManager actionManager, Survey survey, PendingActionListener listener) {
+        super(actionManager, listener);
         this.survey = survey;
-        this.optionsMenuInvalidatedListener = invalidatedListener;
     }
 
     @Override
@@ -23,8 +21,8 @@ public class MarkAgentAction extends PendingAction {
         SeatTaker seatTaker = seat.getSeatTaker();
         if (seatTaker instanceof Person) {
             this.person = (Person) seatTaker;
-            clearThisPendingAction();
             perform();
+            clearThisPendingAction();
         } else {
             getActionManager().showError(R.string.error_please_select_a_person);
         }
@@ -36,11 +34,11 @@ public class MarkAgentAction extends PendingAction {
         person.setAgent(true);
         survey.setAgent(person);
         survey.save();
-        optionsMenuInvalidatedListener.onOptionsMenuInvalidated();
+        firePendingActionFinished();
     }
 
     @Override
-    public void undo() {
+    protected void undoFinishedAction() {
         makeNoPersonBeingAgent();
         survey.setAgent(null);
         survey.save();
