@@ -254,7 +254,7 @@ public class SeatsFragment extends Fragment implements OnOptionsMenuInvalidatedL
     }
 
     @Override
-    public void onDirectionChange(Direction newDirection) {
+    public void onDirectionChanged(Direction newDirection) {
         direction = newDirection;
         setCurrentDirectionIcon();
     }

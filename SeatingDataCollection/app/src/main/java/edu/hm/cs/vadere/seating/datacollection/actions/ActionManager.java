@@ -18,6 +18,7 @@ import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatTaker;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.model.TrainState;
 import edu.hm.cs.vadere.seating.datacollection.seats.FloorRectAdapter;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
@@ -176,12 +177,12 @@ public class ActionManager {
         performActionAndAddToStack(new DirectionChangeAction(this, newDirection, listener));
     }
 
-    public void actionDoorsReleased() {
-        performActionAndAddToStack(new DoorsReleasedAction(this));
+    public void actionDoorsReleased(TrainState.TrainStateListener listener) {
+        performActionAndAddToStack(new DoorsReleasedAction(this, listener));
     }
 
-    public void actionTrainStarts() {
-        performActionAndAddToStack(new TrainStartsAction(this));
+    public void actionTrainStarts(TrainState.TrainStateListener listener) {
+        performActionAndAddToStack(new TrainStartsAction(this, listener));
     }
 
     public void actionCountStandingPersons(Activity activity) {

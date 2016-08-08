@@ -17,13 +17,13 @@ public class DirectionChangeAction extends Action {
     @Override
     public void perform() {
         logEventId = getLogEventWriter().logTrainDirectionEvent(LogEventType.DIRECTION_CHANGE, newDirection);
-        listener.onDirectionChange(newDirection);
+        listener.onDirectionChanged(newDirection);
     }
 
     @Override
     public void undo() {
         deleteLogEvent(logEventId);
-        listener.onDirectionChange(newDirection.invert());
+        listener.onDirectionChanged(newDirection.invert());
     }
 
 }

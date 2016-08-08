@@ -21,7 +21,7 @@ public enum Direction {
     }
 
     public interface DirectionChangeListener {
-        void onDirectionChange(Direction newDirection);
+        void onDirectionChanged(Direction newDirection);
     }
 
 }

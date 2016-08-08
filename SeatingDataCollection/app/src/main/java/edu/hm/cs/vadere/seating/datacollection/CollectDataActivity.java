@@ -12,9 +12,10 @@ import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
+import edu.hm.cs.vadere.seating.datacollection.model.TrainState;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
-public class CollectDataActivity extends AppCompatActivity {
+public class CollectDataActivity extends AppCompatActivity implements TrainState.TrainStateListener {
 
     public static final String EXTRA_STATE = "da0a846ffbbf4436f239cc1b84af4d2a52c5d616";
     public static final String EXTRA_DIRECTION = "fd2d3ed50627a5804fc241bf5f07005b30e41c6f";
@@ -22,7 +23,7 @@ public class CollectDataActivity extends AppCompatActivity {
     private Survey survey;
     private SeatsFragment seatsFragment;
 
-    /** State of the train. Currently, initialized with UNKNOWN. */
+    /** State of the train. */
     private TrainState trainState = TrainState.UNKNOWN;
 
     @Override
@@ -58,14 +59,10 @@ public class CollectDataActivity extends AppCompatActivity {
         ActionManager actionManager = seatsFragment.getActionManager();
         switch (item.getItemId()) {
             case R.id.action_door_release:
-                actionManager.actionDoorsReleased();
-                trainState = TrainState.DOORS_OPENED;
-                invalidateOptionsMenu();
+                actionManager.actionDoorsReleased(this);
                 return true;
             case R.id.action_train_starts:
-                actionManager.actionTrainStarts();
-                trainState = TrainState.DOORS_CLOSED;
-                invalidateOptionsMenu();
+                actionManager.actionTrainStarts(this);
                 return true;
             case R.id.action_count_standing_persons:
                 actionManager.actionCountStandingPersons(this);
@@ -83,11 +80,11 @@ public class CollectDataActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
         // (To trigger this callback, call invalidateOptionsMenu())
         switch (trainState) {
-            case DOORS_CLOSED:
-                menu.removeItem(R.id.action_train_starts);
-                break;
-            case DOORS_OPENED:
+            case HALTING:
                 menu.removeItem(R.id.action_door_release);
+                break;
+            case MOVING:
+                menu.removeItem(R.id.action_train_starts);
                 break;
             case UNKNOWN:
             default:
@@ -106,7 +103,10 @@ public class CollectDataActivity extends AppCompatActivity {
         });
     }
 
-    private enum TrainState {
-        UNKNOWN, DOORS_CLOSED, DOORS_OPENED;
+    @Override
+    public void onTrainStateChanged(TrainState newState) {
+        trainState = newState;
+        invalidateOptionsMenu();
     }
+
 }
