@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
+import edu.hm.cs.vadere.seating.datacollection.R;
+import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.MGroup;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
@@ -21,9 +23,14 @@ public class DefineGroupAction extends PendingAction {
 
     @Override
     public void perform() {
-        setCommonGroupForSelectedPersons();
+        if (persons.size() < 2) {
+            UiHelper.showErrorToast(getActionManager().getSeatsFragment().getContext(), R.string.error_group_must_have_more);
+            firePendingActionCanceled();
+        } else {
+            setCommonGroupForSelectedPersons();
+            firePendingActionFinished();
+        }
         clearThisPendingAction();
-        firePendingActionFinished();
     }
 
     @Override
@@ -45,8 +52,6 @@ public class DefineGroupAction extends PendingAction {
     }
 
     public void setCommonGroupForSelectedPersons() {
-        if (persons.isEmpty())
-            return;
 
         // Simple algorithm:
         // Create new group for selected persons, overwrite old group (if any).
