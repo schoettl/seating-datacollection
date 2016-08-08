@@ -4,7 +4,7 @@
     <string name="start_data_collection">Start data collection</string>
     <string name="agent_name_hint">Your name</string>
     <string name="startingat_hint">Starting at e.g. Otterfing</string>
-    <string name="direction_hint">Direction e.g. Mammendorf</string>
+    <string name="destination_hint">Direction e.g. Mammendorf</string>
     <string name="line_hint">Train line e.g. S3</string>
     <string name="date_hint">Today\'s date</string>
     <string name="wagonno_hint">Position in train e.g. 2 (second wagon from ahead)</string>

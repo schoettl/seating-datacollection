@@ -30,7 +30,7 @@ public class StartSurveyActivity extends AppCompatActivity {
             final Survey survey = Utils.getSurveyFromIntent(this);
             setTextOfEdit(R.id.editTextName, survey.getAgentName());
             setTextOfEdit(R.id.editTextStartingAt, survey.getStartingAt());
-            setTextOfEdit(R.id.editTextDirection, survey.getDestination());
+            setTextOfEdit(R.id.editTextDestination, survey.getDestination());
             setTextOfEdit(R.id.editTextLine, survey.getLine());
         } catch (IllegalArgumentException e) {
             // no valid survey id passed - ignore
@@ -53,7 +53,7 @@ public class StartSurveyActivity extends AppCompatActivity {
         survey.setAgentName(getTextFromEdit(R.id.editTextName));
         survey.setDate(getTextFromEdit(R.id.editTextDate));
         survey.setStartingAt(getTextFromEdit(R.id.editTextStartingAt));
-        survey.setDestination(getTextFromEdit(R.id.editTextDirection));
+        survey.setDestination(getTextFromEdit(R.id.editTextDestination));
         survey.setLine(getTextFromEdit(R.id.editTextLine));
         survey.setWagonNo(getIntFromEdit(R.id.editTextWagonNo));
         survey.setDoorNo(getIntFromEdit(R.id.editTextDoorNo));
