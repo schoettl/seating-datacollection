@@ -73,7 +73,8 @@ public class UiHelper {
      * See https://google.github.io/material-design-icons/ > Coloring
      */
     public static void tintMenuItem(MenuItem item, int color) {
-        item.getIcon().setTint(color);
+        if (item.getIcon() != null)
+            item.getIcon().setTint(color);
 
         SpannableString coloredTitle = new SpannableString(item.getTitle().toString());
         coloredTitle.setSpan(new ForegroundColorSpan(color), 0, coloredTitle.length(), 0);

@@ -2,8 +2,10 @@ package edu.hm.cs.vadere.seating.datacollection;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
 public class CollectDataActivity extends AppCompatActivity implements TrainState.TrainStateListener {
 
+    private static final String TAG = "CollectDataActivity";
     public static final String EXTRA_STATE = "da0a846ffbbf4436f239cc1b84af4d2a52c5d616";
     public static final String EXTRA_DIRECTION = "fd2d3ed50627a5804fc241bf5f07005b30e41c6f";
 
@@ -81,7 +84,10 @@ public class CollectDataActivity extends AppCompatActivity implements TrainState
         // (To trigger this callback, call invalidateOptionsMenu())
         switch (trainState) {
             case HALTING:
+                Log.d(TAG, "prepare options menu after door release");
                 menu.removeItem(R.id.action_door_release);
+                final MenuItem trainStartsItem = menu.findItem(R.id.action_train_starts);
+                UiHelper.tintMenuItem(trainStartsItem, Color.RED); // does not work somehow
                 break;
             case MOVING:
                 menu.removeItem(R.id.action_train_starts);
