@@ -146,8 +146,11 @@ public class SeatsFragment extends Fragment implements PendingActionListener, Di
             if (seatTaker instanceof Person) {
                 Log.d(TAG, "person");
                 inflater.inflate(R.menu.context_menu_person, menu);
-                if (!((Person) seatTaker).isDisturbing())
+                final Person person = (Person) seatTaker;
+                if (!person.isDisturbing())
                     menu.removeItem(R.id.action_person_stops_disturbing);
+                if (person.getGroup() == null)
+                    menu.removeItem(R.id.action_remove_from_group);
 
             } else if (seatTaker instanceof HandBaggage) {
                 Log.d(TAG, "baggage");
