@@ -6,4 +6,9 @@
         android:title="@string/survey_delete"
         />
 
+    <item
+        android:id="@+id/survey_new_from_template"
+        android:title="@string/survey_new_from_template"
+        />
+
 </menu>

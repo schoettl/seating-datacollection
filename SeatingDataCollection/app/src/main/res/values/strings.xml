@@ -51,4 +51,5 @@
     <string name="action_remove_from_group">Remove from group</string>
     <string name="error_group_must_have_more">Too few people selected — canceled</string>
     <string name="survey_delete">Delete survey</string>
+    <string name="survey_new_from_template">Use for new survey</string>
 </resources>

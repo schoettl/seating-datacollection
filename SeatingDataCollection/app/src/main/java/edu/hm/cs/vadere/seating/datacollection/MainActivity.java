@@ -64,11 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        final Survey selectedSurvey = UiHelper.getItemFromMenuInfo(item.getMenuInfo(), adapter);
         switch (item.getItemId()) {
             case R.id.survey_delete:
-                final Survey selectedSurvey = UiHelper.getItemFromMenuInfo(item.getMenuInfo(), adapter);
                 deleteSurvey(selectedSurvey.getId());
                 adapter.remove(selectedSurvey);
+                return true;
+            case R.id.survey_new_from_template:
+                startNewSurvey(selectedSurvey.getId());
                 return true;
             default:
                 return super.onContextItemSelected(item);
