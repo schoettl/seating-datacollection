@@ -67,8 +67,13 @@ public class MainActivity extends AppCompatActivity {
         final Survey selectedSurvey = UiHelper.getItemFromMenuInfo(item.getMenuInfo(), adapter);
         switch (item.getItemId()) {
             case R.id.survey_delete:
-                deleteSurvey(selectedSurvey.getId());
-                adapter.remove(selectedSurvey);
+                UiHelper.showConfirmDialog(this, R.string.dialog_confirm_delete_survey, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteSurvey(selectedSurvey.getId());
+                        adapter.remove(selectedSurvey);
+                    }
+                });
                 return true;
             case R.id.survey_new_from_template:
                 startNewSurvey(selectedSurvey.getId());

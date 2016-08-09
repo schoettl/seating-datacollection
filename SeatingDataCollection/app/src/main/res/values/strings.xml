@@ -52,4 +52,5 @@
     <string name="error_group_must_have_more">Too few people selected — canceled</string>
     <string name="survey_delete">Delete survey</string>
     <string name="survey_new_from_template">Use for new survey</string>
+    <string name="dialog_confirm_delete_survey">Really delete this survey?</string>
 </resources>
