@@ -13,8 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
@@ -116,6 +120,16 @@ public class UiHelper {
         Log.d(TAG, "committing fragment transaction");
         ft.commit();
         return fragment;
+    }
+
+    public static View getViewFromMenuInfo(ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        return info.targetView;
+    }
+
+    public static <T> T getItemFromMenuInfo(ContextMenu.ContextMenuInfo menuInfo, ArrayAdapter<T> adapter) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        return adapter.getItem(info.position);
     }
 
 }

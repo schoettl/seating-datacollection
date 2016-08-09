@@ -136,7 +136,7 @@ public class SeatsFragment extends Fragment implements PendingActionListener, Di
         if (!(view instanceof GridView))
             return;
 
-        View v = getViewFromMenuInfo(menuInfo);
+        View v = UiHelper.getViewFromMenuInfo(menuInfo);
 
         if (v instanceof SeatWidget) {
             MenuInflater inflater = getActivity().getMenuInflater();
@@ -179,7 +179,7 @@ public class SeatsFragment extends Fragment implements PendingActionListener, Di
     public boolean onContextItemSelected(MenuItem item) {
         // Get clicked view: http://stackoverflow.com/questions/2926293/identifying-the-view-selected-in-a-contextmenu-android
         Log.d(TAG, "on context item selected");
-        View v = getViewFromMenuInfo(item.getMenuInfo());
+        View v = UiHelper.getViewFromMenuInfo(item.getMenuInfo());
 
         if (!(v instanceof SeatWidget))
             return false;
@@ -230,11 +230,6 @@ public class SeatsFragment extends Fragment implements PendingActionListener, Di
 
     public SeatsState getCurrentState() {
         return new SeatsState(floorRectAdapter.getSeats());
-    }
-
-    private View getViewFromMenuInfo(ContextMenu.ContextMenuInfo menuInfo) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        return info.targetView; //floorRectAdapter.getItem(menuInfo.position);
     }
 
     private void setCurrentDirectionIcon() {

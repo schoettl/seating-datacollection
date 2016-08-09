@@ -11,11 +11,22 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.List;
+import com.orm.SugarTransactionHelper;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
+import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] REQUIRED_PERMISSIONS = { Manifest.permission.WRITE_EXTERNAL_STORAGE };
 
     private Long lastSurveyId = null;
+    private ArrayAdapter<Survey> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +47,57 @@ public class MainActivity extends AppCompatActivity {
         List<Survey> allSurveys = Survey.listAll(Survey.class, "id DESC"); // findAll's iterator cannot be used in an adapter
         if (!allSurveys.isEmpty())
             lastSurveyId = allSurveys.get(0).getId();
-        SurveyListAdapter adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
+        adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
         // For the CursorAdapter I need to know database details :/
         //CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_survey, cursor, columns, toViewIds, 0);
         ListView listView = (ListView) findViewById(R.id.listViewSurvey);
         listView.setAdapter(adapter);
+
+        registerForContextMenu(listView);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.listViewSurvey) {
+            final MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.context_menu_survey, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.survey_delete:
+                final Survey selectedSurvey = UiHelper.getItemFromMenuInfo(item.getMenuInfo(), adapter);
+                deleteSurvey(selectedSurvey.getId());
+                adapter.remove(selectedSurvey);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void deleteSurvey(long id) {
+        Log.d(TAG, "deleting survey " + id + " in transaction");
+        final String idAsString = String.valueOf(id);
+        SugarTransactionHelper.doInTransaction(new SugarTransactionHelper.Callback() {
+            @Override
+            public void manipulateInTransaction() {
+
+                Survey.deleteAll(Survey.class, "id = ?", idAsString);
+
+                final Set<Person> personsToDelete = new HashSet<>();
+                Iterator<LogEvent> it = LogEvent.findAsIterator(LogEvent.class, "survey = ?", idAsString);
+                while (it.hasNext()) {
+                    LogEvent event = it.next();
+                    personsToDelete.add(event.getPerson());
+                }
+                Person.deleteInTx(personsToDelete);
+
+                LogEvent.deleteAll(LogEvent.class, "survey = ?", idAsString);
+            }
+        });
     }
 
     public void startNewSurvey(View view) {
