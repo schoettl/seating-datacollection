@@ -15,14 +15,12 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.orm.SugarTransactionHelper;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import edu.hm.cs.vadere.seating.datacollection.model.LogEvent;
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int EXPORT_DATA_REQUEST_CODE = 1;
     private static final String[] REQUIRED_PERMISSIONS = { Manifest.permission.WRITE_EXTERNAL_STORAGE };
 
-    private ArrayAdapter<Survey> adapter;
+    private SurveyListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +41,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UiHelper.setToolbar(this);
 
-        List<Survey> allSurveys = Survey.listAll(Survey.class, "id DESC"); // findAll's iterator cannot be used in an adapter
-        adapter = new SurveyListAdapter(this, R.layout.item_survey, allSurveys);
+        adapter = new SurveyListAdapter(this, R.layout.item_survey);
         // For the CursorAdapter I need to know database details :/
         //CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.item_survey, cursor, columns, toViewIds, 0);
         ListView listView = (ListView) findViewById(R.id.listViewSurvey);
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Reload the survey list when the activity restarts.
+        Log.d(TAG, "reloading survey list");
+        adapter.reload();
+        // According to Google's guide, it's uncommon to implement onRestart().
+        // In this case it makes sense: reload() is implicitly called in the adapter's constructor.
+        // Therefore onStart() would call it a second time.
     }
 
     @Override
@@ -130,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "deleting database");
                 deleteDatabase(SeatingDataCollectionApp.DATABASE_NAME);
-                // TODO list of surveys only gets updated onCreate
+                adapter.reload();
             }
         });
     }

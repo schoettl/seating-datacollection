@@ -10,8 +10,15 @@ import java.util.List;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 
 public class SurveyListAdapter extends ArrayAdapter<Survey> {
-    public SurveyListAdapter(Context context, int resource, List<Survey> objects) {
-        super(context, resource, objects);
+    public SurveyListAdapter(Context context, int resource) {
+        super(context, resource);
+        reload();
+    }
+
+    public void reload() {
+        List<Survey> allSurveys = Survey.listAll(Survey.class, "id DESC"); // findAll's iterator cannot be used in an adapter
+        clear();
+        addAll(allSurveys);
     }
 
     @Override
