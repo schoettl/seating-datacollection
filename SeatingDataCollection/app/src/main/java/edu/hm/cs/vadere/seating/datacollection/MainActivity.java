@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void deleteSurvey(long id) {
         Log.d(TAG, "deleting survey " + id + " in transaction");
         final String idAsString = String.valueOf(id);
+
         SugarTransactionHelper.doInTransaction(new SugarTransactionHelper.Callback() {
             @Override
             public void manipulateInTransaction() {
@@ -104,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                 Iterator<LogEvent> it = LogEvent.findAsIterator(LogEvent.class, "survey = ?", idAsString);
                 while (it.hasNext()) {
                     LogEvent event = it.next();
-                    personsToDelete.add(event.getPerson());
+                    final Person person = event.getPerson();
+                    if (person != null)
+                        personsToDelete.add(person);
                 }
                 Person.deleteInTx(personsToDelete);
 
