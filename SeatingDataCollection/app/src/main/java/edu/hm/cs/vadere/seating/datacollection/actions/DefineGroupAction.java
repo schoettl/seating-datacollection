@@ -5,7 +5,6 @@ import android.util.Log;
 import java.util.HashSet;
 import java.util.Set;
 
-import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.MGroup;

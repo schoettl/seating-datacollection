@@ -1,6 +1,5 @@
 package edu.hm.cs.vadere.seating.datacollection.actions;
 
-import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.model.Person;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;

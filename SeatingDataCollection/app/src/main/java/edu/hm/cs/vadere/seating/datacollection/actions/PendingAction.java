@@ -2,7 +2,6 @@ package edu.hm.cs.vadere.seating.datacollection.actions;
 
 import android.util.Log;
 
-import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.model.Seat;
 
 public abstract class PendingAction extends Action {
@@ -53,4 +52,7 @@ public abstract class PendingAction extends Action {
         listener.onPendingActionFinished(true);
     }
 
+    public interface PendingActionListener {
+        void onPendingActionFinished(boolean wasCanceled);
+    }
 }

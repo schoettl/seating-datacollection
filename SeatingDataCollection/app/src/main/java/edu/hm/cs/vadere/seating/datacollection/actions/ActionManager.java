@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Stack;
 
 import edu.hm.cs.vadere.seating.datacollection.LogEventWriter;
-import edu.hm.cs.vadere.seating.datacollection.PendingActionListener;
 import edu.hm.cs.vadere.seating.datacollection.R;
 import edu.hm.cs.vadere.seating.datacollection.UiHelper;
 import edu.hm.cs.vadere.seating.datacollection.model.Direction;
@@ -60,7 +59,7 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionPlaceBaggage(Seat seat, PendingActionListener listener) {
+    public void actionPlaceBaggage(Seat seat, PendingAction.PendingActionListener listener) {
         addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker(), listener));
     }
 
@@ -74,7 +73,7 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionSitDownAndPlaceBaggage(Seat seat, PendingActionListener listener) {
+    public void actionSitDownAndPlaceBaggage(Seat seat, PendingAction.PendingActionListener listener) {
         performActionAndAddToStack(new SitDownAction(this, seat));
         addPendingActionToStack(new PlaceBaggageAction(this, (Person) seat.getSeatTaker(), listener));
     }
@@ -87,7 +86,7 @@ public class ActionManager {
         return (seat.getSeatTaker() instanceof Person);
     }
 
-    public void actionChangeSeat(Seat seat, PendingActionListener listener) {
+    public void actionChangeSeat(Seat seat, PendingAction.PendingActionListener listener) {
         addPendingActionToStack(new ChangeSeatAction(this, seat, listener));
     }
 
@@ -96,7 +95,7 @@ public class ActionManager {
         performActionAndAddToStack(action);
     }
 
-    public void actionDefineGroup(PendingActionListener listener) {
+    public void actionDefineGroup(PendingAction.PendingActionListener listener) {
         if (isActionPending(DefineGroupAction.class)) {
             Log.d(TAG, "finish defining group");
             pendingAction.perform();
@@ -106,7 +105,7 @@ public class ActionManager {
         }
     }
 
-    public void actionMarkAgent(Survey survey, PendingActionListener listener) {
+    public void actionMarkAgent(Survey survey, PendingAction.PendingActionListener listener) {
         if (isActionPending(MarkAgentAction.class)) {
             clearPendingAction();
         } else {

@@ -11,12 +11,13 @@ import android.view.View;
 
 import edu.hm.cs.vadere.seating.datacollection.actions.ActionManager;
 import edu.hm.cs.vadere.seating.datacollection.actions.MarkAgentAction;
+import edu.hm.cs.vadere.seating.datacollection.actions.PendingAction;
 import edu.hm.cs.vadere.seating.datacollection.model.Direction;
 import edu.hm.cs.vadere.seating.datacollection.model.SeatsState;
 import edu.hm.cs.vadere.seating.datacollection.model.Survey;
 import edu.hm.cs.vadere.seating.datacollection.seats.SeatsFragment;
 
-public class InitCollectionActivity extends AppCompatActivity implements PendingActionListener {
+public class InitCollectionActivity extends AppCompatActivity implements PendingAction.PendingActionListener {
 
     private static final String TAG = "InitCollectionActivity";
     private Survey survey;
