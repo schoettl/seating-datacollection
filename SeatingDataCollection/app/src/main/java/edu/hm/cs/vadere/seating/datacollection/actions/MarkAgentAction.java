@@ -29,6 +29,8 @@ public class MarkAgentAction extends PendingAction {
 
     @Override
     public void perform() {
+        if (person == null)
+            throw new IllegalStateException("no person selected");
         makeNoPersonBeingAgent();
         person.setAgent(true);
         survey.setAgent(person);
