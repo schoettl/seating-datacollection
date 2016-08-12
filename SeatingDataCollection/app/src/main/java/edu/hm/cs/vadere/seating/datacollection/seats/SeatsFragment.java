@@ -149,8 +149,11 @@ public class SeatsFragment extends Fragment implements PendingAction.PendingActi
                 final Person person = (Person) seatTaker;
                 if (!person.isDisturbing())
                     menu.removeItem(R.id.action_person_stops_disturbing);
-                if (person.getGroup() == null)
+
+                if (person.getGroup() == null) {
                     menu.removeItem(R.id.action_remove_from_group);
+                    menu.removeItem(R.id.action_add_other_person_to_group);
+                }
 
             } else if (seatTaker instanceof HandBaggage) {
                 Log.d(TAG, "baggage");
@@ -219,7 +222,7 @@ public class SeatsFragment extends Fragment implements PendingAction.PendingActi
             case R.id.action_person_stops_disturbing:
                 actionManager.actionPersonStopsDisturbing(seat);
                 return true;
-            case R.id.action_add_to_group:
+            case R.id.action_add_other_person_to_group:
                 actionManager.actionAddToGroup(seat, this);
                 return true;
             case R.id.action_remove_from_group:

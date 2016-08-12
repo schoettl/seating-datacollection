@@ -53,5 +53,5 @@
     <string name="survey_delete">Delete survey</string>
     <string name="survey_new_from_template">Use for new survey</string>
     <string name="dialog_confirm_delete_survey">Really delete this survey?</string>
-    <string name="action_add_to_group">Add another person to group</string>
+    <string name="action_add_other_person_to_group">Add another person to group</string>
 </resources>
