@@ -219,6 +219,9 @@ public class SeatsFragment extends Fragment implements PendingAction.PendingActi
             case R.id.action_person_stops_disturbing:
                 actionManager.actionPersonStopsDisturbing(seat);
                 return true;
+            case R.id.action_add_to_group:
+                actionManager.actionAddToGroup(seat, this);
+                return true;
             case R.id.action_remove_from_group:
                 actionManager.actionRemoveFromGroup(seat);
                 return true;

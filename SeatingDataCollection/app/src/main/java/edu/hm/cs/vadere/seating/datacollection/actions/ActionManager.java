@@ -113,6 +113,11 @@ public class ActionManager {
         }
     }
 
+    public void actionAddToGroup(Seat seat, PendingAction.PendingActionListener listener) {
+        Person person = (Person) seat.getSeatTaker();
+        addPendingActionToStack(new AddToGroupAction(this, listener, person.getGroup()));
+    }
+
     public void actionRemoveFromGroup(Seat seat) {
         performActionAndAddToStack(new RemoveFromGroupAction(this, (Person) seat.getSeatTaker()));
     }
