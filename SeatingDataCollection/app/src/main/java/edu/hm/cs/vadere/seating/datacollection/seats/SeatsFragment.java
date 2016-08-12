@@ -221,6 +221,7 @@ public class SeatsFragment extends Fragment implements PendingAction.PendingActi
                 return true;
             case R.id.action_remove_from_group:
                 actionManager.actionRemoveFromGroup(seat);
+                return true;
             default:
                 Log.w(TAG, "context menu item not implemented");
                 return super.onContextItemSelected(item);
