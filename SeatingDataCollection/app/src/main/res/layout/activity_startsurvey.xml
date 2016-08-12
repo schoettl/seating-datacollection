@@ -8,82 +8,90 @@
 
     <include layout="@layout/app_toolbar" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName|textCapWords|textAutoComplete"
-        android:hint="@string/agent_name_hint"
-        android:ems="10"
-        android:id="@+id/editTextName"
-        android:layout_gravity="center_horizontal" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/editTextDate"
-        android:layout_gravity="center_horizontal"
-        android:editable="false"
-        android:hint="@string/date_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|textCapWords|textAutoComplete"
+            android:hint="@string/agent_name_hint"
+            android:ems="10"
+            android:id="@+id/editTextName"
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextStartingAt"
-        android:hint="@string/startingat_hint"
-        android:inputType="textCapWords|textAutoComplete" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editTextDate"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:hint="@string/date_hint" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextDestination"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/destination_hint"
-        android:inputType="textCapWords|textAutoComplete" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextStartingAt"
+            android:hint="@string/startingat_hint"
+            android:inputType="textCapWords|textAutoComplete" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextLine"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/line_hint"
-        android:inputType="textCapCharacters" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextDestination"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/destination_hint"
+            android:inputType="textCapWords|textAutoComplete" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextWagonNo"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/wagonno_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextLine"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/line_hint"
+            android:inputType="textCapCharacters" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editTextDoorNo"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/doorno_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTextWagonNo"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/wagonno_hint" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextTrainType"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/traintype_default"
-        android:inputType="textCapCharacters" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editTextDoorNo"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/doorno_hint" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextTrainNo"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textCapCharacters"
-        android:hint="@string/trainno_hint" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextTrainType"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/traintype_default"
+            android:inputType="textCapCharacters" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextTrainNo"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textCapCharacters"
+            android:hint="@string/trainno_hint" />
+
+    </LinearLayout>
+    
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
