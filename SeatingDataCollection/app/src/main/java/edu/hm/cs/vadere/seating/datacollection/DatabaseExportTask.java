@@ -61,7 +61,6 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         try {
             exportAllTables();
         } catch (IOException e) {
-            e.printStackTrace();
             Log.e(TAG, "error while exporting: " + e.getLocalizedMessage());
             return false;
         }
@@ -70,8 +69,10 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
     private void exportAllTables() throws IOException {
         // This throws an exception with no real external SD card!
-        //if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
-        //    throw new IOException("external storage must be mounted writable");
+//        String state = Environment.getExternalStorageState();
+//        Log.d(TAG, "external storage state: " + state);
+//        if (state != Environment.MEDIA_MOUNTED)
+//            throw new IOException("external storage must be mounted writable");
 
         File directory = Environment.getExternalStorageDirectory();
         //File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS); // as alternative
@@ -84,7 +85,7 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
         SQLiteOpenHelper helper = new MySQLiteOpenHelper(activity, SeatingDataCollectionApp.DATABASE_NAME, null, SeatingDataCollectionApp.DATABASE_VERSION);
         try (SQLiteDatabase db = helper.getWritableDatabase()) {
 
-            List<String> tableNames = getTableList();
+            List<String> tableNames = getTableNames();
             Log.d(TAG, "exporting " + tableNames.size() + " tables");
 
             for (String tableName : tableNames) {
@@ -99,16 +100,16 @@ public class DatabaseExportTask extends AsyncTask<Void, String, Boolean> {
 
     /** Trigger media scan to make new files visible for MTP clients. */
     private void triggerMediaScan() {
+        // Does not work :(
         // http://muzso.hu/2014/05/11/manually-running-a-media-scan-on-android
-        Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageState()));
-        // not tested
+        Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()));
     }
 
     private void logDirExist(File directory) {
         Log.d(TAG, "dir exists? " + directory.toString() + " -> " + directory.isDirectory());
     }
 
-    private List<String> getTableList() {
+    private List<String> getTableNames() {
         List<String> result = new LinkedList<>();
         result.add(Utils.toSugarTableName(Survey.class));
         result.add(Utils.toSugarTableName(Person.class));
