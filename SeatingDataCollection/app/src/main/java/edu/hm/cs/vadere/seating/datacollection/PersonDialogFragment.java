@@ -89,7 +89,7 @@ public class PersonDialogFragment extends DialogFragment {
     }
 
     private <E> void setSimpleSpinnerAdapter(Spinner spinner, E[] values) {
-        spinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_plain_textview, values));
+        spinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.item_spinner, values));
     }
 
     public interface PositiveClickListener {
